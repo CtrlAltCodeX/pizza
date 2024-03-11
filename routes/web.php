@@ -53,7 +53,7 @@ Route::group(['prefix' => 'admin'], function () {
 //----------------------------  Client Side Routes  -----------------------------------------------
 
 Route::get('/', function () {
-    return view('web.contact');
+    return view('web.index');
 });
 
 Route::post('/register', [LoginController::class, 'register'])->name('register');

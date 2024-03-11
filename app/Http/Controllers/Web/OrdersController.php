@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Validator;
 
 class OrdersController extends Controller
 {
-    public function index($slug){
-//        Session::flush();
-
-//        dd(Session::all());
-//        (Session::forget('cart'));
+    public function index($slug)
+    {
         $categoryAll = Category::all();
         $categoryId = Category::where('slug', $slug)->value('id');
         $items = ItemMaster::where('category_master_id', $categoryId)->get();
@@ -63,7 +60,7 @@ class OrdersController extends Controller
                         'name' => $cheeseIngredient->name,
                     ];
 
-                     $data[$index]['all'][] = $cheeseIngredient->name;
+                    $data[$index]['all'][] = $cheeseIngredient->name;
                 }
             }
 
@@ -77,7 +74,7 @@ class OrdersController extends Controller
                     ];
                 })->all();
 
-                 $data[$index]['all'] = array_merge( $data[$index]['all'], $sauces->pluck('name')->all());
+                $data[$index]['all'] = array_merge($data[$index]['all'], $sauces->pluck('name')->all());
             }
 
             if (isset($data[$index]['sauces'])) {
@@ -94,7 +91,7 @@ class OrdersController extends Controller
                         'name' => $meat_ingredients->name,
                     ];
                 })->all();
-                 $data[$index]['all'] = array_merge( $data[$index]['all'], $meat->pluck('name')->all());
+                $data[$index]['all'] = array_merge($data[$index]['all'], $meat->pluck('name')->all());
             }
 
             if (isset($data[$index]['meat'])) {
@@ -111,7 +108,7 @@ class OrdersController extends Controller
                         // Add other veggie attributes as needed
                     ];
                 })->all();
-                 $data[$index]['all'] = array_merge( $data[$index]['all'], $veggies->pluck('name')->all());
+                $data[$index]['all'] = array_merge($data[$index]['all'], $veggies->pluck('name')->all());
             }
 
             // Resetting keys for veggies array
@@ -120,16 +117,17 @@ class OrdersController extends Controller
             }
         }
 
-//        $pizza = json_encode($data);
+        //        $pizza = json_encode($data);
         return view('web.order')
             ->with('category', $categoryAll)
             ->with('pizza', $data)
             ->with('all', $all);
     }
 
-    public function ordering(Request $request){
-        if($request->ajax() && isset($request->idOfPizza)){
-            $val = Validator::make($request->all(),[
+    public function ordering(Request $request)
+    {
+        if ($request->ajax() && isset($request->idOfPizza)) {
+            $val = Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required|email',
                 'street' => 'required',
@@ -138,7 +136,7 @@ class OrdersController extends Controller
                 'city' => 'required',
             ]);
 
-            if($val->fails()){
+            if ($val->fails()) {
                 return response()->json([
                     'status' => 0,
                     'message' => $val->errors()->first(),
@@ -184,12 +182,12 @@ class OrdersController extends Controller
                 'igredients_used_id' => $data['sauces'] . ',' . $data['cheese'] . ',' . $data['meat_ingredients'] . ',' . $data['veggies'],
             ]);
 
-            if($data){
+            if ($data) {
                 return response()->json([
                     'status' => 1,
                     'message' => $orderId,
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     'status' => 0,
                     'message' => "Something went wrong",
@@ -198,8 +196,9 @@ class OrdersController extends Controller
         }
     }
 
-    public function deliverySetup(Request $request){
-        if($request->ajax()){
+    public function deliverySetup(Request $request)
+    {
+        if ($request->ajax()) {
 
             $val = Validator::make($request->all(), [
                 'name' => 'required',
@@ -212,10 +211,10 @@ class OrdersController extends Controller
                 'city' => 'required',
             ]);
 
-            if($val->fails()){
+            if ($val->fails()) {
                 return response()->json([
-                   'status' => 'error',
-                   'message' => $val->errors()->first()
+                    'status' => 'error',
+                    'message' => $val->errors()->first()
                 ]);
             }
 
@@ -231,7 +230,7 @@ class OrdersController extends Controller
             ];
 
             Session::put('delivery_details', $data);
-            if(Session::has('delivery_details')){
+            if (Session::has('delivery_details')) {
                 return response()->json([
                     'status' => 'success'
                 ]);
@@ -244,8 +243,9 @@ class OrdersController extends Controller
         }
     }
 
-    public function pickupSetup(Request $request){
-        if($request->ajax()){
+    public function pickupSetup(Request $request)
+    {
+        if ($request->ajax()) {
 
             $val = Validator::make($request->all(), [
                 'name' => 'required',
@@ -253,7 +253,7 @@ class OrdersController extends Controller
                 'phone' => 'required|numeric'
             ]);
 
-            if($val->fails()){
+            if ($val->fails()) {
                 return response()->json([
                     'status' => 'error',
                     'message' => $val->errors()->first()
@@ -267,7 +267,7 @@ class OrdersController extends Controller
             ];
 
             Session::put('pickup_details', $data);
-            if(Session::has('pickup_details')){
+            if (Session::has('pickup_details')) {
                 return response()->json([
                     'status' => 'success'
                 ]);
@@ -280,19 +280,20 @@ class OrdersController extends Controller
         }
     }
 
-    public function getPizzaDetails(Request $request){
-        if($request->ajax()){
+    public function getPizzaDetails(Request $request)
+    {
+        if ($request->ajax()) {
             $pizza = ItemMaster::where('id', $request->id)->first()->toArray();
-//            dd($pizza);
+            //            dd($pizza);
             return response()->json([
                 'status' => 'success',
                 'data' => $pizza
             ]);
-
         }
     }
 
-    public function addToCart(Request $request){
+    public function addToCart(Request $request)
+    {
         $type = $request->input('type');
         $size = $request->input('size');
         $price = $request->input('price');
@@ -306,9 +307,9 @@ class OrdersController extends Controller
 
         $cart = Session::get('cart', []);
 
-//        if (!isset($cart[$type])) {
-//            $cart[$type] = [];
-//        }
+        //        if (!isset($cart[$type])) {
+        //            $cart[$type] = [];
+        //        }
 
         $cart[] = [
             'type' => $type,
@@ -331,12 +332,13 @@ class OrdersController extends Controller
         ]);
     }
 
-    public function cart(Request $request){
-        if($request->ajax()){
+    public function cart(Request $request)
+    {
+        if ($request->ajax()) {
             $cart = Session::get('cart');
             return response()->json([
-               'status' => 'success',
-               'cart' => $cart
+                'status' => 'success',
+                'cart' => $cart
             ]);
         }
     }

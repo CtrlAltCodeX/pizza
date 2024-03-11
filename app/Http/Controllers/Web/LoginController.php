@@ -47,7 +47,6 @@ class LoginController extends Controller
                 'message' => 'Something is wrong.'
             ]);
         }
-
     }
 
     public function login(Request $request){
