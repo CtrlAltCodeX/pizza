@@ -1126,7 +1126,7 @@ body.menu-open #body-overlay {
     padding: 0;
 }
 .order-header-content-wrapper{
-    padding: 50px 32px 20px;
+    /* padding: 50px 32px 20px; */
     text-align: center;
 }
 .order-header-content-wrapper h2{

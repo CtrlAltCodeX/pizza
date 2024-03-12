@@ -1,11 +1,29 @@
 @extends("web.layout.master")
 
+@push('head')
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('css/media.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/proxima-nova-condensed" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ asset('images/apple-touch-icon.png') }}" sizes="16x16" />
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+@endpush
+
 @php
 $urlParts = explode('/', url()->current());
 $lastPart = last($urlParts);
 @endphp
 
 @section('section')
+
 <section class="order-tab-section">
     <div class="container">
         <div class="row">
@@ -609,16 +627,6 @@ $lastPart = last($urlParts);
                                             <label class="mdl-textfield__label">City <span class="required"> *</span></label>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6">--}}
-                                    {{-- <div class="mdl-textfield del-select-box">--}}
-                                    {{-- <label class="mdl-textfield__label">Province <span class="required"> *</span></label>--}}
-                                    {{-- <select class="province">--}}
-                                    {{-- <option>Ontario</option>--}}
-                                    {{-- <option>Québec</option>--}}
-                                    {{-- <option>Nova Scotia</option>--}}
-                                    {{-- </select>--}}
-                                    {{-- </div>--}}
-                                    {{-- </div>--}}
 
                                     <div class="col-md-12">
                                         <div class="form-submit">
@@ -631,8 +639,8 @@ $lastPart = last($urlParts);
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="delivery-form-content">
-                            <div class="row">
-                                <form id="pickupForm" enctype="multipart/form-data">
+                            <form id="pickupForm" enctype="multipart/form-data">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="name">
@@ -651,39 +659,13 @@ $lastPart = last($urlParts);
                                             <label class="mdl-textfield__label">Phone # <span class="required"> *</span></label>
                                         </div>
                                     </div>
-                                </form>
-                                {{-- <div class="col-md-12">--}}
-                                {{-- <div class="select-pill-store">--}}
-                                {{-- <label class="c-label" >Select a store <span class="required"> *</span></label>--}}
-                                {{-- <ul class="nav nav-pills pivions-tab">--}}
-                                {{-- <li class="nav-item">--}}
-                                {{-- <a class="nav-link active" data-toggle="pill" href="" role="tab" aria-selected="true">Ontario</a>--}}
-                                {{-- </li>--}}
-                                {{-- <li class="nav-item">--}}
-                                {{-- <a class="nav-link" data-toggle="pill" href="" role="tab" aria-selected="false">Québec</a>--}}
-                                {{-- </li>--}}
-                                {{-- <li class="nav-item">--}}
-                                {{-- <a class="nav-link" data-toggle="pill" href="" role="tab" aria-selected="false">Nova Scotia</a>--}}
-                                {{-- </li>--}}
-                                {{-- </ul>--}}
-                                {{-- </div>--}}
-                                {{-- </div>--}}
-                                {{-- <div class="col-md-12">--}}
-                                {{-- <div class="mdl-textfield del-select-box mt-0">--}}
-                                {{-- <select class="s-store">--}}
-                                {{-- <option selected disabled >Select a store</option>--}}
-                                {{-- <option>Barrhaven - 220 Kennevale Dr (closed)</option>--}}
-                                {{-- <option>Bells Corners - 2150 Robertson Rd (closed)</option>--}}
-                                {{-- <option>Brockville - 2441 Parkedale Ave (closed)</option>--}}
-                                {{-- </select>--}}
-                                {{-- </div>--}}
-                                {{-- </div>--}}
-                                <div class="col-md-12">
-                                    <div class="form-submit">
-                                        <button class="pro-order-btn pickUpSave"> Save </button>
+                                    <div class="col-md-12">
+                                        <div class="form-submit">
+                                            <button class="pro-order-btn pickUpSave"> Save </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -707,7 +689,7 @@ $lastPart = last($urlParts);
             <div class="modal-body">
                 <div class="order-header-content-wrapper">
                     <h2>SIGN IN </h2>
-                    <p>Sign in to your account and start earning Pizza Perks points on your next order. </p>
+                    <p style="width: 90%;margin: auto;">Sign in to your account and start earning Pizza Perks points on your next order. </p>
                     <img src="{{ asset('images/perks.png') }}" alt="perks" />
                 </div>
                 <div class="delivery-form-content sign-in-form">
@@ -848,6 +830,17 @@ $lastPart = last($urlParts);
 @endsection
 
 @push('js')
+<script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
+<script src="{{ asset('js/jquery.validate.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('js/selectize.min.js') }}"></script>
+<script src="{{ asset('js/stickybits.min.js') }}"></script>
+<script src="{{ asset('js/owlCarousel.min.js') }}"></script>
+<script src="{{ asset('js/wow.js')}}"></script>
+<script src="{{ asset('js/all.js') }}"></script>
+<script defer src="{{ asset('js/material.min.js') }}"></script>
+<script src="{{ asset('js/toastr.js') }}"></script>
 <script>
     $(document).ready(function() {
 

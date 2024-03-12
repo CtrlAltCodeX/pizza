@@ -12,8 +12,8 @@ use function Laravel\Prompts\password;
 
 class LoginController extends Controller
 {
-    public function register(Request $request){
-
+    public function register(Request $request)
+    {
         $val = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
@@ -21,7 +21,7 @@ class LoginController extends Controller
             'firstname' => 'required',
         ]);
 
-        if($val->fails()){
+        if ($val->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => $val->errors()->first()
@@ -32,16 +32,16 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
-//            'address' => $request->address,
+            //            'address' => $request->address,
             'name' => $request->firstname,
         ]);
 
-        if($data){
+        if ($data) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'You have successfully registered'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something is wrong.'
@@ -49,13 +49,14 @@ class LoginController extends Controller
         }
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $val = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if($val->fails()){
+        if ($val->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => $val->errors()->first()
@@ -70,7 +71,23 @@ class LoginController extends Controller
                 'message' => 'login successfull'
             ]);
         } else {
-            return redirect()->back()->withInput()->withErrors(['email' => 'Invalid email', 'password' => 'Invalid password']);
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid email or Invalid password'
+            ]);
+            // return redirect()->back()->withInput()->withErrors(['email' => 'Invalid email', 'password' => 'Invalid password']);
         }
+    }
+
+    /**
+     * Logout
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->back();
     }
 }

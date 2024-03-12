@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'guest:admin'], function () {
         Route::get('login', [AuthController::class, 'index'])->name('login');
+
         Route::post('login-check', [AuthController::class, 'loginCheck'])->name('admin.login-check');
     });
 
@@ -51,9 +52,12 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //----------------------------  Client Side Routes  -----------------------------------------------
-
 Route::get('/', function () {
     return view('web.index');
+});
+
+Route::group(['middleware' => 'auth:web'], function () {
+    Route::get('logout', [LoginController::class, 'logout'])->name('user.log.out');
 });
 
 Route::post('/register', [LoginController::class, 'register'])->name('register');

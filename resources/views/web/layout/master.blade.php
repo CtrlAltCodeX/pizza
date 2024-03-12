@@ -8,15 +8,15 @@
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="John Doe">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" /> -->
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/media.css') }}" />
-    <!-- <link rel="stylesheet" type="text/css" href="css/all.min.css" /> -->
     <link rel="stylesheet" href="{{ asset('css/owlCarousal.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/owlTheme.min.css') }}" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('images/apple-touch-icon.png') }}" sizes="16x16" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     @stack('head')
     @stack('css')
 </head>
@@ -32,19 +32,26 @@
         </div>
     </div>
 
+    @if(request()->route()->uri == "/")
+    @include('web.layout.home-header')
+    @else
     @include('web.layout.header')
+    @endif
 
     @yield('section')
 
     @include('web.layout.footer')
 
-    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jquery-3.6.0.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
     <script src="{{ asset('js/stickybits.min.js') }}"></script>
     <script src="{{ asset('js/owlCarousel.min.js') }}"></script>
     <script src="{{ asset('js/stickybits.min.js') }}"></script>
     <script src="{{ asset('js/wow.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script>
         stickybits('.main-header', {
             useStickyClasses: true
@@ -136,7 +143,7 @@
             });
         });
     </script>
-    
+
     @stack('js')
 </body>
 

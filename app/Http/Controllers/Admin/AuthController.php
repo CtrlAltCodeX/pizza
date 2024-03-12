@@ -9,29 +9,31 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function index(){
-//        dd(Auth::getUser());
+    public function index()
+    {
         return view('admin.login');
     }
 
-    public function loginCheck(Request $request){
-        $validator = Validator::make($request->all(),[
+    public function loginCheck(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
-//dd(bcrypt($request->password));
-        if ($validator->fails()){
+        
+        if ($validator->fails()) {
             return response()->json(['status' => 0, 'message' => $validator->errors()->first()]);
         }
 
-        if(Auth::guard('admin')->attempt(['email'=>$request->input('email'),'password'=>$request->input('password'), 'is_admin'=>1])){
+        if (Auth::guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'is_admin' => 1])) {
             return response()->json(['status' => 1, 'message' => 'Logged in successfully']);
-        }else{
+        } else {
             return response()->json(['status' => 0, 'message' => 'Invalid email or password']);
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }

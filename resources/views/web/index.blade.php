@@ -127,7 +127,7 @@
                                     <div class="module-menu__item-price">from 14.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                                     <div class="module-menu__item-price">from 14.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                                     <div class="module-menu__item-price">from 16.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                                     <div class="module-menu__item-price">from 16.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +183,7 @@
                                     <div class="module-menu__item-price">from 16.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                     <div class="module-menu__item-price">from 14.50</div>
                                 </div>
                                 <div class="pizza-order-btn">
-                                    <a href="" class="c-btn">Build Pizza</a>
+                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
                                 </div>
                             </div>
                         </div>
@@ -328,3 +328,4 @@
 </section>
 
 @endsection
+
