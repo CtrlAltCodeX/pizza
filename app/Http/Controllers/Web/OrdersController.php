@@ -117,10 +117,8 @@ class OrdersController extends Controller
             }
         }
 
-        // dd($all);
-
         return view('web.order')
-            ->with('category', $categoryAll)
+            ->with('categories', $categoryAll)
             ->with('pizza', $data)
             ->with('all', $all);
     }
