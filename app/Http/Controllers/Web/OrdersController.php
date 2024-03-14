@@ -117,7 +117,8 @@ class OrdersController extends Controller
             }
         }
 
-        //        $pizza = json_encode($data);
+        // dd($all);
+
         return view('web.order')
             ->with('category', $categoryAll)
             ->with('pizza', $data)
@@ -284,7 +285,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
             $pizza = ItemMaster::where('id', $request->id)->first()->toArray();
-            //            dd($pizza);
+            
             return response()->json([
                 'status' => 'success',
                 'data' => $pizza

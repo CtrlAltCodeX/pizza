@@ -69,5 +69,4 @@ Route::post('/pickup-setup', [OrdersController::class, 'pickupSetup'])->name('pi
 Route::post('/getPizzaDetails', [OrdersController::class, 'getPizzaDetails'])->name('getPizzaDetails');
 Route::post('/add-to-cart', [OrdersController::class, 'addToCart'])->name('add-to-cart');
 Route::post('/get-cart', [OrdersController::class, 'cart'])->name('get-cart');
-
 Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.order.index');

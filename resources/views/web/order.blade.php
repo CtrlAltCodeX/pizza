@@ -20,6 +20,7 @@
 @php
 $urlParts = explode('/', url()->current());
 $lastPart = last($urlParts);
+
 @endphp
 
 @section('section')
@@ -158,6 +159,7 @@ $lastPart = last($urlParts);
                     </select>
                 </div>
             </div>
+
             <div class="col-md-8">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="deal-comman-header">
@@ -180,7 +182,7 @@ $lastPart = last($urlParts);
                                 </div>
                             </div>
 
-                            @foreach($pizza as $piz)
+                            @foreach($pizza as $key => $piz)
                             <div class="product-col">
                                 <div class="product-bg-wrapper">
                                     <p class="price">
@@ -197,7 +199,7 @@ $lastPart = last($urlParts);
                                             <div class="pro-btn-with-description">
                                                 <p>{{ implode(', ', $piz['all']) }}</p>
                                             </div>
-                                            <a href="#" class="pro-order-btn checkSession" data-toggle="modal" data-id="{{ $piz['id'] }}" data-target="#exampleModalLong2"> Order </a>
+                                            <a href="#" class="pro-order-btn checkSession" data-key={{$key}} data-toggle="modal" data-id="{{ $piz['id'] }}" data-target="#exampleModalLong2"> Order </a>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +245,7 @@ $lastPart = last($urlParts);
                             <div class="cop-price-with-btn">
                                 <p>
                                     <sup>$</sup>
-                                    <span id="finalPrice" data-basePrice="" data-finalPrice="11.25">11.25</span>
+                                    <span id="finalPrice" data-finalPrice="0">0</span>
                                 </p>
                                 <div class="qty-container">
                                     <button class="qty-btn-minus btn-light" type="button">-</button>
@@ -287,11 +289,11 @@ $lastPart = last($urlParts);
                                             </div>
                                             <div class="col-size-box">
                                                 <div class="">
-                                                    <select class="province ingredients" id="size" name="size">
-                                                        <option value="S">Small (9'')</option>
-                                                        <option value="M">Medium(12'')</option>
-                                                        <option value="L">Large(15'')</option>
-                                                        <option value="XL">Extra-Large(18'')</option>
+                                                    <select class="province" id="size" name="size">
+                                                        <!-- <option value=1>Small (9'')</option>
+                                                        <option value=2>Medium(12'')</option>
+                                                        <option value=3>Large(15'')</option>
+                                                        <option value=4>Extra-Large(18'')</option> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -319,9 +321,9 @@ $lastPart = last($urlParts);
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
                                                     <select class="province" name="thickness" id="thickness">
-                                                        <option>Reguler</option>
-                                                        <option>Thick</option>
-                                                        <option>Thin</option>
+                                                        <option value=1>Reguler</option>
+                                                        <option value=2>Thick</option>
+                                                        <option value=3>Thin</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -346,7 +348,7 @@ $lastPart = last($urlParts);
                                                 <div class="mdl-textfield del-select-box">
                                                     <select class="province" name="sauce[]">
                                                         @foreach($all['sauce'] as $sauce)
-                                                        <option value="{{ $sauce['id'] }}">{{ $sauce['name'] }}</option>
+                                                        <option value="{{ $sauce['price'] }}">{{ $sauce['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -362,7 +364,7 @@ $lastPart = last($urlParts);
                                                 <div class="mdl-textfield del-select-box">
                                                     <select class="province" name="cheese[]">
                                                         @foreach(array_slice($all['cheese'], 2) as $cheese)
-                                                        <option value="{{ $cheese['id'] }}" data-price="{{ isset($cheese['price']) ? $cheese['price'] : ''}}">{{ $cheese['name'] }}</option>
+                                                        <option value="{{ $cheese['price'] }}" data-price="{{ isset($cheese['price']) ? $cheese['price'] : ''}}">{{ $cheese['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -529,9 +531,7 @@ $lastPart = last($urlParts);
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
@@ -976,7 +976,7 @@ $lastPart = last($urlParts);
         $(document).on('click', '.checkSession', function(e) {
             e.preventDefault();
             $('#exampleModalLong').modal('hide');
-            // var login = $('#boolPickUp').val();
+
             var delivery = $('#boolDelivery').val();
             var pickup = $('#boolPickUp').val();
 
@@ -1045,6 +1045,12 @@ $lastPart = last($urlParts);
                     }
                 });
 
+                var sizes = @json($pizza);
+                var splitSizes = sizes[$(this).data('key')]['size'][0].split(",");
+
+                splitSizes.forEach(function(val) {
+                    $("#size").append('<option>' + val + "</option>");
+                });
 
                 $('#exampleModalLong').modal('show');
                 $('#exampleModalLong #idOfPizza').val(idOfPizza);
@@ -1356,6 +1362,14 @@ $lastPart = last($urlParts);
         }
     });
 
+    $(document).on('change', '.province', function(e) {
+        // If checked, add to finalPrice
+        var priceToAdd = parseFloat($(this).val());
+        var currentPrice = parseFloat($('#finalPrice').text());
+        var newPrice = currentPrice + priceToAdd;
+        $('#finalPrice').text(newPrice.toFixed(2));
+    });
+
     $(document).on('click', '#orderBTN', function(e) {
         e.preventDefault();
 
@@ -1428,7 +1442,7 @@ $lastPart = last($urlParts);
 
         // Update the final price by multiplying with the quantity
         var finalPrice = parseFloat($('#finalPrice').text());
-        var totalPrice = finalPrice * (currentValue + 1);
+        var totalPrice = finalPrice * inputQty.val();
         $('#finalPrice').text(totalPrice.toFixed(2));
     });
 
@@ -1442,7 +1456,7 @@ $lastPart = last($urlParts);
 
         // Update the final price by multiplying with the quantity
         var finalPrice = parseFloat($('#finalPrice').text());
-        var totalPrice = finalPrice * (currentValue - 1);
+        var totalPrice = finalPrice * inputQty.val();
         $('#finalPrice').text(totalPrice.toFixed(2));
     });
 </script>
