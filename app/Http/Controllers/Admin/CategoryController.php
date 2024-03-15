@@ -12,68 +12,70 @@ use Illuminate\Support\Facades\Image;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request){
-        $data = Category::where('status','<>','2')->orderBy('id','ASC')->get();
-        if($request->ajax()){
+    public function index(Request $request)
+    {
+        $data = Category::where('status', '<>', '2')->orderBy('id', 'ASC')->get();
+        if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('status',function ($row){
-                    if($row->status == '1'){
+                ->addColumn('status', function ($row) {
+                    if ($row->status == '1') {
                         $checked = 'checked';
-                    }else{
+                    } else {
                         $checked = '';
                     }
                     $status = '<div class="form-check form-switch form-switch-md d-flex justify-content-center p-1" dir="ltr">
-                                    <input type="checkbox" onclick="status(this)" class="form-check-input statusBtn s'.$row->id.'" id="'.$row->id.'" '.$checked.'>
+                                    <input type="checkbox" onclick="status(this)" class="form-check-input statusBtn s' . $row->id . '" id="' . $row->id . '" ' . $checked . '>
                                 </div>';
                     return $status;
                 })
-                ->addColumn('image',function ($row){
-                    $status = '<img class="rounded-circle" width="35" src="'.asset('admin/images/category/'.$row->img).'" alt="">';
+                ->addColumn('image', function ($row) {
+                    $status = '<img class="rounded-circle" width="35" src="' . asset('admin/images/category/' . $row->img) . '" alt="">';
                     return $status;
                 })
-                ->addColumn('action',function ($row){
+                ->addColumn('action', function ($row) {
                     $action = '<ul class="list-inline mb-0 d-flex justify-content-center align-middle p-2">
                                     <li class="list-inline-item">
                                         <a class="text-warning editItem" data-bs-toggle="modal"
-                            data-bs-target="#UpdateCategory" href="javascript:void(0)" id="'.$row->id.'">
+                            data-bs-target="#UpdateCategory" href="javascript:void(0)" id="' . $row->id . '">
                                             <i class="fas fa-pencil-alt p-2 bg-soft-warning border border-warning rounded-circle"></i>
                                         </a>
 
                                     </li>';
-//                                    <li class="list-inline-item">
-//                                        <a class="text-danger deleteItem" data-bs-toggle="modal"
-//                            data-bs-target="#deleteCategory" href="javascript:void(0)" id="'.$row->id.'">
-//                                            <i class="fa fa-trash p-2 bg-soft-danger border border-danger rounded-circle" data-id="1"></i>
-//                                        </a>
-//                                    </li>
-//                                </ul>';
-//                    <li class="list-inline-item">
-//                                        <a class="text-success viewItem" href="javascript:void(0)" id="'.$row->id.'">
-//                                            <i class="ri-eye-fill fs-16 p-2 bg-soft-success border border-success rounded-circle" data-id="1"></i>
-//                                        </a>
-//                                    </li>
+                    //                                    <li class="list-inline-item">
+                    //                                        <a class="text-danger deleteItem" data-bs-toggle="modal"
+                    //                            data-bs-target="#deleteCategory" href="javascript:void(0)" id="'.$row->id.'">
+                    //                                            <i class="fa fa-trash p-2 bg-soft-danger border border-danger rounded-circle" data-id="1"></i>
+                    //                                        </a>
+                    //                                    </li>
+                    //                                </ul>';
+                    //                    <li class="list-inline-item">
+                    //                                        <a class="text-success viewItem" href="javascript:void(0)" id="'.$row->id.'">
+                    //                                            <i class="ri-eye-fill fs-16 p-2 bg-soft-success border border-success rounded-circle" data-id="1"></i>
+                    //                                        </a>
+                    //                                    </li>
                     return $action;
                 })
-                ->rawColumns(['status','action','image'])
+                ->rawColumns(['status', 'action', 'image'])
                 ->make('true');
         }
         return view('admin.category.index');
     }
 
-    public function addNewCategory(Request $request){
-        $validator = Validator::make($request->all(),[
+    public function addNewCategory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-               'status' => 0,
-               'message' => $validator->fails()->first()
+                'status' => 0,
+                'message' => $validator->fails()->first()
             ]);
         }
 
-        if ($request->file('image')){
+        if ($request->file('image')) {
 
             $image = $request->file('image');
 
@@ -94,25 +96,25 @@ class CategoryController extends Controller
         $slug = preg_replace('/-+/', '-', $slug);
 
         $data = Category::create([
-           'name' => $request->name,
-           'description' => isset($request->description) ? $request->description : '' ,
-           'img' => isset($filename) ? 'admin/images/category/' . $filename : "",
-           'status' => true,
-           'slug' => $slug,
+            'name' => $request->name,
+            'description' => isset($request->description) ? $request->description : '',
+            'img' => isset($filename) ? 'admin/images/category/' . $filename : "",
+            'status' => true,
+            'slug' => $slug,
         ]);
 
-        if($data){
+        if ($data) {
             return response()->json([
-               'status' => 1,
-               'message' => 'Successfully added'
+                'status' => 1,
+                'message' => 'Successfully added'
             ]);
         }
-
     }
 
-    public function categoryStatus(Request $request){
-        if($request->ajax()){
-            if(isset($request->isChecked)){
+    public function categoryStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            if (isset($request->isChecked)) {
                 $id = $request->id;
 
                 $category = Category::find($id);
@@ -121,28 +123,24 @@ class CategoryController extends Controller
                         'status' => $request->isChecked == 'true' ? true : false,
                     ]);
 
-                    if($request->isChecked == 'true'){
+                    if ($request->isChecked == 'true') {
                         return response()->json([
                             'status' => true,
                             'message' => 'Successfully activated the Category'
                         ]);
-                    }
-                    else{
+                    } else {
                         return response()->json([
                             'status' => true,
                             'message' => 'Successfully deactivated the Category'
                         ]);
                     }
-
-                }
-                else{
+                } else {
                     return response()->json([
                         'status' => false,
                         'message' => 'Category id not found'
                     ]);
                 }
-            }
-            else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'isChecked field is not found. ERROR'
@@ -151,7 +149,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function categoryUpdate(Request $request){
+    public function categoryUpdate(Request $request)
+    {
         if ($request->ajax() && isset($request->id)) {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
@@ -192,7 +191,7 @@ class CategoryController extends Controller
 
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $filename = $image->getClientOriginalExtension();
+                $filename = $image->getClientOriginalName();
 
                 $fileMoved = $image->move(public_path('admin/images/category'), $filename);
 
@@ -203,7 +202,7 @@ class CategoryController extends Controller
                     ]);
                 }
 
-                $dataToUpdate['image'] = $filename;
+                $dataToUpdate['img'] = $filename;
             }
 
             $category->update($dataToUpdate);
@@ -218,18 +217,17 @@ class CategoryController extends Controller
             'status' => false,
             'message' => 'Invalid request',
         ]);
-
     }
 
-    public function getData(Request $request){
-        if($request->ajax() && isset($request->id)){
+    public function getData(Request $request)
+    {
+        if ($request->ajax() && isset($request->id)) {
             $data = Category::where('id', $request->id)->first();
 
             return response()->json([
-               'status' => 1,
-               'data' => $data
+                'status' => 1,
+                'data' => $data
             ]);
         }
     }
-
 }

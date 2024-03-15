@@ -43,13 +43,8 @@ $lastPart = last($urlParts);
             <div class="col-md-4">
                 <div class="nav flex-column nav-pills nav-p-tab" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     @foreach($categories as $category)
-                    <a class="nav-link " id="v-pills-pizzas-tab" href="{{ route('user.order.index', ['slug' => $category->slug]) }}" >
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="23" x="0" y="0" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512 512" xml:space="preserve">
-                            <g>
-                                <path d="M509.026 2.885A9.995 9.995 0 0 0 498.642.583L83.289 148.68c-14.43-8.824-32.733-10.89-49.52-3.939-27.865 11.543-41.146 43.604-29.604 71.471 27.219 65.708 66.518 124.525 116.809 174.816s109.107 89.591 174.816 116.809a54.41 54.41 0 0 0 20.861 4.164c21.475-.001 41.894-12.726 50.609-33.769 5.864-14.158 5.31-29.396-.299-42.48L511.462 13.238a10.002 10.002 0 0 0-2.436-10.353zM146.179 147.489l44.02-15.694a25.442 25.442 0 0 1 6.678 20.752c-.89 6.75-4.354 12.751-9.755 16.896-5.401 4.145-12.089 5.936-18.844 5.049-6.749-.889-12.749-4.352-16.894-9.754-3.819-4.977-5.636-11.049-5.205-17.249zm202.603 323.088c-7.322 17.678-27.664 26.103-45.338 18.779-128.04-53.035-227.763-152.759-280.8-280.799-3.547-8.563-3.547-17.994 0-26.558 3.547-8.563 10.216-15.232 18.779-18.779s17.995-3.547 26.558 0 15.232 10.216 18.779 18.779c22.701 54.807 55.481 103.865 97.429 145.813 41.948 41.948 91.006 74.727 145.813 97.429 17.678 7.321 26.103 27.66 18.78 45.336zm88.843-303.248a25.786 25.786 0 0 1-2.715-.192c-6.749-.889-12.749-4.353-16.893-9.754-4.145-5.401-5.938-12.094-5.05-18.843 1.835-13.934 14.66-23.776 28.599-21.944 4.3.566 8.337 2.234 11.78 4.771l-15.721 45.962zm22.368-65.406a45.478 45.478 0 0 0-15.817-5.156c-24.871-3.283-47.764 14.294-51.038 39.163-1.586 12.046 1.614 23.989 9.011 33.629 7.125 9.285 17.325 15.351 28.831 17.201l-19.876 58.119-22.858-17.54c-4.381-3.36-10.66-2.536-14.021 1.846-3.362 4.382-2.535 10.659 1.846 14.021l28.205 21.642-51.694 151.155a54.475 54.475 0 0 0-14.922-9.241c-105.98-43.899-188.52-126.439-232.417-232.417a54.66 54.66 0 0 0-5.609-10.26l26.779-9.548c.935 8.068 4.032 15.764 9.105 22.375 7.396 9.64 18.105 15.822 30.151 17.407 2.018.266 4.03.398 6.032.398 9.948 0 19.572-3.25 27.597-9.407 9.641-7.398 15.822-18.105 17.409-30.153a45.412 45.412 0 0 0-6.768-30.401l124.307-44.322 4.711 11.374a10.005 10.005 0 0 0 9.243 6.176 9.98 9.98 0 0 0 3.823-.764c5.102-2.113 7.525-7.964 5.412-13.066l-4.326-10.445 132.719-47.322-25.835 75.536z" opacity="1"></path>
-                                <path d="M108 268.276c-.03-.047-.113-.174-.145-.22-3.062-4.593-9.259-5.826-13.854-2.767-4.587 3.054-5.831 9.253-2.795 13.848a9.995 9.995 0 0 0 13.789 2.958c4.646-2.987 5.991-9.174 3.005-13.819zM92.791 243.433a473.307 473.307 0 0 1-26.036-53.147c-2.113-5.104-7.966-7.524-13.065-5.411-5.103 2.113-7.525 7.963-5.411 13.065a493.223 493.223 0 0 0 27.14 55.401 9.997 9.997 0 0 0 13.64 3.733c4.797-2.737 6.469-8.844 3.732-13.641zM312.933 127.987a45.819 45.819 0 0 0-5.983-.394c-22.717 0-42.087 17.005-45.055 39.555-3.274 24.868 14.293 47.764 39.161 51.038 1.982.262 3.995.394 5.983.394 22.716 0 42.086-17.005 45.055-39.557 3.273-24.867-14.294-47.762-39.161-51.036zm19.333 48.426c-1.664 12.637-12.509 22.166-25.227 22.166-1.118 0-2.253-.074-3.372-.222-13.935-1.835-23.777-14.664-21.943-28.599 1.664-12.636 12.508-22.164 25.226-22.164 1.118 0 2.253.074 3.372.222 13.934 1.836 23.778 14.664 21.944 28.597zM310.331 252.374a45.83 45.83 0 0 0-5.983-.394c-22.717 0-42.087 17.005-45.055 39.556-1.587 12.047 1.613 23.989 9.01 33.63 7.396 9.64 18.104 15.822 30.151 17.409 1.981.261 3.993.392 5.98.392 22.717 0 42.088-17.005 45.057-39.557 3.275-24.866-14.293-47.76-39.16-51.036zm19.333 48.427c-1.664 12.637-12.51 22.166-25.228 22.166a25.96 25.96 0 0 1-3.37-.222c-6.75-.89-12.75-4.354-16.895-9.755-4.145-5.401-5.938-12.093-5.049-18.844 1.664-12.636 12.509-22.165 25.226-22.165 1.118 0 2.253.074 3.372.222 13.933 1.835 23.777 14.664 21.944 28.598zM244.375 210.946l-30.736-4.047c-5.473-.727-10.499 3.133-11.22 8.608-.722 5.476 3.133 10.499 8.608 11.22l30.736 4.047c.443.059.883.087 1.318.087 4.941 0 9.239-3.663 9.901-8.695.723-5.475-3.131-10.499-8.607-11.22zM228.79 284.743l-2.714-20.624c-.721-5.476-5.743-9.332-11.219-8.609-5.476.721-9.33 5.743-8.609 11.219l2.715 20.624c.662 5.033 4.959 8.696 9.901 8.696.435 0 .875-.028 1.317-.087 5.476-.721 9.33-5.743 8.609-11.219z" opacity="1"></path>
-                            </g>
-                        </svg>
+                    <a class="nav-link {{ $category->slug == $lastPart ? 'active' : '' }}" id="v-pills-pizzas-tab" href="{{ route('user.order.index', ['slug' => $category->slug]) }}">
+                        <img class="mr-2" onerror="this.onerror=null;this.src='/dummy.jpg';" src="{{url('/')}}/admin/images/category/{{$category->img}}" width="50"/>
                         {{$category->name}}
                     </a>
                     @endforeach
@@ -132,7 +127,6 @@ $lastPart = last($urlParts);
 </section>
 
 <!-- ----- ORDER Model ---- -->
-@if($lastPart == 'pizzas' )
 <div class="modal fade custom-order-model" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -143,7 +137,6 @@ $lastPart = last($urlParts);
             </div>
             <div class="modal-body">
                 <div class="row">
-
                     <div class="col-lg-6">
                         <div class="custom-order-header-content-wrapper">
                             <h3>CREATE YOUR OWN</h3>
@@ -167,11 +160,18 @@ $lastPart = last($urlParts);
                     <div class="col-lg-6">
                         <div class="cop-tab-right-part">
                             <ul class="nav nav-pills mb-3 dp-form cop-tab" id="pills-tab-order" role="tablist">
+                                @php $i = 0;@endphp
+                                @foreach($all as $key => $ingredent)
+                                @php $i++; @endphp
                                 <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{$i == 1 ? 'active' : ''}}" data-toggle="pill" data-target="#pills-{{$key}}" type="button" role="tab">{{ucfirst($key)}}</button>
+                                </li>
+                                @endforeach
+                                <!-- <li class="nav-item" role="presentation">
                                     <button class="nav-link active" data-toggle="pill" data-target="#pills-Size" type="button" role="tab" aria-controls="pills-Size" aria-selected="true">Size & Crust</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-toggle="pill" data-target="#pills-Sauce" type="button" role="tab" aria-controls="pills-Sauce" aria-selected="false">Sauce & Cheese</button>
+                                    <button class="nav-link active" data-toggle="pill" data-target="#pills-Sauce" type="button" role="tab" aria-controls="pills-Sauce" aria-selected="false">Sauce & Cheese</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" data-toggle="pill" data-target="#pills-meat" type="button" role="tab" aria-controls="pills-meat" aria-selected="false">Meat</button>
@@ -181,15 +181,18 @@ $lastPart = last($urlParts);
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" data-toggle="pill" data-target="#pills-Extras" type="button" role="tab" aria-controls="pills-Extras" aria-selected="false">Extras</button>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-Size" role="tabpanel" aria-labelledby="pills-Size-tab">
-                                    <div class="make-sure-box">Make sure to select a size, crust, and thickness!</div>
-                                    <h4 class="pizza-label-h4">Pizza Size, Crust & Thickness</h4>
+                                @php $i = 0; @endphp
+                                @foreach($all as $key => $ingredent)
+                                @php $i++; @endphp
+                                <div class="tab-pane fade {{$i==1 ? 'active show' : ''}}" id="pills-{{$key}}" role="tabpanel">
+                                    <!-- <div class="make-sure-box">Make sure to select a size, crust, and thickness!</div> -->
+                                    <!-- <h4 class="pizza-  label-h4">Pizza Size, Crust & Thickness</h4> -->
 
                                     <div class="">
-                                        <div class="row size-flex">
+                                        <!-- <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Size</label>
                                                 <i>Choose from 9" small to 18" extra large.</i>
@@ -205,8 +208,9 @@ $lastPart = last($urlParts);
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
+                                        @if($key == 'crust')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Crust Type</label>
@@ -215,13 +219,16 @@ $lastPart = last($urlParts);
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
                                                     <select class="province" name="crust" id="crust">
-                                                        <option>Standard Crust</option>
+                                                        @foreach($all['crust'] as $crust)
+                                                        <option value="{{$crust['price']}}">{{$crust['name']}}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
 
-                                        <div class="row size-flex">
+                                        <!-- <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Crust Thickness</label>
                                             </div>
@@ -235,18 +242,124 @@ $lastPart = last($urlParts);
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-md-12">
-                                            <div class="form-submit mt-5">
-                                                <a class="pro-order-btn cop-border-btn" id="base&cheese"> Base Sauce & Cheese</a>
+                                        @if($key == 'veggies')
+                                        <div class="row cf-row">
+                                            @foreach($all['veggies'] as $veg)
+                                            <div class="col-md-6">
+                                                <div class="custom-features-section veggies_ingredient">
+                                                    <input type="checkbox" name="veggies[]" class="ingredients" data-price="{{ $veg['price'] }}" data-veggies="{{ $veg['id'] }}" />
+                                                    <div class="custom-feat-wrapper">
+                                                        <img src="{{ asset('') . $veg['img']}}" />
+                                                        <span>{{ isset($veg['name']) ? $veg['name'] : '' }}</span>
+                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                    </div>
+
+                                                    <div class="cop-select-with-radio">
+                                                        <div class="cop-sox">
+                                                            <select class="province" name="veggiesPortion">
+                                                                <option>Easy (.5x)</option>
+                                                                <option selected>Reguler (1x)</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="pizza-size-box">
+                                                            <div class="second-radio">
+                                                                <input type="radio" id="" name="" checked>
+                                                                <label for=""></label>
+                                                                <span>Full</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            @endforeach
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-Sauce" role="tabpanel">
-                                    <h4 class="pizza-label-h4">Base Sauce & Cheese</h4>
-                                    <div class="">
+                                        @endif
+
+                                        @if($key == 'extra-sauce')
+                                        <div class="row cf-row">
+                                            @foreach($all['extra-sauce'] as $extraSauce)
+                                            <div class="col-md-6">
+                                                <div class="custom-features-section extraSauce_ingredient">
+                                                    <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-sauce="{{ $extraSauce['id'] }}" />
+                                                    <div class="custom-feat-wrapper">
+                                                        <img src="{{ asset('') . $extraSauce['img']}}" />
+                                                        <span>{{ isset($extraSauce['name']) ? $extraSauce['name'] : '' }}</span>
+                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                    </div>
+
+                                                    <div class="cop-select-with-radio">
+                                                        <div class="cop-sox">
+                                                            <select class="province">
+                                                                <option checked>Reguler (1x)</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="pizza-size-box">
+                                                            <div class="second-radio">
+                                                                <input type="radio" id="" name="" checked>
+                                                                <label for=""></label>
+                                                                <span>Full</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+
+                                        @if($key == 'meat')
+                                        <div class="row cf-row">
+                                            @foreach($all['meat'] as $meat)
+                                            <div class="col-md-6">
+                                                <div class="custom-features-section meat_ingredients">
+                                                    <input type="checkbox" name="meat[]" class="ingredients" data-price="{{ $meat['price'] }}" data-meat="{{ $meat['id'] }}" />
+                                                    <div class="custom-feat-wrapper">
+                                                        <img src="{{ asset('') . $meat['img']}}" />
+                                                        <span>{{ $meat['name'] }}</span>
+                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                    </div>
+
+                                                    <div class="cop-select-with-radio">
+                                                        <div class="cop-sox">
+                                                            <select class="province" name="meatPortion">
+                                                                <option>Easy (.5x)</option>
+                                                                <option selected>Reguler (1x)</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="pizza-size-box">
+                                                            <div class="second-radio">
+                                                                <input type="radio" id="" name="" checked>
+                                                                <label for=""></label>
+                                                                <span>Full</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+
+                                        @if($key == 'cheese')
+                                        <div class="row cf-row">
+                                            @foreach($all['cheese'] as $cheese)
+                                            <div class="col-md-6">
+                                                <div class="custom-features-section meat_ingredients">
+                                                    <input type="checkbox" name="cheese[]" class="ingredients" data-price="{{ $cheese['price'] }}" data-meat="{{ $cheese['id'] }}" />
+                                                    <div class="custom-feat-wrapper">
+                                                        <img src="{{ asset('') . $cheese['img']}}" />
+                                                        <span>{{ $cheese['name'] }}</span>
+                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        @endif
+
+                                        @if($key == 'sauce')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Sauce</label>
@@ -262,179 +375,34 @@ $lastPart = last($urlParts);
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if($key == 'bread')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
-                                                <label>Cheese</label>
-                                                <i>Choose your cheese.</i>
+                                                <label>Bread</label>
+                                                <i>Choose your Bread.</i>
                                             </div>
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
-                                                    <select class="province" name="cheese[]">
-                                                        @foreach(array_slice($all['cheese'], 2) as $cheese)
-                                                        <option value="{{ $cheese['price'] }}">{{ $cheese['name'] }}</option>
+                                                    <select class="province" name="bread[]">
+                                                        @foreach($all['bread'] as $bread)
+                                                        <option value="{{ $bread['price'] }}">{{ $bread['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <h4 class="pizza-label-h4">Add some extra cheese to your pizza</h4>
-
-                                        <div class="row cf-row">
-                                            @foreach($all['cheese'] as $key => $cheese)
-                                            @if($key < 2) <div class="col-md-6">
-                                                <div class="custom-features-section">
-                                                    <input type="checkbox" class="ingredients" data-price="{{ $cheese['price'] }}" name="cheese-extra[]" />
-                                                    <div class="custom-feat-wrapper">
-                                                        <img src="{{ asset('' . $cheese['img'])}}" />
-                                                        <span>{{ $cheese['name'] }}</span>
-                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
-                                                    </div>
-
-                                                    <div class="cop-select-with-radio">
-                                                        <div class="cop-sox">
-                                                            <select class="province">
-                                                                <option>Reguler (1x)</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="pizza-size-box">
-                                                            <div class="second-radio">
-                                                                <input type="radio" id="" name="" checked>
-                                                                <label for=""></label>
-                                                                <span>Full</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                        </div>
-                                        @else
-                                        @break
                                         @endif
-                                        @endforeach
-                                    </div>
 
-                                    <div class="col-md-12">
-                                        <div class="form-submit mt-5">
-                                            <button class="pro-order-btn cop-border-btn"> Now Let's add some meat</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="pills-meat" role="tabpanel">
-
-                                <h4 class="pizza-label-h4">Add some meat to your pizza</h4>
-                                <div class="row cf-row">
-                                    @foreach($all['meat'] as $meat)
-                                    <div class="col-md-6">
-                                        <div class="custom-features-section meat_ingredients">
-                                            <input type="checkbox" name="meat[]" class="ingredients" data-price="{{ $meat['price'] }}" data-meat="{{ $meat['id'] }}" />
-                                            <div class="custom-feat-wrapper">
-                                                <img src="{{ asset('') . $meat['img']}}" />
-                                                <span>{{ $meat['name'] }}</span>
-                                                <img src="{{ asset('images/checked.png')}}" class="checked-img" />
-                                            </div>
-
-                                            <div class="cop-select-with-radio">
-                                                <div class="cop-sox">
-                                                    <select class="province" name="meatPortion">
-                                                        <option>Easy (.5x)</option>
-                                                        <option selected>Reguler (1x)</option>
-                                                    </select>
-                                                </div>
-                                                <div class="pizza-size-box">
-                                                    <div class="second-radio">
-                                                        <input type="radio" id="" name="" checked>
-                                                        <label for=""></label>
-                                                        <span>Full</span>
-                                                    </div>
-                                                </div>
+                                        <div class="col-md-12">
+                                            <div class="form-submit mt-5">
+                                                <a class="pro-order-btn cop-border-btn" id="base&cheese"> Base Sauce & Cheese</a>
                                             </div>
                                         </div>
                                     </div>
-                                    @endforeach
                                 </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-submit mt-5">
-                                        <button class="pro-order-btn cop-border-btn"> How about some veggies?</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="pills-Veggiee" role="tabpanel">
-                                <h4 class="pizza-label-h4">Add some veggies to your pizza </h4>
-                                <div class="row cf-row">
-                                    @foreach($all['veggies'] as $veg)
-                                    <div class="col-md-6">
-                                        <div class="custom-features-section veggies_ingredient">
-                                            <input type="checkbox" name="veggies[]" class="ingredients" data-price="{{ $veg['price'] }}" data-veggies="{{ $veg['id'] }}" />
-                                            <div class="custom-feat-wrapper">
-                                                <img src="{{ asset('') . $veg['img']}}" />
-                                                <span>{{ isset($veg['name']) ? $veg['name'] : '' }}</span>
-                                                <img src="{{ asset('images/checked.png')}}" class="checked-img" />
-                                            </div>
-
-                                            <div class="cop-select-with-radio">
-                                                <div class="cop-sox">
-                                                    <select class="province" name="veggiesPortion">
-                                                        <option>Easy (.5x)</option>
-                                                        <option selected>Reguler (1x)</option>
-                                                    </select>
-                                                </div>
-                                                <div class="pizza-size-box">
-                                                    <div class="second-radio">
-                                                        <input type="radio" id="" name="" checked>
-                                                        <label for=""></label>
-                                                        <span>Full</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-submit mt-5">
-                                        <button class="pro-order-btn cop-border-btn">And some free extras?</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab-pane fade" id="pills-Extras" role="tabpanel">
-                                <h4 class="pizza-label-h4">Add some free toppings </h4>
-                                <div class="row cf-row">
-                                    @foreach($all['extra-sauce'] as $extraSauce)
-                                    <div class="col-md-6">
-                                        <div class="custom-features-section extraSauce_ingredient">
-                                            <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-sauce="{{ $extraSauce['id'] }}" />
-                                            <div class="custom-feat-wrapper">
-                                                <img src="{{ asset('') . $extraSauce['img']}}" />
-                                                <span>{{ isset($extraSauce['name']) ? $extraSauce['name'] : '' }}</span>
-                                                <img src="{{ asset('images/checked.png')}}" class="checked-img" />
-                                            </div>
-
-                                            <div class="cop-select-with-radio">
-                                                <div class="cop-sox">
-                                                    <select class="province">
-                                                        <option checked>Reguler (1x)</option>
-                                                    </select>
-                                                </div>
-                                                <div class="pizza-size-box">
-                                                    <div class="second-radio">
-                                                        <input type="radio" id="" name="" checked>
-                                                        <label for=""></label>
-                                                        <span>Full</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -444,7 +412,6 @@ $lastPart = last($urlParts);
     </div>
 </div>
 </div>
-@endif
 
 <!-- ----- Order setup Modal ---- -->
 <div class="modal fade" id="orderSetup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
