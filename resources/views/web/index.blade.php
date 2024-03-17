@@ -108,7 +108,7 @@
                     <div class="module-menu__cta">
                         <div class="module-menu__cta-interior">
                             <p>Feelin' <span class="distinct">Hungry?</span></p>
-                            <a href="" class="c-btn">Order Now <i class="fas fa-arrow-right"></i></a>
+                            <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Order Now <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -118,13 +118,14 @@
                     <h3>Featured <span class="distinct">'Zas</span></h3>
                 </div>
                 <div class="row">
+                    @foreach($items as $item)
                     <div class="col-md-4">
                         <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
+                            <img src="/admin/images/items/{{$item->img}}" alt="product-pizza" />
                             <div class="product-title-wrapper">
                                 <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">REDBLACKS</h4>
-                                    <div class="module-menu__item-price">from 14.50</div>
+                                    <h4 class="module-menu__item-name">{{$item->name}}</h4>
+                                    <div class="module-menu__item-price">from {{explode(',',$item->price)[0]}}</div>
                                 </div>
                                 <div class="pizza-order-btn">
                                     <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
@@ -132,76 +133,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
-                            <div class="product-title-wrapper">
-                                <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">Texas Bold-Em</h4>
-                                    <div class="module-menu__item-price">from 14.50</div>
-                                </div>
-                                <div class="pizza-order-btn">
-                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
-                            <div class="product-title-wrapper">
-                                <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">Gabriel Deluxe</h4>
-                                    <div class="module-menu__item-price">from 16.50</div>
-                                </div>
-                                <div class="pizza-order-btn">
-                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
-                            <div class="product-title-wrapper">
-                                <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">Veggie Extreme</h4>
-                                    <div class="module-menu__item-price">from 16.50</div>
-                                </div>
-                                <div class="pizza-order-btn">
-                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
-                            <div class="product-title-wrapper">
-                                <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">Fajita</h4>
-                                    <div class="module-menu__item-price">from 16.50</div>
-                                </div>
-                                <div class="pizza-order-btn">
-                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="product-wrapper">
-                            <img src="images/product-pizza.png" alt="product-pizza" />
-                            <div class="product-title-wrapper">
-                                <div class="product-title-with-btn">
-                                    <h4 class="module-menu__item-name">Meatsa</h4>
-                                    <div class="module-menu__item-price">from 14.50</div>
-                                </div>
-                                <div class="pizza-order-btn">
-                                    <a href="{{ route('user.order.index', 'pizzas') }}" class="c-btn">Build Pizza</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -328,4 +260,3 @@
 </section>
 
 @endsection
-

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IngridentController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\OrdersController;
 use Illuminate\Support\Facades\Route;
@@ -52,9 +53,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 //----------------------------  Client Side Routes  -----------------------------------------------
-Route::get('/', function () {
-    return view('web.index');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::group(['middleware' => 'auth:web'], function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('user.log.out');
