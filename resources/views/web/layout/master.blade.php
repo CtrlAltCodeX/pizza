@@ -108,7 +108,7 @@
                         </div>
                     </div>
 
-                    <div class="forgotting-block">
+                    <!-- <div class="forgotting-block">
                         <h5>Forgetting something?</h5>
                         <div class="row">
                             <div class="col-md-4">
@@ -130,7 +130,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="cl-btn text-center pc-btn">
                         <button type="button" class="pro-order-btn" data-toggle="modal" data-target="#checkout" data-dismiss="modal">Proceed to checkout</button>

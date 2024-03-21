@@ -70,3 +70,8 @@ Route::post('/add-to-cart', [OrdersController::class, 'addToCart'])->name('add-t
 Route::post('/get-cart', [OrdersController::class, 'cart'])->name('get-cart');
 Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.order.index');
 Route::get('/cart/item', [OrdersController::class, 'removeCartItem'])->name('user.cart.item.remove');
+
+
+Route::get('/about', function () {
+    return view('web.about');
+})->name('user.cart.item.remove');

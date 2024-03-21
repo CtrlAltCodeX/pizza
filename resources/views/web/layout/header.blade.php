@@ -1,8 +1,9 @@
 @php
-$cartSession = session()->get('cart');
-$total = 0;
+$total = 0.00;
+if($cartSession = session()->get('cart')){
 foreach($cartSession as $item){
 $total += $item['total'];
+}
 }
 @endphp
 <header class="main-header navbar-fixed-top order-header">
