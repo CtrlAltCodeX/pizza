@@ -265,4 +265,42 @@
     .pivions-tab {
         flex-direction: column;
     }
+    .custom-order-model .col-lg-6{
+        padding: 0;
+    }
+    .cop-tab-right-part {
+        padding: 0 10px 40px;
+    }
+    .cf-row .col-md-6:nth-child(even) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .cf-row .col-md-6:nth-child(odd) {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .custom-order-header-content-wrapper h2 {
+        font-size: 32px;
+        line-height: 32px;
+        margin-top: 15px;
+    }
+    .cop-tab-right-part ul li button {
+        line-height: 16px;
+        padding: 0;
+    }
+    .pizza-label-h4 {
+        margin-bottom: 0;
+    }
+    .starter-custom-model .size-flex .qty-container button {
+        padding: 12px 0;
+        text-align: center;
+        width: 100%;
+    }
 }
+
+https://www.youtube.com/watch?v=gIuoIBu-BzM
+https://www.youtube.com/watch?v=RLBo9tLp07k
+https://www.youtube.com/watch?v=4fRLD0XmpEk
+https://www.youtube.com/watch?v=LhWT0lZJNho
+
+https://www.youtube.com/watch?v=mYjQlyiGSL0

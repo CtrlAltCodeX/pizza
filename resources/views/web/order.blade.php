@@ -44,7 +44,7 @@ $lastPart = last($urlParts);
                 <div class="nav flex-column nav-pills nav-p-tab" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     @foreach($categories as $category)
                     <a class="nav-link {{ $category->slug == $lastPart ? 'active' : '' }}" id="v-pills-pizzas-tab" href="{{ route('user.order.index', ['slug' => $category->slug]) }}">
-                        <img class="mr-2" onerror="this.onerror=null;this.src='/dummy.jpg';" src="{{url('/')}}/admin/images/category/{{$category->img}}" width="50"/>
+                        <img class="mr-2" onerror="this.onerror=null;this.src='/dummy.jpg';" src="{{url('/')}}/admin/images/category/{{$category->img}}" width="50" />
                         {{$category->name}}
                     </a>
                     @endforeach
@@ -141,7 +141,7 @@ $lastPart = last($urlParts);
                         <div class="custom-order-header-content-wrapper">
                             <h3>CREATE YOUR OWN</h3>
                             <h2 id="nameOfPizza"></h2>
-                            <img src="{{ asset('images/cp-pizza.png')}}" alt="pizza" class="w-100 img-fluid" />
+                            <img src="{{ asset('images/cp-pizza.png')}}" alt="pizza" class="w-100 img-fluid" id='img' />
                             <div class="cop-price-with-btn">
                                 <p>
                                     <sup>$</sup>
@@ -167,21 +167,6 @@ $lastPart = last($urlParts);
                                     <button class="nav-link {{$i == 1 ? 'active' : ''}}" data-toggle="pill" data-target="#pills-{{$key}}" type="button" role="tab">{{ucfirst($key)}}</button>
                                 </li>
                                 @endforeach
-                                <!-- <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-toggle="pill" data-target="#pills-Size" type="button" role="tab" aria-controls="pills-Size" aria-selected="true">Size & Crust</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-toggle="pill" data-target="#pills-Sauce" type="button" role="tab" aria-controls="pills-Sauce" aria-selected="false">Sauce & Cheese</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-toggle="pill" data-target="#pills-meat" type="button" role="tab" aria-controls="pills-meat" aria-selected="false">Meat</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-toggle="pill" data-target="#pills-Veggiee" type="button" role="tab" aria-controls="pills-Veggiee" aria-selected="false">Veggiee</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-toggle="pill" data-target="#pills-Extras" type="button" role="tab" aria-controls="pills-Extras" aria-selected="false">Extras</button>
-                                </li> -->
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
                                 @php $i = 0; @endphp
@@ -192,23 +177,6 @@ $lastPart = last($urlParts);
                                     <!-- <h4 class="pizza-  label-h4">Pizza Size, Crust & Thickness</h4> -->
 
                                     <div class="">
-                                        <!-- <div class="row size-flex">
-                                            <div class="col-size-label">
-                                                <label>Size</label>
-                                                <i>Choose from 9" small to 18" extra large.</i>
-                                            </div>
-                                            <div class="col-size-box">
-                                                <div class="">
-                                                    <select class="province" id="size" name="size">
-                                                        <option value=0>--Select--</option>
-                                                        <option value=1>Small (9'')</option>
-                                                        <option value=2>Medium(12'')</option>
-                                                        <option value=3>Large(15'')</option>
-                                                        <option value=4>Extra-Large(18'')</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div> -->
 
                                         @if($key == 'crust')
                                         <div class="row size-flex">
@@ -870,14 +838,16 @@ $lastPart = last($urlParts);
 
                     success: function(data) {
                         if (data.status == 'success') {
-                            var sizes = data.data['size'].split(",");
+                            var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
                             var price = data.data['price'].split(",");
 
+                            var imgURl = "/admin/images/items/" + data.data['img'];
+                            $("#img").attr('src', imgURl);
+                            $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />")
+                            $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />")
                             $('#nameOfPizza').text(data.data['name'].toUpperCase());
                             $('.ingredients').prop('checked', false);
                             $('#size option').each(function(index) {
-                                // console.log($(this).val());
-                                // console.log(price[index]);
                                 $(this).attr('data-price', price[index]);
                                 $(this).text($(this).text() + ' - $' + price[index]);
                             });
@@ -1252,6 +1222,8 @@ $lastPart = last($urlParts);
 
         var type = "{{ $lastPart }}";
         var size = $('#size').val();
+        var name = $('#name').val();
+        var image = $('#image').val();
         var quantity = $('#quantity').val();
         var price = $('#finalPrice').attr('data-finalPrice');
         var crust = $('#crust').val();
@@ -1283,7 +1255,9 @@ $lastPart = last($urlParts);
             method: 'POST',
             data: {
                 '_token': "{{ csrf_token() }}",
+                'name': name,
                 'type': type,
+                'image': image,
                 'quantity': quantity,
                 'size': size,
                 'price': price,

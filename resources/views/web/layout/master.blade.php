@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <div id="preloader" class="loader-overlay">
+    <!-- <div id="preloader" class="loader-overlay">
         <div class="loading loader loader--centered">
             <div class="loader__icon">
                 <img src="{{ asset('images/loader.png') }}" alt="loader" />
@@ -30,7 +30,7 @@
             <div class="loader__label">Loading products...</div>
             <img src="{{ asset('images/loader-logo.png') }}" alt="logo" />
         </div>
-    </div>
+    </div> -->
 
     @if(request()->route()->uri == "/")
     @include('web.layout.home-header')
@@ -39,6 +39,100 @@
     @endif
 
     @yield('section')
+
+    @if(session()->get('cart'))
+    <div class="modal fade cart-model" id="cartModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cart-model-label">
+                        <h4>Order Summary</h4>
+                        <p>Ordering as <b>guest</b> for <b>Pickup</b> at <b>2150 Robertson Rd</b>
+                            Your store opens:<b> March 18 2024, 11:00 am</b></p>
+                    </div>
+
+                    <div class="cart-item-wrapper">
+                        <div class="row">
+                            @php $totalPrice = 0; @endphp
+                            @foreach(session()->get('cart') as $item)
+                            @php
+                            $totalPrice = $totalPrice + $item['total']
+                            @endphp
+                            <div class="col-sm-9">
+                                <div class="cart-item-name">
+                                    <img src="{{ $item['image'] }}" width="100" />
+                                    <h4 class="mt-2">{{$item['quantity']}}x {{$item['name']}}</h4>
+                                    <!-- <span><strong>Selections:</strong>  Strawberry Swirl Cheesecake -->
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="price-with-edit-btn">
+                                    <span><sup>$</sup>{{ $item['total'] }}</span>
+                                    <a href="#">X</a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="total-data">
+                        <div class="st-col"><b>Subtotal</b><span><sup>$</sup>{{ $totalPrice }}</span></div>
+                        <div class="order-total">
+                            <h4>Order Total</h4>
+                            <span><sup>$</sup>{{ $totalPrice }}</span>
+                        </div>
+                    </div>
+
+                    <div class="pizza-perks-wrapper">
+                        <div class="pizza-perks-info">
+                            <p><strong>Gabe's Pizza Perks</strong> <br>Add the item(s) to your cart and select the coupon from the dropdown list</p>
+                        </div>
+                        <div class="coupen-code">
+                            <input type="text" class="form-control" placeholder="Apply coupen code.." />
+                            <div class="cl-btn text-center">
+                                <button type="button" class="pro-order-btn">Apply Coupon</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="forgotting-block">
+                        <h5>Forgetting something?</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="#" class="upsell__item">
+                                    <img src="images/dips.png" alt="">
+                                    <span>Add dips</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="upsell__item">
+                                    <img src="images/dips.png" alt="">
+                                    <span>Add drinks</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="upsell__item">
+                                    <img src="images/dips.png" alt="">
+                                    <span>Add dresserts</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cl-btn text-center pc-btn">
+                        <button type="button" class="pro-order-btn" data-toggle="modal" data-target="#checkout" data-dismiss="modal">Proceed to checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     @include('web.layout.footer')
 
@@ -49,6 +143,8 @@
     <script src="{{ asset('js/stickybits.min.js') }}"></script>
     <script src="{{ asset('js/wow.js') }}"></script>
     <script src="{{ asset('js/all.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->

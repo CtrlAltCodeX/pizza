@@ -283,7 +283,7 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
             $pizza = ItemMaster::where('id', $request->id)->first()->toArray();
-            
+
             return response()->json([
                 'status' => 'success',
                 'data' => $pizza
@@ -293,7 +293,10 @@ class OrdersController extends Controller
 
     public function addToCart(Request $request)
     {
+        $name = $request->input('name');
         $type = $request->input('type');
+        $image = $request->input('image');
+        $quantity = $request->input('quantity');
         $size = $request->input('size');
         $price = $request->input('price');
         $crust = $request->input('crust');
@@ -306,23 +309,49 @@ class OrdersController extends Controller
 
         $cart = Session::get('cart', []);
 
-        //        if (!isset($cart[$type])) {
-        //            $cart[$type] = [];
-        //        }
+        if (isset($cart[$name])) {
+            $prevPrice = (int) $cart[$name]['price'];
+            $prevQty = (int) $cart[$name]['quantity'];
+            $sumAmt = 0;
 
-        $cart[] = [
-            'type' => $type,
-            'size' => $size,
-            'price' => $price,
-            'crust' => $crust,
-            'thickness' => $thickness,
-            'sauce' => $sauce,
-            'cheese' => $cheese,
-            'meat' => $meat,
-            'veggies' => $veggies,
-            'extraSauce' => $extraSauce
-        ];
+            foreach ($cart[$name] as $key => $item) {
+                if (
+                    $key == 'crust'
+                    || $key == 'thickness'
+                    || $key == 'sauce'
+                    || $key == 'cheese'
+                    || $key == 'meat'
+                    || $key == 'veggies'
+                    || $key == 'extraSauce'
+                ) {
+                    if ($item) {
+                        $sumAmt = $sumAmt + array_sum($item);
+                    }
+                }
+            }
 
+            $cart[$name]['total'] =  $prevPrice + (int) $price + $sumAmt;
+            $cart[$name]['price'] =  $price;
+            $cart[$name]['quantity'] =  $prevQty + (int) $quantity;
+        } else {
+            $cart[$name] = [
+                'name' => $name,
+                'type' => $type,
+                'image' => $image,
+                'quantity' => $quantity,
+                'total' => (int) $price * (int) $quantity,
+                'size' => $size,
+                'price' => $price,
+                'crust' => $crust,
+                'thickness' => $thickness,
+                'sauce' => $sauce,
+                'cheese' => $cheese,
+                'meat' => $meat,
+                'veggies' => $veggies,
+                'extraSauce' => $extraSauce
+            ];
+        }
+        
         Session::put('cart', $cart);
 
         return response()->json([

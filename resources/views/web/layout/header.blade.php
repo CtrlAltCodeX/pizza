@@ -27,7 +27,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="cart-bag">
+                        <a class="cart-bag" data-toggle="modal" data-target="#cartModal">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="#fff" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                                 <g>
                                     <g>
