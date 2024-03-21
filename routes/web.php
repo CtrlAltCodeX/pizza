@@ -69,3 +69,4 @@ Route::post('/getPizzaDetails', [OrdersController::class, 'getPizzaDetails'])->n
 Route::post('/add-to-cart', [OrdersController::class, 'addToCart'])->name('add-to-cart');
 Route::post('/get-cart', [OrdersController::class, 'cart'])->name('get-cart');
 Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.order.index');
+Route::get('/cart/item', [OrdersController::class, 'removeCartItem'])->name('user.cart.item.remove');

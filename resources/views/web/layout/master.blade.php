@@ -40,7 +40,6 @@
 
     @yield('section')
 
-    @if(session()->get('cart'))
     <div class="modal fade cart-model" id="cartModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -56,10 +55,11 @@
                             Your store opens:<b> March 18 2024, 11:00 am</b></p>
                     </div>
 
+                    @if(session()->get('cart'))
                     <div class="cart-item-wrapper">
                         <div class="row">
                             @php $totalPrice = 0; @endphp
-                            @foreach(session()->get('cart') as $item)
+                            @foreach(session()->get('cart') as $key => $item)
                             @php
                             $totalPrice = $totalPrice + $item['total']
                             @endphp
@@ -67,14 +67,21 @@
                                 <div class="cart-item-name">
                                     <img src="{{ $item['image'] }}" width="100" />
                                     <h4 class="mt-2">{{$item['quantity']}}x {{$item['name']}}</h4>
-                                    <!-- <span><strong>Selections:</strong>  Strawberry Swirl Cheesecake -->
+                                    <span><strong>Selections:</strong>
+                                        @foreach($item as $innerKey => $topings)
+                                        @if($innerKey == 'thickness' && ($topings && count($topings))) Thickness - ${{ array_sum($topings) }} @endif
+                                        @if($innerKey == 'sauce' && ($topings && count($topings))) Sauce - ${{ array_sum($topings) }}@endif
+                                        @if($innerKey == 'cheese' && ($topings && count($topings))) Cheese ${{ array_sum($topings) }} @endif
+                                        @if($innerKey == 'meat' && ($topings && count($topings))) Meat - ${{ array_sum($topings) }} @endif
+                                        @if($innerKey == 'veggies' && ($topings && count($topings))) Veggies - ${{ array_sum($topings) }}@endif
+                                        @endforeach
                                     </span>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="price-with-edit-btn">
                                     <span><sup>$</sup>{{ $item['total'] }}</span>
-                                    <a href="#">X</a>
+                                    <a id='remove' class="{{ $key }}" >X</a>
                                 </div>
                             </div>
                             @endforeach
@@ -128,11 +135,15 @@
                     <div class="cl-btn text-center pc-btn">
                         <button type="button" class="pro-order-btn" data-toggle="modal" data-target="#checkout" data-dismiss="modal">Proceed to checkout</button>
                     </div>
+                    @else
+                    <div class="cart-model-label">
+                        <h4>Cart is Empty</h4>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    @endif
 
     @include('web.layout.footer')
 
@@ -237,6 +248,22 @@
                 var number = $(this).index();
                 sync1.data('owl.carousel').to(number, 300, true);
             });
+
+            $("#remove").click(function() {
+                var orderId = $(this).attr('class');
+                $.ajax({
+                    url: '{{route("user.cart.item.remove")}}',
+                    type: "GET",
+                    data: {
+                        item: orderId
+                    },
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            location.reload();
+                        }
+                    },
+                });
+            })
         });
     </script>
 

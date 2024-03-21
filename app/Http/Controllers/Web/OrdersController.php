@@ -160,7 +160,7 @@ class OrdersController extends Controller
                 $orderNo = 1;
             } else {
                 // Extract the order number part and increment it
-                $orderNo = intval(substr($latestOrder->orderMaster_id, -2)) + 1;
+                $orderNo = floatval(substr($latestOrder->orderMaster_id, -2)) + 1;
             }
 
             // Pad the order number with leading zeros if necessary
@@ -309,10 +309,46 @@ class OrdersController extends Controller
 
         $cart = Session::get('cart', []);
 
+        $sumAmt = 0;
         if (isset($cart[$name])) {
-            $prevPrice = (int) $cart[$name]['price'];
-            $prevQty = (int) $cart[$name]['quantity'];
-            $sumAmt = 0;
+            $prevPrice = (float) $cart[$name]['price'];
+            $prevQty = (float) $cart[$name]['quantity'];
+
+            foreach ($cart[$name] as $key => $item) {
+                if (
+                    $key == 'crust'
+                    || $key == 'thickness'
+                    || $key == 'sauce'
+                    || $key == 'cheese'
+                    || $key == 'meat'
+                    || $key == 'veggies'
+                    || $key == 'extraSauce'
+                ) {
+                    if ($item) {
+                        $sumAmt = $sumAmt + array_sum($item);
+                    }
+                }
+            }
+            $cart[$name]['quantity'] =  $prevQty + (float) $quantity;
+            $cart[$name]['total'] =  ((float) $price * (float) $cart[$name]['quantity']) + $sumAmt;
+            $cart[$name]['price'] =  $price;
+        } else {
+            $cart[$name] = [
+                'name' => $name,
+                'type' => $type,
+                'image' => $image,
+                'quantity' => $quantity,
+                'total' => (float) $price * (float) $quantity,
+                'size' => $size,
+                'price' => $price,
+                'crust' => $crust,
+                'thickness' => $thickness,
+                'sauce' => $sauce,
+                'cheese' => $cheese,
+                'meat' => $meat,
+                'veggies' => $veggies,
+                'extraSauce' => $extraSauce
+            ];
 
             foreach ($cart[$name] as $key => $item) {
                 if (
@@ -330,30 +366,10 @@ class OrdersController extends Controller
                 }
             }
 
-            $cart[$name]['total'] =  $prevPrice + (int) $price + $sumAmt;
-            $cart[$name]['price'] =  $price;
-            $cart[$name]['quantity'] =  $prevQty + (int) $quantity;
-        } else {
-            $cart[$name] = [
-                'name' => $name,
-                'type' => $type,
-                'image' => $image,
-                'quantity' => $quantity,
-                'total' => (int) $price * (int) $quantity,
-                'size' => $size,
-                'price' => $price,
-                'crust' => $crust,
-                'thickness' => $thickness,
-                'sauce' => $sauce,
-                'cheese' => $cheese,
-                'meat' => $meat,
-                'veggies' => $veggies,
-                'extraSauce' => $extraSauce
-            ];
+            $cart[$name]['price'] = $cart[$name]['price'] + $sumAmt;
         }
-        
-        Session::put('cart', $cart);
 
+        Session::put('cart', $cart);
         return response()->json([
             'status' => 'success',
             'message' => 'Items added to cart successfully'
@@ -363,7 +379,24 @@ class OrdersController extends Controller
     public function cart(Request $request)
     {
         if ($request->ajax()) {
+
             $cart = Session::get('cart');
+            return response()->json([
+                'status' => 'success',
+                'cart' => $cart
+            ]);
+        }
+    }
+
+    public function removeCartItem(Request $request)
+    {
+        if ($request->ajax()) {
+            $cart = Session::get('cart');
+
+            unset($cart[request()->item]);
+
+            $cart = Session::put('cart', $cart);
+
             return response()->json([
                 'status' => 'success',
                 'cart' => $cart

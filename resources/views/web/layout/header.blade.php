@@ -1,3 +1,10 @@
+@php
+$cartSession = session()->get('cart');
+$total = 0;
+foreach($cartSession as $item){
+$total += $item['total'];
+}
+@endphp
 <header class="main-header navbar-fixed-top order-header">
     <div class="container">
         <nav class="navbar navbar-expand-lg">
@@ -23,7 +30,7 @@
                 <ul class="nav nav--secondary align-items-center order-call-nav">
                     <li class="nav__item">
                         <a class="btn btn--call app__total" href="">
-                            <sup>$</sup>0.00
+                            <sup>$</sup>{{$total}}
                         </a>
                     </li>
                     <li>

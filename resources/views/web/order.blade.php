@@ -1274,9 +1274,11 @@ $lastPart = last($urlParts);
                     cart();
                     toastr.success(data.message);
                     $('#exampleModalLong').modal('hide');
+                    location.reload();
                 } else {
                     toastr.error("Something went Wrong");
                     $('#exampleModalLong').modal('hide');
+                    location.reload();
                 }
             },
             error: function(xhr, status, error) {
