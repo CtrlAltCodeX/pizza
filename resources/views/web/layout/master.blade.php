@@ -17,9 +17,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('images/apple-touch-icon.png') }}" sizes="16x16" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
     @stack('head')
     @stack('css')
 </head>
+
+@php
+session()->forget('paymentId');
+
+$str = rand();
+$result = md5($str);
+session()->put('paymentId', $result);
+@endphp
 
 <body>
     <!-- <div id="preloader" class="loader-overlay">
@@ -81,7 +90,7 @@
                             <div class="col-sm-3">
                                 <div class="price-with-edit-btn">
                                     <span><sup>$</sup>{{ $item['total'] }}</span>
-                                    <a id='remove' class="{{ $key }}" >X</a>
+                                    <a id='remove' class="{{ $key }}">X</a>
                                 </div>
                             </div>
                             @endforeach
@@ -133,7 +142,7 @@
                     </div> -->
 
                     <div class="cl-btn text-center pc-btn">
-                        <button type="button" class="pro-order-btn" data-toggle="modal" data-target="#checkout" data-dismiss="modal">Proceed to checkout</button>
+                        <a class="pro-order-btn" href='{{ route("payment.session", ["id" => $result]) }}'>Proceed to checkout</a>
                     </div>
                     @else
                     <div class="cart-model-label">
@@ -156,9 +165,9 @@
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script>
         stickybits('.main-header', {
             useStickyClasses: true

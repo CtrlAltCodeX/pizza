@@ -1,12 +1,21 @@
 @extends("web.layout.master")
 
 @push('css')
+<link rel='stylesheet' href='https://gabrielpizza.com/wp-content/themes/gabriel-theme/style.css' />
+
 <style>
     body {
         padding: 0px !important;
     }
+
+    .order-call-nav {
+        display: flex;
+    }
+
+    .container {
+        padding: 0px !important;
+    }
 </style>
-<link rel='stylesheet' id='soshal-css-css' href='https://gabrielpizza.com/wp-content/themes/gabriel-theme/style.css' media='all' />
 @endpush
 
 @section("section")

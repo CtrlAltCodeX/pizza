@@ -1,43 +1,54 @@
 <?php
 
-namespace App\Http\Web\Controllers;
+namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Services\CloverService;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    protected $cloverService;
-
-    public function __construct(CloverService $cloverService)
+    public function createSesison()
     {
-        $this->cloverService = $cloverService;
+        echo "Please wait redirecting you to payment page...........";
+
+        return redirect()->route('card.details', ['id' => request()->id]);
     }
 
-    public function processPayment(Request $request)
+    public function cardDetails()
     {
-        $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'order_id' => 'required|string',
-        ]);
-
-        $amount = $request->input('amount');
-        $orderId = $request->input('order_id');
-
-        $paymentResponse = $this->cloverService->processPayment($amount, $orderId);
-
-        // Handle payment response
-
-        return redirect()->back()->with('message', 'Payment processed successfully.');
+        // if (session()->get('paymentId') == request()->id) {
+        return view('web.enter-info');
+        // } else {
+        // return 'Token is expired try again later..........';
+        // }
     }
 
-    public function redirectToHostedPaymentPage(Request $request)
+    public function createCardToken(Request $request)
     {
-        // Generate the payment link using Clover's API or dashboard
-        $paymentLink = 'https://your-clover-hosted-payment-page.com';
+        $client = new Client();
 
-        // Redirect the user to the hosted payment page
-        return redirect()->away($paymentLink);
+        try {
+            $response = $client->post('https://token-sandbox.dev.clover.com/v1/tokens', [
+                'form_params' => [
+                    'exp_month' => $request->exp_month,
+                    'exp_year' => $request->exp_year,
+                    'number' => $request->card_number,
+                    'cvv' => $request->cvv,
+                ],
+                'headers' => [
+                    'Authorization' => 'Bearer 31800200-0b32-4a4d-b5a0-ee41828744da',
+                    'Accept' => 'application/json',
+                ],
+            ]);
+
+            $tokenData = json_decode($response->getBody(), true);
+
+            // Handle token data as needed
+            return response()->json($tokenData);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

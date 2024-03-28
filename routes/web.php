@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\OrdersController;
+use App\Http\Controllers\Web\PaymentController as WebPaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +72,23 @@ Route::post('/get-cart', [OrdersController::class, 'cart'])->name('get-cart');
 Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.order.index');
 Route::get('/cart/item', [OrdersController::class, 'removeCartItem'])->name('user.cart.item.remove');
 
+Route::get('/create/session', [WebPaymentController::class, 'createSesison'])->name('payment.session');
+Route::post('/card/token', [WebPaymentController::class, 'createCardToken'])->name('card.token');
+Route::get('/card/details', [WebPaymentController::class, 'cardDetails'])->name('card.details');
+
 
 Route::get('/about', function () {
     return view('web.about');
-})->name('user.cart.item.remove');
+})->name('about');
+
+Route::get('/contact', function () {
+    return view('web.contact');
+})->name('contact');
+
+Route::get('/community', function () {
+    return view('web.community');
+})->name('community');
+
+Route::get('/location', function () {
+    return view('web.locations');
+})->name('location');

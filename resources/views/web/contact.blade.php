@@ -1,33 +1,19 @@
 @extends("web.layout.master")
 
-@push('head')
-<meta charset="UTF-8">
-<title> Contact : Gabriel Pizza</title>
-<link rel="icon" type="image/png" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/android-chrome-192x192.png" sizes="192x192">
-<link rel="apple-touch-icon" sizes="57x57" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/favicon-16x16.png" sizes="16x16">
-<link rel="shortcut icon" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/favicon.ico">
-<link rel="manifest" href="https://gabrielpizza.com/wp-content/themes/gabriel-theme/img/favicons/manifest.json">
-<link rel='stylesheet' id='wp-block-library-css' href='https://gabrielpizza.com/wp-includes/css/dist/block-library/style.min.css?ver=6.2.3' media='all' />
-<link rel='stylesheet' id='classic-theme-styles-css' href='https://gabrielpizza.com/wp-includes/css/classic-themes.min.css?ver=6.2.3' media='all' />
-<link rel='stylesheet' id='wpml-blocks-css' href='https://gabrielpizza.com/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css?ver=4.6.4' media='all' />
-<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href='https://gabrielpizza.com/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css?ver=1' media='all' />
-<link rel='stylesheet' id='font-css-css' href='https://gabrielpizza.com/wp-content/themes/gabriel-theme/fonts/fonts.css' media='all' />
-<link rel='stylesheet' id='google-fonts-css' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic' media='all' />
-<link rel='stylesheet' id='soshal-css-css' href='https://gabrielpizza.com/wp-content/themes/gabriel-theme/style.css' media='all' />
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' id='jquery-js'></script>
-<script type='text/javascript' src='https://gabrielpizza.com/wp-content/themes/gabriel-theme/js/vendor/webfontloader.js' defer='defer' id='webfontloader-js'></script>
-<script type='text/javascript' defer='defer' src='https://gabrielpizza.com/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.7.10' id='gform_json-js'></script>
-<script type='text/javascript' defer='defer' src='https://gabrielpizza.com/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.7.10' id='gform_gravityforms-js'></script>
-<script type='text/javascript' defer='defer' src='https://www.google.com/recaptcha/api.js?hl=en&#038;ver=6.2.3#038;render=explicit' id='gform_recaptcha-js'></script>
-<script type='text/javascript' defer='defer' src='https://gabrielpizza.com/wp-content/plugins/gravityforms/assets/js/dist/utils.min.js?ver=1329f9a0886f2ff3fb51c6f17277eb75' id='gform_gravityforms_utils-js'></script>
-<meta name="generator" content="WPML ver:4.6.4 stt:1,4;" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-@endpush
-
 @push('css')
 <style id='wpml-legacy-horizontal-list-0-inline-css' type='text/css'>
+    body {
+        padding: 0px !important;
+    }
+
+    .order-call-nav {
+        display: flex;
+    }
+
+    .container {
+        padding: 0px !important;
+    }
+
     .wpml-ls-statics-shortcode_actions {
         background-color: #ffffff;
     }
