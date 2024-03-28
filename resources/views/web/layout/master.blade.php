@@ -20,17 +20,16 @@
 
     @stack('head')
     @stack('css')
+    <style>
+        header {
+            z-index: 1800 !important;
+        }
+    </style>
 </head>
 
-@php
-session()->forget('paymentId');
-
-$str = rand();
-$result = md5($str);
-session()->put('paymentId', $result);
-@endphp
-
 <body>
+
+
     <!-- <div id="preloader" class="loader-overlay">
         <div class="loading loader loader--centered">
             <div class="loader__icon">
@@ -105,7 +104,7 @@ session()->put('paymentId', $result);
                         </div>
                     </div>
 
-                    <div class="pizza-perks-wrapper">
+                    <!-- <div class="pizza-perks-wrapper">
                         <div class="pizza-perks-info">
                             <p><strong>Gabe's Pizza Perks</strong> <br>Add the item(s) to your cart and select the coupon from the dropdown list</p>
                         </div>
@@ -115,7 +114,7 @@ session()->put('paymentId', $result);
                                 <button type="button" class="pro-order-btn">Apply Coupon</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="forgotting-block">
                         <h5>Forgetting something?</h5>
@@ -142,7 +141,7 @@ session()->put('paymentId', $result);
                     </div> -->
 
                     <div class="cl-btn text-center pc-btn">
-                        <a class="pro-order-btn" href='{{ route("payment.session", ["id" => $result]) }}'>Proceed to checkout</a>
+                        <a id='payment' class="pro-order-btn" href='#'>Proceed to checkout</a>
                     </div>
                     @else
                     <div class="cart-model-label">
@@ -165,9 +164,9 @@ session()->put('paymentId', $result);
     <script src="{{ asset('js/all.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
     <script>
         stickybits('.main-header', {
             useStickyClasses: true
@@ -273,6 +272,8 @@ session()->put('paymentId', $result);
                     },
                 });
             })
+
+
         });
     </script>
 

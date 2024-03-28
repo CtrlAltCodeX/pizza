@@ -72,9 +72,10 @@ Route::post('/get-cart', [OrdersController::class, 'cart'])->name('get-cart');
 Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.order.index');
 Route::get('/cart/item', [OrdersController::class, 'removeCartItem'])->name('user.cart.item.remove');
 
-Route::get('/create/session', [WebPaymentController::class, 'createSesison'])->name('payment.session');
-Route::post('/card/token', [WebPaymentController::class, 'createCardToken'])->name('card.token');
-Route::get('/card/details', [WebPaymentController::class, 'cardDetails'])->name('card.details');
+Route::post('/payment', [WebPaymentController::class, 'generatePaymentLink'])->name('payment.link');
+
+Route::get('/checkout', [WebPaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/success', [WebPaymentController::class, 'success'])->name('payment.success');
 
 
 Route::get('/about', function () {
