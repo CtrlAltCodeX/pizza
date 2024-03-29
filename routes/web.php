@@ -73,8 +73,9 @@ Route::get('/order/{slug}', [OrdersController::class, 'index'])->name('user.orde
 Route::get('/cart/item', [OrdersController::class, 'removeCartItem'])->name('user.cart.item.remove');
 
 Route::post('/payment', [WebPaymentController::class, 'generatePaymentLink'])->name('payment.link');
-
 Route::get('/checkout', [WebPaymentController::class, 'checkout'])->name('payment.checkout');
+Route::post('/order-save', [WebPaymentController::class, 'orderSave'])->name('order.save');
+
 Route::get('/success', [WebPaymentController::class, 'success'])->name('payment.success');
 
 

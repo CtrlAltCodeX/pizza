@@ -28,9 +28,7 @@
 </head>
 
 <body>
-
-
-    <!-- <div id="preloader" class="loader-overlay">
+    <div id="preloader" class="loader-overlay">
         <div class="loading loader loader--centered">
             <div class="loader__icon">
                 <img src="{{ asset('images/loader.png') }}" alt="loader" />
@@ -38,7 +36,7 @@
             <div class="loader__label">Loading products...</div>
             <img src="{{ asset('images/loader-logo.png') }}" alt="logo" />
         </div>
-    </div> -->
+    </div>
 
     @if(request()->route()->uri == "/")
     @include('web.layout.home-header')
@@ -141,7 +139,7 @@
                     </div> -->
 
                     <div class="cl-btn text-center pc-btn">
-                        <a id='payment' class="pro-order-btn" href='#'>Proceed to checkout</a>
+                        <a id='payment' class="pro-order-btn" href='{{ route("payment.checkout") }}'>Proceed to checkout</a>
                     </div>
                     @else
                     <div class="cart-model-label">
@@ -156,106 +154,106 @@
     @include('web.layout.footer')
 
     <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> -->
     <script src="{{ asset('js/stickybits.min.js') }}"></script>
-    <script src="{{ asset('js/owlCarousel.min.js') }}"></script>
-    <script src="{{ asset('js/stickybits.min.js') }}"></script>
-    <script src="{{ asset('js/wow.js') }}"></script>
-    <script src="{{ asset('js/all.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+    <!-- <script src="{{ asset('js/owlCarousel.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/stickybits.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/wow.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/all.js') }}"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script> -->
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
     <script>
         stickybits('.main-header', {
             useStickyClasses: true
         });
 
         $(document).ready(function() {
-            $(window).on('load', function() {
+            // $(window).on('load', function() {
                 setTimeout(function() {
                     $("#preloader").delay(600).fadeOut(600).addClass('loaded');
                 }, 700);
-            });
+            // });
 
-            var sync1 = $("#sync1");
-            var sync2 = $("#sync2");
-            var slidesPerPage = 4; //globaly define number of elements per page
-            var syncedSecondary = true;
+            // var sync1 = $("#sync1");
+            // var sync2 = $("#sync2");
+            // var slidesPerPage = 4; //globaly define number of elements per page
+            // var syncedSecondary = true;
 
-            sync1.owlCarousel({
-                items: 1,
-                slideSpeed: 500000,
-                nav: false,
-                autoplay: true,
-                dots: false,
-                loop: true,
-                responsiveRefreshRate: 200,
-                animateOut: 'fadeOut',
-                mouseDrag: false,
-                touchDrag: false,
-            }).on('changed.owl.carousel', syncPosition);
+            // sync1.owlCarousel({
+            //     items: 1,
+            //     slideSpeed: 500000,
+            //     nav: false,
+            //     autoplay: true,
+            //     dots: false,
+            //     loop: true,
+            //     responsiveRefreshRate: 200,
+            //     animateOut: 'fadeOut',
+            //     mouseDrag: false,
+            //     touchDrag: false,
+            // }).on('changed.owl.carousel', syncPosition);
 
-            sync2.on('initialized.owl.carousel', function() {
-                sync2.find(".owl-item").eq(0).addClass("current");
-            }).owlCarousel({
-                items: slidesPerPage,
-                dots: false,
-                nav: false,
-                smartSpeed: 5000,
-                slideSpeed: 5000,
-                slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-                responsiveRefreshRate: 100,
-                mouseDrag: false,
-                touchDrag: false,
-            }).on('changed.owl.carousel', syncPosition2);
+            // sync2.on('initialized.owl.carousel', function() {
+            //     sync2.find(".owl-item").eq(0).addClass("current");
+            // }).owlCarousel({
+            //     items: slidesPerPage,
+            //     dots: false,
+            //     nav: false,
+            //     smartSpeed: 5000,
+            //     slideSpeed: 5000,
+            //     slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+            //     responsiveRefreshRate: 100,
+            //     mouseDrag: false,
+            //     touchDrag: false,
+            // }).on('changed.owl.carousel', syncPosition2);
 
-            function syncPosition(el) {
-                //if you set loop to false, you have to restore this next line
-                //var current = el.item.index;
+            // function syncPosition(el) {
+            //     //if you set loop to false, you have to restore this next line
+            //     //var current = el.item.index;
 
-                //if you disable loop you have to comment this block
-                var count = el.item.count - 1;
-                var current = Math.round(el.item.index - (el.item.count / 2) - .5);
+            //     //if you disable loop you have to comment this block
+            //     var count = el.item.count - 1;
+            //     var current = Math.round(el.item.index - (el.item.count / 2) - .5);
 
-                if (current < 0) {
-                    current = count;
-                }
-                if (current > count) {
-                    current = 0;
-                }
+            //     if (current < 0) {
+            //         current = count;
+            //     }
+            //     if (current > count) {
+            //         current = 0;
+            //     }
 
-                //end block
-                sync2
-                    .find(".owl-item")
-                    .removeClass("current")
-                    .eq(current)
-                    .addClass("current");
-                var onscreen = sync2.find('.owl-item.active').length - 1;
-                var start = sync2.find('.owl-item.active').first().index();
-                var end = sync2.find('.owl-item.active').last().index();
+            //     //end block
+            //     sync2
+            //         .find(".owl-item")
+            //         .removeClass("current")
+            //         .eq(current)
+            //         .addClass("current");
+            //     var onscreen = sync2.find('.owl-item.active').length - 1;
+            //     var start = sync2.find('.owl-item.active').first().index();
+            //     var end = sync2.find('.owl-item.active').last().index();
 
-                if (current > end) {
-                    sync2.data('owl.carousel').to(current, 100, true);
-                }
-                if (current < start) {
-                    sync2.data('owl.carousel').to(current - onscreen, 100, true);
-                }
-            }
+            //     if (current > end) {
+            //         sync2.data('owl.carousel').to(current, 100, true);
+            //     }
+            //     if (current < start) {
+            //         sync2.data('owl.carousel').to(current - onscreen, 100, true);
+            //     }
+            // }
 
-            function syncPosition2(el) {
-                if (syncedSecondary) {
-                    var number = el.item.index;
-                    sync1.data('owl.carousel').to(number, 100, true);
-                }
-            }
+            // function syncPosition2(el) {
+            //     if (syncedSecondary) {
+            //         var number = el.item.index;
+            //         sync1.data('owl.carousel').to(number, 100, true);
+            //     }
+            // }
 
-            sync2.on("click", ".owl-item", function(e) {
-                e.preventDefault();
-                var number = $(this).index();
-                sync1.data('owl.carousel').to(number, 300, true);
-            });
+            // sync2.on("click", ".owl-item", function(e) {
+            //     e.preventDefault();
+            //     var number = $(this).index();
+            //     sync1.data('owl.carousel').to(number, 300, true);
+            // });
 
             $("#remove").click(function() {
                 var orderId = $(this).attr('class');
@@ -272,8 +270,6 @@
                     },
                 });
             })
-
-
         });
     </script>
 

@@ -3,41 +3,21 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Services\CloverService;
+use App\Models\Order;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function createSesison()
-    {
-        echo "Please wait redirecting you to payment page...........";
-
-        return redirect()->route('card.details', ['id' => request()->id]);
-    }
-
-    public function cardDetails()
-    {
-        // if (session()->get('paymentId') == request()->id) {
-        return view('web.enter-info');
-        // } else {
-        // return 'Token is expired try again later..........';
-        // }
-    }
-
     public function generatePaymentLink(Request $request)
     {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'Please login first'], 500);
-        }
-
         $client = new Client();
 
         $items = [];
         $total = 0;
         foreach ($request->items as $item) {
             $info['note'] = 'Order Payment';
-            $info['price'] = (float) $item['price'];
+            $info['price'] = (float) $item['price'] * 100;
             $info['name'] = $item['name'];
             $info['unitQty'] = (float) $item['quantity'];
 
@@ -46,13 +26,16 @@ class PaymentController extends Controller
             array_push($items, $info);
         }
 
+        $orderId = rand();
+
         $data = json_encode([
             'customer' => [
-                'id' => rand(),
-                'firstName' => explode(' ', auth()->user()->name)[0],
-                'lastName' => explode(' ', auth()->user()->name)[1] ?? '',
-                'email' => auth()->user()->email,
-                'phoneNumber' => auth()->user()->mobile_no,
+                'id' => $orderId,
+                'firstName' => request()->info['first_name'],
+                'lastName' => request()->info['last_name'],
+                'email' => request()->info['email'],
+                'phoneNumber' => 232131,
+                "address" =>  request()->address
             ],
             'shoppingCart' => [
                 'total' => $total,
@@ -64,17 +47,33 @@ class PaymentController extends Controller
         ]);
 
         try {
-            $response = $client->post('https://sandbox.dev.clover.com/invoicingcheckoutservice/v1/checkouts', [
+            $response = $client->post(env('APIURL') . '/invoicingcheckoutservice/v1/checkouts', [
                 'body' => $data,
                 'headers' => [
-                    'X-Clover-Merchant-Id' => 'KY1E74GAQVR11',
-                    'authorization' => 'Bearer 31800200-0b32-4a4d-b5a0-ee41828744da',
+                    'X-Clover-Merchant-Id' => env('MERCHANTID'),
+                    'authorization' => 'Bearer ' . env('APITOKEN'),
                     'accept' => 'application/json',
                     'content-type' => 'application/json'
                 ],
             ]);
 
             $tokenData = json_decode($response->getBody(), true);
+
+            Order::create([
+                'order_id' => $orderId,
+                'first_name' => request()->info['first_name'],
+                'last_name' => request()->info['last_name'],
+                'email' => request()->info['email'],
+                'mobile' => request()->info['mobile'],
+                'address' => request()->address['address1'],
+                'address2' => request()->address['address2'],
+                'country_code' => request()->address['country'],
+                'state' => request()->address['state'],
+                'city' => request()->address['state'],
+                'zip' => request()->address['zip'],
+                'payment_method' => 'Clover',
+                'total' => $total,
+            ]);
 
             // Handle token data as needed
             return response()->json($tokenData);
@@ -85,7 +84,68 @@ class PaymentController extends Controller
 
     public function checkout()
     {
-        return view('web.checkout');
+        $countries = [
+            'AF' => 'Afghanistan', 'AL' => 'Albania', 'DZ' => 'Algeria', 'AD' => 'Andorra', 'AO' => 'Angola', 'AG' => 'Antigua and Barbuda', 'AR' => 'Argentina', 'AM' => 'Armenia', 'AU' => 'Australia', 'AT' => 'Austria',
+            'AZ' => 'Azerbaijan', 'BS' => 'Bahamas', 'BH' => 'Bahrain', 'BD' => 'Bangladesh', 'BB' => 'Barbados', 'BY' => 'Belarus', 'BE' => 'Belgium', 'BZ' => 'Belize', 'BJ' => 'Benin', 'BT' => 'Bhutan',
+            'BO' => 'Bolivia', 'BA' => 'Bosnia and Herzegovina', 'BW' => 'Botswana', 'BR' => 'Brazil', 'BN' => 'Brunei', 'BG' => 'Bulgaria', 'BF' => 'Burkina Faso', 'BI' => 'Burundi', 'CV' => 'Cabo Verde', 'KH' => 'Cambodia',
+            'CM' => 'Cameroon', 'CA' => 'Canada', 'CF' => 'Central African Republic', 'TD' => 'Chad', 'CL' => 'Chile', 'CN' => 'China', 'CO' => 'Colombia', 'KM' => 'Comoros', 'CD' => 'Congo', 'CR' => 'Costa Rica',
+            'HR' => 'Croatia', 'CU' => 'Cuba', 'CY' => 'Cyprus', 'CZ' => 'Czech Republic', 'DK' => 'Denmark', 'DJ' => 'Djibouti', 'DM' => 'Dominica', 'DO' => 'Dominican Republic', 'TL' => 'East Timor', 'EC' => 'Ecuador',
+            'EG' => 'Egypt', 'SV' => 'El Salvador', 'GQ' => 'Equatorial Guinea', 'ER' => 'Eritrea', 'EE' => 'Estonia', 'SZ' => 'Eswatini', 'ET' => 'Ethiopia', 'FJ' => 'Fiji', 'FI' => 'Finland', 'FR' => 'France',
+            'GA' => 'Gabon', 'GM' => 'Gambia', 'GE' => 'Georgia', 'DE' => 'Germany', 'GH' => 'Ghana', 'GR' => 'Greece', 'GD' => 'Grenada', 'GT' => 'Guatemala', 'GN' => 'Guinea', 'GW' => 'Guinea-Bissau',
+            'GY' => 'Guyana', 'HT' => 'Haiti', 'HN' => 'Honduras', 'HU' => 'Hungary', 'IS' => 'Iceland', 'IN' => 'India', 'ID' => 'Indonesia', 'IR' => 'Iran', 'IQ' => 'Iraq', 'IE' => 'Ireland',
+            'IL' => 'Israel', 'IT' => 'Italy', 'CI' => 'Ivory Coast', 'JM' => 'Jamaica', 'JP' => 'Japan', 'JO' => 'Jordan', 'KZ' => 'Kazakhstan', 'KE' => 'Kenya', 'KI' => 'Kiribati', 'XK' => 'Kosovo',
+            'KW' => 'Kuwait', 'KG' => 'Kyrgyzstan', 'LA' => 'Laos', 'LV' => 'Latvia', 'LB' => 'Lebanon', 'LS' => 'Lesotho', 'LR' => 'Liberia', 'LY' => 'Libya', 'LI' => 'Liechtenstein', 'LT' => 'Lithuania',
+            'LU' => 'Luxembourg', 'MG' => 'Madagascar', 'MW' => 'Malawi', 'MY' => 'Malaysia', 'MV' => 'Maldives', 'ML' => 'Mali', 'MT' => 'Malta', 'MH' => 'Marshall Islands', 'MR' => 'Mauritania', 'MU' => 'Mauritius',
+            'MX' => 'Mexico', 'FM' => 'Micronesia', 'MD' => 'Moldova', 'MC' => 'Monaco', 'MN' => 'Mongolia', 'ME' => 'Montenegro', 'MA' => 'Morocco', 'MZ' => 'Mozambique', 'MM' => 'Myanmar', 'NA' => 'Namibia',
+            'NR' => 'Nauru', 'NP' => 'Nepal', 'NL' => 'Netherlands', 'NZ' => 'New Zealand', 'NI' => 'Nicaragua', 'NE' => 'Niger', 'NG' => 'Nigeria', 'KP' => 'North Korea', 'MK' => 'North Macedonia', 'NO' => 'Norway',
+            'OM' => 'Oman', 'PK' => 'Pakistan', 'PW' => 'Palau', 'PS' => 'Palestine', 'PA' => 'Panama', 'PG' => 'Papua New Guinea', 'PY' => 'Paraguay', 'PE' => 'Peru', 'PH' => 'Philippines', 'PL' => 'Poland',
+            'PT' => 'Portugal', 'QA' => 'Qatar', 'RO' => 'Romania', 'RU' => 'Russia', 'RW' => 'Rwanda', 'KN' => 'Saint Kitts and Nevis', 'LC' => 'Saint Lucia', 'VC' => 'Saint Vincent and the Grenadines', 'WS' => 'Samoa', 'SM' => 'San Marino',
+            'ST' => 'Sao Tome and Principe', 'SA' => 'Saudi Arabia', 'SN' => 'Senegal', 'RS' => 'Serbia', 'SC' => 'Seychelles', 'SL' => 'Sierra Leone', 'SG' => 'Singapore', 'SK' => 'Slovakia', 'SI' => 'Slovenia', 'SB' => 'Solomon Islands',
+            'SO' => 'Somalia', 'ZA' => 'South Africa', 'KR' => 'South Korea', 'SS' => 'South Sudan', 'ES' => 'Spain', 'LK' => 'Sri Lanka', 'SD' => 'Sudan', 'SR' => 'Suriname', 'SE' => 'Sweden', 'CH' => 'Switzerland',
+            'SY' => 'Syria', 'TW' => 'Taiwan', 'TJ' => 'Tajikistan', 'TZ' => 'Tanzania', 'TH' => 'Thailand', 'TG' => 'Togo', 'TO' => 'Tonga', 'TT' => 'Trinidad and Tobago', 'TN' => 'Tunisia', 'TR' => 'Turkey',
+            'TM' => 'Turkmenistan', 'TV' => 'Tuvalu', 'UG' => 'Uganda', 'UA' => 'Ukraine', 'AE' => 'United Arab Emirates', 'GB' => 'United Kingdom', 'US' => 'United States', 'UY' => 'Uruguay', 'UZ' => 'Uzbekistan', 'VU' => 'Vanuatu',
+            'VA' => 'Vatican City', 'VE' => 'Venezuela', 'VN' => 'Vietnam', 'YE' => 'Yemen', 'ZM' => 'Zambia', 'ZW' => 'Zimbabwe'
+        ];
+
+        return view('web.checkout', compact('countries'));
+    }
+
+    public function orderSave(Request $request)
+    {
+        $items = [];
+        $total = 0;
+        foreach ($request->items as $item) {
+            $info['note'] = 'Order Payment';
+            $info['price'] = (float) $item['price'] * 100;
+            $info['name'] = $item['name'];
+            $info['unitQty'] = (float) $item['quantity'];
+
+            $total += (float) $item['price'];
+
+            array_push($items, $info);
+        }
+
+        $orderId = rand();
+
+        Order::create([
+            'order_id' => $orderId,
+            'first_name' => request()->info['first_name'],
+            'last_name' => request()->info['last_name'],
+            'email' => request()->info['email'],
+            'mobile' => request()->info['mobile'],
+            'address' => request()->address['address1'],
+            'address2' => request()->address['address2'],
+            'country_code' => request()->address['country'],
+            'state' => request()->address['state'],
+            'city' => request()->address['state'],
+            'zip' => request()->address['zip'],
+            'payment_method' => 'COD',
+            'total' => $total,
+        ]);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
     }
 
     public function success()

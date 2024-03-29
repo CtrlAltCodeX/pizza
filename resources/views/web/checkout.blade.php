@@ -3,7 +3,7 @@
 @push('css')
 <style>
     /* Absolute Center Spinner */
-    .loading {
+    .payment_login {
         position: fixed;
         z-index: 999;
         height: 2em;
@@ -17,7 +17,7 @@
     }
 
     /* Transparent Overlay */
-    .loading:before {
+    .payment_login:before {
         content: '';
         display: block;
         position: fixed;
@@ -31,8 +31,8 @@
     }
 
     /* :not(:required) hides these rules from IE9 and below */
-    .loading:not(:required) {
-        /* hide "loading..." text */
+    .payment_login:not(:required) {
+        /* hide "payment_login..." text */
         font: 0/0 a;
         color: transparent;
         text-shadow: none;
@@ -40,7 +40,7 @@
         border: 0;
     }
 
-    .loading:not(:required):after {
+    .payment_login:not(:required):after {
         content: '';
         display: block;
         font-size: 10px;
@@ -135,16 +135,16 @@
 @endpush
 
 @section("section")
-<div class="loading" style="display: none;">Loading&#8230;</div>
+<div class="payment_login" style="display: none;">Loading&#8230;</div>
 
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill">3</span>
+                <span class="badge badge-secondary badge-pill">{{count(session()->get('cart'))}}</span>
             </h4>
-            <ul class="list-group mb-3 sticky-top">
+            <ul class="list-group mb-3">
                 @foreach(session()->get('cart') as $key => $item)
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
@@ -175,6 +175,12 @@
                     <input type="email" class="form-control" id="email" placeholder="you@example.com" value="{{ auth()->user()->email }}">
                     <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                 </div>
+
+                <div class="mb-3">
+                    <label for="mobile">Mobile</label>
+                    <input type="mobile" class="form-control" id="mobile" placeholder="9999999999" value="{{ auth()->user()->mobile_no }}">
+                    <div class="invalid-feedback"> Please enter a valid Mobile number for shipping updates. </div>
+                </div>
                 <div class="mb-3">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
@@ -189,17 +195,20 @@
                         <label for="country">Country</label>
                         <select class="custom-select d-block w-100" id="country" required="">
                             <option value="">Choose...</option>
-                            <option>United States</option>
+                            @foreach($countries as $key => $country)
+                            <option value="{{$key}}">{{$country}}</option>
+                            @endforeach
                         </select>
                         <div class="invalid-feedback"> Please select a valid country. </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="state">State</label>
-                        <select class="custom-select d-block w-100" id="state" required="">
+                        <input type="text" class="form-control" id="state" placeholder="" required="">
+                        <!-- <select class="custom-select d-block w-100" id="state" required="">
                             <option value="">Choose...</option>
                             <option>California</option>
                         </select>
-                        <div class="invalid-feedback"> Please provide a valid state. </div>
+                        <div class="invalid-feedback"> Please provide a valid state. </div> -->
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="zip">Zip</label>
@@ -208,10 +217,10 @@
                     </div>
                 </div>
                 <hr class="mb-4">
-                <div class="custom-control custom-checkbox">
+                <!-- <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="same-address">
                     <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                </div>
+                </div> -->
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="save-info">
                     <label class="custom-control-label" for="save-info">Save this information for next time</label>
@@ -221,7 +230,7 @@
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio cod">
                         <input id="cod" name="paymentMethod" type="radio" class="custom-control-input">
-                        <label class="custom-control-label"  for="credit">Cash on Delivery ( COD )</label>
+                        <label class="custom-control-label" for="credit">Cash on Delivery ( COD )</label>
                     </div>
                     <div class="custom-control custom-radio online">
                         <input id="online" name="paymentMethod" type="radio" class="custom-control-input">
@@ -233,14 +242,6 @@
             </form>
         </div>
     </div>
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2017-2019 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
 
 @endsection
@@ -250,28 +251,64 @@
     $(document).ready(function() {
         $("#payment").click(function(e) {
             e.preventDefault();
-            if ($('#cod').prop('checked')) {
-                window.location.href = '/success';
-            } else if ($('#online').prop('checked')) {
-                var data = @json(session()->get('cart'));
-                console.log(data);
+            var data = @json(session()->get('cart'));
+            var basicDetails = {
+                first_name: $('#firstName').val(),
+                last_name: $('#lastName').val(),
+                email: $('#email').val(),
+                mobile: $('#mobile').val()
+            };
 
+            var address = {
+                address1: $("#address").val(),
+                state: $("#state").val(),
+                city: $("#state").val(),
+                country: $("#country").val(),
+                zip: $("#zip").val(),
+                address2: $("#address2").val(),
+            };
+
+            if ($('#cod').prop('checked')) {
+                $.ajax({
+                    url: "{{ route('order.save') }}",
+                    type: "POST",
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        items: data,
+                        address: address,
+                        info: basicDetails
+                    },
+                    beforeSend: function() {
+                        $(".payment_login").show();
+                    },
+                    success: function(response) {
+                        $(".payment_login").hide();
+                        window.location.href = '/success';
+                    },
+                    error: function(response) {
+                        $(".payment_login").hide();
+                        alert(response.responseJSON.error);
+                    }
+                });
+            } else if ($('#online').prop('checked')) {
                 $.ajax({
                     url: "{{ route('payment.link') }}",
                     type: "POST",
                     data: {
                         '_token': '{{ csrf_token() }}',
                         items: data,
+                        address: address,
+                        info: basicDetails
                     },
                     beforeSend: function() {
-                        $(".loading").show();
+                        $(".payment_login").show();
                     },
                     success: function(response) {
-                        // $(".loading").hide();
-                        // window.location.href = response.href;
+                        $(".payment_login").hide();
+                        window.location.href = response.href;
                     },
                     error: function(response) {
-                        $(".loading").hide();
+                        $(".payment_login").hide();
                         console.log(response.responseJSON.error)
                         alert(response.responseJSON.error);
                     }
