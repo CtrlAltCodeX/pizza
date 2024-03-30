@@ -304,6 +304,7 @@
                         $(".payment_login").show();
                     },
                     success: function(response) {
+                        // console.log(response);
                         $(".payment_login").hide();
                         window.location.href = response.href;
                     },

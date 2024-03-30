@@ -176,8 +176,7 @@ $lastPart = last($urlParts);
                                     <!-- <div class="make-sure-box">Make sure to select a size, crust, and thickness!</div> -->
                                     <!-- <h4 class="pizza-  label-h4">Pizza Size, Crust & Thickness</h4> -->
 
-                                    <div class="">
-
+                                    <div>
                                         @if($key == 'crust')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
@@ -838,15 +837,23 @@ $lastPart = last($urlParts);
 
                     success: function(data) {
                         if (data.status == 'success') {
+                            console.log(data);
                             var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
                             var price = data.data['price'].split(",");
 
                             var imgURl = "/admin/images/items/" + data.data['img'];
                             $("#img").attr('src', imgURl);
-                            $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />")
-                            $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />")
+                            
+                            $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
+
+                            $('#exampleModalLong').append("<input type='hidden' name='id' id='id' value='" + data.data['id'] + "' />");
+
+                            $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />");
+
                             $('#nameOfPizza').text(data.data['name'].toUpperCase());
+
                             $('.ingredients').prop('checked', false);
+
                             $('#size option').each(function(index) {
                                 $(this).attr('data-price', price[index]);
                                 $(this).text($(this).text() + ' - $' + price[index]);
@@ -1221,6 +1228,7 @@ $lastPart = last($urlParts);
         e.preventDefault();
 
         var type = "{{ $lastPart }}";
+        var id = $('#id').val();
         var size = $('#size').val();
         var name = $('#name').val();
         var image = $('#image').val();
@@ -1255,6 +1263,7 @@ $lastPart = last($urlParts);
             method: 'POST',
             data: {
                 '_token': "{{ csrf_token() }}",
+                'id': id,
                 'name': name,
                 'type': type,
                 'image': image,

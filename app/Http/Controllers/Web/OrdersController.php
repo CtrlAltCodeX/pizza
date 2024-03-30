@@ -282,7 +282,9 @@ class OrdersController extends Controller
     public function getPizzaDetails(Request $request)
     {
         if ($request->ajax()) {
-            $pizza = ItemMaster::where('id', $request->id)->first()->toArray();
+            $pizza = ItemMaster::where('id', $request->id)
+                ->first()
+                ->toArray();
 
             return response()->json([
                 'status' => 'success',
@@ -293,6 +295,7 @@ class OrdersController extends Controller
 
     public function addToCart(Request $request)
     {
+        $id = $request->input('id');
         $name = $request->input('name');
         $type = $request->input('type');
         $image = $request->input('image');
@@ -334,6 +337,7 @@ class OrdersController extends Controller
             $cart[$name]['price'] =  $price;
         } else {
             $cart[$name] = [
+                'id' => $id,
                 'name' => $name,
                 'type' => $type,
                 'image' => $image,

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemMaster;
 use App\Models\Order;
+use App\Models\OrderDetails;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -59,7 +61,7 @@ class PaymentController extends Controller
 
             $tokenData = json_decode($response->getBody(), true);
 
-            Order::create([
+            $order = Order::create([
                 'order_id' => $orderId,
                 'first_name' => request()->info['first_name'],
                 'last_name' => request()->info['last_name'],
@@ -75,6 +77,27 @@ class PaymentController extends Controller
                 'total' => $total,
             ]);
 
+            $items = [];
+            $total = 0;
+            foreach ($request->items as $item) {
+                $data = ItemMaster::find($item['id']);
+
+                $price = explode(", ", $data['price']);
+                $size = explode(", ", $data['size']);
+
+                OrderDetails::create([
+                    'orderMaster_id' => $order->id,
+                    'item_id' => $item['id'],
+                    'name' => $data['name'],
+                    'quantity' => $item['quantity'],
+                    'price' => $price[0],
+                    'size' => $size[0],
+                    'category_id' => $data['category_master_id'],
+                    'category_name' => 'pizza',
+                    'igredients_used_id' => $data['sauces'] . ',' . $data['cheese'] . ',' . $data['meat_ingredients'] . ',' . $data['veggies'],
+                ]);
+            }
+
             // Handle token data as needed
             return response()->json($tokenData);
         } catch (\Exception $e) {
@@ -84,6 +107,8 @@ class PaymentController extends Controller
 
     public function checkout()
     {
+        if (!session()->get('cart')) return redirect()->to("/");
+
         $countries = [
             'AF' => 'Afghanistan', 'AL' => 'Albania', 'DZ' => 'Algeria', 'AD' => 'Andorra', 'AO' => 'Angola', 'AG' => 'Antigua and Barbuda', 'AR' => 'Argentina', 'AM' => 'Armenia', 'AU' => 'Australia', 'AT' => 'Austria',
             'AZ' => 'Azerbaijan', 'BS' => 'Bahamas', 'BH' => 'Bahrain', 'BD' => 'Bangladesh', 'BB' => 'Barbados', 'BY' => 'Belarus', 'BE' => 'Belgium', 'BZ' => 'Belize', 'BJ' => 'Benin', 'BT' => 'Bhutan',
