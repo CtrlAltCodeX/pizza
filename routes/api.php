@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('orders', [OrdersController::class, 'index']);
     
     Route::get('/logout', [LoginController::class, 'logout']);
-// });
+});
 
 Route::post('login', [LoginController::class, 'login']);
+
 Route::post('register', [LoginController::class, 'register']);
