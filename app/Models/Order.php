@@ -24,4 +24,9 @@ class Order extends Model
         'payment_method',
         'total',
     ];
+
+    public function order_details()
+    {
+        return $this->hasOne(OrderDetails::class, 'id', 'orderMaster_id');
+    }
 }

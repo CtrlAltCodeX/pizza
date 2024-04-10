@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,26 +12,33 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    public function login(Request $request){
+    /**
+     * Login
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function login(Request $request)
+    {
         $val = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if($val->fails()){
+        if ($val->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => $val->errors()->first()
             ]);
         }
 
-        if (Auth::guard('admin')->attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-            'is_admin' => 0
-        ])) {
+        if (Auth::attempt($request->all())) {
+            $user = Auth::user();
+            $token = $user->createToken('AuthToken')->plainTextToken;
+
             return response()->json([
                 'status' => 'success',
+                'token' => $token,
                 'message' => 'login successfull'
             ]);
         } else {
@@ -41,38 +49,62 @@ class LoginController extends Controller
         }
     }
 
-    public function register(Request $request){
+    /**
+     * Register
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function register(Request $request)
+    {
         $val = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:admin,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required'
         ]);
 
-        if($val->fails()){
+        if ($val->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => $val->errors()->first()
             ]);
         }
+
         $password = Hash::make($request->password);
 
-        $data = Admin::create([
+        $data = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $password,
-            'is_admin' => 0
+            'phone' => $request->phone,
         ]);
 
-        if($data){
+        if ($data) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully registered'
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Something went wrong'
             ]);
         }
+    }
+
+    /**
+     * Logout
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+
+        return response([
+            'success' => true,
+            'message' => 'User Logout Successfully',
+        ], 200);
     }
 }
