@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/customers', [DashboardController::class, 'index'])->name('admin.customers');
-        Route::get('/orders', [DashboardController::class, 'index'])->name('admin.orders');
+        Route::get('/orders', [DashboardController::class, 'orders'])->name('admin.orders');
 
         Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
         Route::post('/add-category', [CategoryController::class, 'addNewCategory'])->name('admin.addNewCategory');
