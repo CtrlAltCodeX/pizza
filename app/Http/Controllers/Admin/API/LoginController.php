@@ -31,13 +31,14 @@ class LoginController extends Controller
             ]);
         }
 
-        if (Auth::attempt($request->all())) {
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'staff' => 1])) {
             $user = Auth::user();
             $token = $user->createToken('AuthToken')->plainTextToken;
 
             return response()->json([
                 'status' => 'success',
                 'token' => $token,
+                'data' => $user,
                 'message' => 'login successfull'
             ]);
         } else {

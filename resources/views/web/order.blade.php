@@ -482,6 +482,7 @@ $lastPart = last($urlParts);
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="delivery-form-content">
                             <form id="pickupForm" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -841,7 +842,7 @@ $lastPart = last($urlParts);
                             var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
                             var price = data.data['price'].split(",");
 
-                            var imgURl = "/admin/images/items/" + data.data['img'];
+                            var imgURl = "/public/admin/images/items/" + data.data['img'];
                             $("#img").attr('src', imgURl);
                             
                             $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
@@ -1233,7 +1234,7 @@ $lastPart = last($urlParts);
         var name = $('#name').val();
         var image = $('#image').val();
         var quantity = $('#quantity').val();
-        var price = $('#finalPrice').attr('data-finalPrice');
+        var price = $('#finalPrice').html();
         var crust = $('#crust').val();
         var thickness = $('#thickness').val();
         var sauce = $('#pills-Sauce select[name="sauce[]"]').val();

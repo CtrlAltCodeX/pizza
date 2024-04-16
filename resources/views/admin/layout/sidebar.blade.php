@@ -29,18 +29,24 @@
                 </a>
             </li>
 
-            <li>
+            <!-- <li>
                 <a href="{{route('admin.customers')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-050-info"></i>
                     <span class="nav-text">Customers</span>
                 </a>
+            </li> -->
+            <li>
+                <a href="{{route('admin.users')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-050-info"></i>
+                    <span class="nav-text">Registration</span>
+                </a>
             </li>
         </ul>
-{{--        <div class="plus-box">--}}
-{{--            <img src="images/plus.png" alt="">--}}
-{{--            <h5 class="fs-18 font-w700">Add Menus</h5>--}}
-{{--            <p class="fs-14 font-w400">Manage your food <br>and beverages menus<i class="fas fa-arrow-right ms-3"></i></p>--}}
-{{--        </div>--}}
+        {{-- <div class="plus-box">--}}
+        {{-- <img src="images/plus.png" alt="">--}}
+        {{-- <h5 class="fs-18 font-w700">Add Menus</h5>--}}
+        {{-- <p class="fs-14 font-w400">Manage your food <br>and beverages menus<i class="fas fa-arrow-right ms-3"></i></p>--}}
+        {{-- </div>--}}
         <div class="copyright">
             <p><strong>PizzaOnline Restaurant Admin</strong> © {{date('Y')}} All Rights Reserved</p>
             <p class="fs-12">Made with <span class="heart"></span> by TshrXD</p>

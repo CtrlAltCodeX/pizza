@@ -160,25 +160,25 @@
             <form class="needs-validation" novalidate="">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="{{ explode(' ',auth()->user()?->name)[0]??'' }}" required="">
+                        <label for="firstName">Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="{{ $name }}" required="">
                         <div class="invalid-feedback"> Valid first name is required. </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <!-- <div class="col-md-6 mb-3">
                         <label for="lastName">Last name</label>
                         <input type="text" class="form-control" id="lastName" placeholder="" value="{{ explode(' ',auth()->user()?->name)[1]??'' }}" required="">
                         <div class="invalid-feedback"> Valid last name is required. </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mb-3">
                     <label for="email">Email </label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com" value="{{ auth()->user()->email }}">
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" value="{{ $email }}">
                     <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="mobile">Mobile</label>
-                    <input type="mobile" class="form-control" id="mobile" placeholder="9999999999" value="{{ auth()->user()->mobile_no }}">
+                    <input type="mobile" class="form-control" id="mobile" placeholder="9999999999" value="{{ $phone }}">
                     <div class="invalid-feedback"> Please enter a valid Mobile number for shipping updates. </div>
                 </div>
                 <div class="mb-3">
@@ -221,19 +221,19 @@
                     <input type="checkbox" class="custom-control-input" id="same-address">
                     <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
                 </div> -->
-                <div class="custom-control custom-checkbox">
+                <!-- <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="save-info">
                     <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                </div>
+                </div> -->
                 <hr class="mb-4">
                 <h4 class="mb-3">Payment</h4>
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio cod">
-                        <input id="cod" name="paymentMethod" type="radio" class="custom-control-input">
+                        <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" style="z-index: 1 !important;">
                         <label class="custom-control-label" for="credit">Cash on Delivery ( COD )</label>
                     </div>
                     <div class="custom-control custom-radio online">
-                        <input id="online" name="paymentMethod" type="radio" class="custom-control-input">
+                        <input id="online" name="paymentMethod" type="radio" class="custom-control-input" style="z-index: 1 !important;">
                         <label class="custom-control-label" for="debit">Online Payment</label>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
                     },
                     success: function(response) {
                         $(".payment_login").hide();
-                        window.location.href = '/success';
+                        window.location.href = '/public/success';
                     },
                     error: function(response) {
                         $(".payment_login").hide();

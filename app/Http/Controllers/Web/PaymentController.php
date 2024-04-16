@@ -34,7 +34,7 @@ class PaymentController extends Controller
             'customer' => [
                 'id' => $orderId,
                 'firstName' => request()->info['first_name'],
-                'lastName' => request()->info['last_name'],
+                // 'lastName' => request()->info['last_name'],
                 'email' => request()->info['email'],
                 'phoneNumber' => 232131,
                 "address" =>  request()->address
@@ -64,7 +64,7 @@ class PaymentController extends Controller
             $order = Order::create([
                 'order_id' => $orderId,
                 'first_name' => request()->info['first_name'],
-                'last_name' => request()->info['last_name'],
+                // 'last_name' => request()->info['last_name'],
                 'email' => request()->info['email'],
                 'mobile' => request()->info['mobile'],
                 'address' => request()->address['address1'],
@@ -132,7 +132,32 @@ class PaymentController extends Controller
             'VA' => 'Vatican City', 'VE' => 'Venezuela', 'VN' => 'Vietnam', 'YE' => 'Yemen', 'ZM' => 'Zambia', 'ZW' => 'Zimbabwe'
         ];
 
-        return view('web.checkout', compact('countries'));
+        if (session()->get('pickup_details')) {
+            $name = session()->get('pickup_details')['name'];
+        } else if(auth()->check()) {
+            $name = auth()->user()->name;
+        } else {
+            $name = '';
+        }
+
+        if (session()->get('pickup_details')) {
+            $email = session()->get('pickup_details')['email'];
+        } else if(auth()->check()) {
+            $email = auth()->user()->email;
+        } else {
+            $email = '';
+        }
+
+        if (session()->get('pickup_details')) {
+            $phone = session()->get('pickup_details')['phone'];
+        } else if(auth()->check()) {
+            $phone = auth()->user()->phone;
+        } else {
+            $phone = '';
+        }
+
+
+        return view('web.checkout', compact('countries', 'email', 'phone', 'name'));
     }
 
     public function orderSave(Request $request)
@@ -152,10 +177,10 @@ class PaymentController extends Controller
 
         $orderId = rand();
 
-        Order::create([
+        $order_id = Order::create([
             'order_id' => $orderId,
             'first_name' => request()->info['first_name'],
-            'last_name' => request()->info['last_name'],
+            // 'last_name' => request()->info['last_name'],
             'email' => request()->info['email'],
             'mobile' => request()->info['mobile'],
             'address' => request()->address['address1'],
@@ -168,6 +193,25 @@ class PaymentController extends Controller
             'total' => $total,
         ]);
 
+        foreach ($request->items as $item) {
+            $data = ItemMaster::find($item['id']);
+
+            $price = explode(", ", $data['price']);
+            $size = explode(", ", $data['size']);
+
+            OrderDetails::create([
+                'orderMaster_id' => $order_id->id,
+                'item_id' => $item['id'],
+                'name' => $data['name'],
+                'quantity' => $item['quantity'],
+                'price' => $price[0],
+                'size' => $size[0],
+                'category_id' => $data['category_master_id'],
+                'category_name' => 'pizza',
+                'igredients_used_id' => $data['sauces'] . ',' . $data['cheese'] . ',' . $data['meat_ingredients'] . ',' . $data['veggies'],
+            ]);
+        }
+
         return response()->json([
             'success' => true,
         ], 200);
@@ -175,6 +219,10 @@ class PaymentController extends Controller
 
     public function success()
     {
+        if (!session()->get('cart')) return redirect()->to("/");
+
+        session()->forget('cart');
+
         return view('web.success');
     }
 }

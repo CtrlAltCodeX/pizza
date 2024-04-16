@@ -1,5 +1,9 @@
 @extends("web.layout.master")
 
+@php
+
+@endphp
+
 @section("section")
 
 <div class="jumbotron text-center">

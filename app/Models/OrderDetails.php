@@ -19,4 +19,19 @@ class OrderDetails extends Model
         'category_name',
         'igredients_used_id',
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'igredients_used_id', 'id');
+    }
+
+    public function item_master()
+    {
+        return $this->belongsTo(ItemMaster::class, 'item_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 }

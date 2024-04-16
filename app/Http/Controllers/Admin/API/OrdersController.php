@@ -14,7 +14,17 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $allOrders = Order::with('order_details')->get();
+        $allOrders = Order::with('order_details');
+
+        if (request()->status) {
+            $allOrders->where('status', request()->status);
+        }
+
+        if (request()->email) {
+            $allOrders->where('email', request()->email);
+        }
+
+        $allOrders = $allOrders->get();
 
         return response()->json([
             'data' => $allOrders,

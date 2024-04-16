@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IngridentController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\OrderController;
+
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\OrdersController;
@@ -32,7 +34,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/customers', [DashboardController::class, 'index'])->name('admin.customers');
-        Route::get('/orders', [DashboardController::class, 'orders'])->name('admin.orders');
+        Route::get('/users', [DashboardController::class, 'users'])->name('admin.users');
+        Route::get('/registration', [DashboardController::class, 'registration'])->name('user.registration.view');
+        Route::post('/registration-save', [DashboardController::class, 'registrationSubmit'])->name('admin.registration');
+
+        // start vijay for admin
+        Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+        Route::get('/showData/{id}', [OrderController::class, 'showData'])->name('admin.showData');
+        Route::get('/update/status/{id}', [OrderController::class, 'updateStatus'])->name('admin.update.status');
 
         Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
         Route::post('/add-category', [CategoryController::class, 'addNewCategory'])->name('admin.addNewCategory');

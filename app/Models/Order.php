@@ -23,6 +23,7 @@ class Order extends Model
         'zip',
         'payment_method',
         'total',
+        'status',
     ];
 
     public function order_details()

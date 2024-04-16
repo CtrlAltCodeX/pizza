@@ -121,7 +121,7 @@
                     @foreach($items as $item)
                     <div class="col-md-4">
                         <div class="product-wrapper">
-                            <img src="/admin/images/items/{{$item->img}}" alt="product-pizza" />
+                            <img src="/public/admin/images/items/{{$item->img}}" alt="product-pizza" />
                             <div class="product-title-wrapper">
                                 <div class="product-title-with-btn">
                                     <h4 class="module-menu__item-name">{{$item->name}}</h4>
