@@ -1,14 +1,14 @@
-@extends("web.layout.master")
+@extends('web.layout.master')
+
 
 @push('head')
-<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" />
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/media.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,7 +24,6 @@ $lastPart = last($urlParts);
 @endphp
 
 @section('section')
-
 <section class="order-tab-section">
     <div class="container">
         <div class="row">
@@ -42,10 +41,10 @@ $lastPart = last($urlParts);
         <div class="row">
             <div class="col-md-4">
                 <div class="nav flex-column nav-pills nav-p-tab" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    @foreach($categories as $category)
+                    @foreach ($categories as $category)
                     <a class="nav-link {{ $category->slug == $lastPart ? 'active' : '' }}" id="v-pills-pizzas-tab" href="{{ route('user.order.index', ['slug' => $category->slug]) }}">
-                        <img class="mr-2" onerror="this.onerror=null;this.src='/dummy.jpg';" src="{{url('/')}}/admin/images/category/{{$category->img}}" width="50" />
-                        {{$category->name}}
+                        <img class="mr-2" onerror="this.onerror=null;this.src='/dummy.jpg';" src="{{ url('/') }}/admin/images/category/{{ $category->img }}" width="50" />
+                        {{ $category->name }}
                     </a>
                     @endforeach
                 </div>
@@ -65,26 +64,29 @@ $lastPart = last($urlParts);
             <div class="col-md-8">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="deal-comman-header">
-                        <p>Due to an update with our map provider, some addresses are no longer working with the city name ROCKLAND. Please try using CLARENCE CREEK as your city.</p>
+                        <p>Due to an update with our map provider, some addresses are no longer working with the city
+                            name ROCKLAND. Please try using CLARENCE CREEK as your city.</p>
                     </div>
 
                     <div class="tab-pane fade show active" id="v-pills-deal" role="tabpanel">
                         <div class="row">
+                            @if($lastPart == 'pizzas')
                             <div class="product-col">
                                 <div class="product-bg-wrapper pro-bg-image">
                                     <div class="image-with-content ">
                                         <div class="pro-con">
                                             <h4>CREATE YOUR OWN</h4>
                                             <h3> CUSTOM PIZZA</h3>
-                                            <a class="pro-order-btn checkSession" data-toggle="modal" data-target="#exampleModalLong2">
+                                            <a class="pro-order-btn checkSession" data-toggle="modal" data-target="#exampleModalLong2" data-key=0>
                                                 Start your order
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @endif
 
-                            @foreach($pizza as $key => $piz)
+                            @foreach ($pizza as $key => $piz)
                             <div class="product-col">
                                 <div class="product-bg-wrapper">
                                     <p class="price">
@@ -93,7 +95,7 @@ $lastPart = last($urlParts);
                                     </p>
                                     <div class="image-with-content">
                                         <div class="product-image">
-                                            <img src="{{ asset('admin/images/items') ."/". $piz['img'] }}" alt="product-1" />
+                                            <img src="{{ asset('admin/images/items') . '/' . $piz['img'] }}" alt="product-1" />
                                         </div>
                                         <div class="pro-con">
                                             <h4>{{ $piz['name'] }}</h4>
@@ -101,7 +103,8 @@ $lastPart = last($urlParts);
                                             <div class="pro-btn-with-description">
                                                 <p>{{ implode(', ', $piz['all']) }}</p>
                                             </div>
-                                            <a href="#" class="pro-order-btn checkSession" data-key={{$key}} data-toggle="modal" data-id="{{ $piz['id'] }}" data-target="#exampleModalLong2"> Order </a>
+                                            <a href="#" class="pro-order-btn checkSession" data-key={{ $key }} data-toggle="modal" data-id="{{ $piz['id'] }}" data-target="#exampleModalLong2">
+                                                Order </a>
                                         </div>
                                     </div>
                                 </div>
@@ -114,9 +117,11 @@ $lastPart = last($urlParts);
 
                 <div class="order-footer">
                     <div class="media">
-                        <img src="{{ asset('images/pizza-icon.png')}}" alt="pizza-icon" />
+                        <img src="{{ asset('images/pizza-icon.png') }}" alt="pizza-icon" />
                         <div class="media-body">
-                            <p>Adults and youth (ages 13 and older) need an average of 2,000 calories a day, and children (ages 4 to 12) need an average of 1,500 calories a day. However, individual needs vary.</p>
+                            <p>Adults and youth (ages 13 and older) need an average of 2,000 calories a day, and
+                                children (ages 4 to 12) need an average of 1,500 calories a day. However, individual
+                                needs vary.</p>
                         </div>
                     </div>
                 </div>
@@ -141,7 +146,7 @@ $lastPart = last($urlParts);
                         <div class="custom-order-header-content-wrapper">
                             <h3>CREATE YOUR OWN</h3>
                             <h2 id="nameOfPizza"></h2>
-                            <img src="{{ asset('images/cp-pizza.png')}}" alt="pizza" class="w-100 img-fluid" id='img' />
+                            <img src="{{ asset('images/cp-pizza.png') }}" alt="pizza" class="w-100 img-fluid" id='img' />
                             <div class="cop-price-with-btn">
                                 <p>
                                     <sup>$</sup>
@@ -159,25 +164,37 @@ $lastPart = last($urlParts);
 
                     <div class="col-lg-6">
                         <div class="cop-tab-right-part">
-                            <ul class="nav nav-pills mb-3 dp-form cop-tab" id="pills-tab-order" role="tablist">
+                            <ul class="nav nav-pills mb-3 dp-form cop-tab" id="pills-tab-order" role="tablist" style="flex-wrap: nowrap;">
                                 @php $i = 0;@endphp
-                                @foreach($all as $key => $ingredent)
+                                @foreach ($all as $key => $ingredent)
                                 @php $i++; @endphp
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link {{$i == 1 ? 'active' : ''}}" data-toggle="pill" data-target="#pills-{{$key}}" type="button" role="tab">{{ucfirst($key)}}</button>
+                                    <button class="nav-link {{$key}} {{ $i == 1 ? 'active' : '' }}" data-toggle="pill" data-target="#pills-{{ $key }}" type="button" role="tab">{{ ucfirst($key) }}</button>
                                 </li>
                                 @endforeach
                             </ul>
+                            @php
+                            function getNextKey($currentKey, $all)
+                            {
+                            $keys = array_keys($all);
+                            $currentIndex = array_search($currentKey, $keys);
+                            $nextIndex = $currentIndex + 1;
+                            if ($nextIndex >= count($keys)) {
+                            $nextIndex = 0; // If it reaches the end, loop back to the first menu item
+                            }
+
+                            return $keys[$nextIndex];
+                            }
+                            @endphp
+
                             <div class="tab-content" id="pills-tabContent">
                                 @php $i = 0; @endphp
-                                @foreach($all as $key => $ingredent)
+                                @foreach ($all as $key => $ingredient)
                                 @php $i++; @endphp
-                                <div class="tab-pane fade {{$i==1 ? 'active show' : ''}}" id="pills-{{$key}}" role="tabpanel">
-                                    <!-- <div class="make-sure-box">Make sure to select a size, crust, and thickness!</div> -->
-                                    <!-- <h4 class="pizza-  label-h4">Pizza Size, Crust & Thickness</h4> -->
 
+                                <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}" id="pills-{{ $key }}" role="tabpanel">
                                     <div>
-                                        @if($key == 'crust')
+                                        @if ($key == 'crust')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Crust Type</label>
@@ -185,9 +202,11 @@ $lastPart = last($urlParts);
                                             </div>
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
-                                                    <select class="province" name="crust" id="crust">
-                                                        @foreach($all['crust'] as $crust)
-                                                        <option value="{{$crust['price']}}">{{$crust['name']}}</option>
+                                                    <select class="province crust-select" name="crust" id="crust">
+                                                        @foreach ($all['crust'] as $crust)
+                                                        <option value="{{ $crust['price'] }}">
+                                                            {{ $crust['name'] }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -196,36 +215,36 @@ $lastPart = last($urlParts);
                                         @endif
 
                                         <!-- <div class="row size-flex">
-                                            <div class="col-size-label">
-                                                <label>Crust Thickness</label>
-                                            </div>
-                                            <div class="col-size-box">
-                                                <div class="mdl-textfield del-select-box">
-                                                    <select class="province" name="thickness" id="thickness">
-                                                        <option value=0>--Select--</option>
-                                                        <option value=1>Reguler</option>
-                                                        <option value=2>Thick</option>
-                                                        <option value=3>Thin</option>
-                                                    </select>
+                                                <div class="col-size-label">
+                                                    <label>Crust Thickness</label>
                                                 </div>
-                                            </div>
-                                        </div> -->
+                                                <div class="col-size-box">
+                                                    <div class="mdl-textfield del-select-box">
+                                                        <select class="province" name="thickness" id="thickness">
+                                                            <option value=0>--Select--</option>
+                                                            <option value=1>Reguler</option>
+                                                            <option value=2>Thick</option>
+                                                            <option value=3>Thin</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div> -->
 
-                                        @if($key == 'veggies')
+                                        @if ($key == 'veggies')
                                         <div class="row cf-row">
-                                            @foreach($all['veggies'] as $veg)
+                                            @foreach ($all['veggies'] as $veg)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section veggies_ingredient">
                                                     <input type="checkbox" name="veggies[]" class="ingredients" data-price="{{ $veg['price'] }}" data-veggies="{{ $veg['id'] }}" />
                                                     <div class="custom-feat-wrapper">
-                                                        <img src="{{ asset('') . $veg['img']}}" />
+                                                        <img src="{{ asset('') . $veg['img'] }}" />
                                                         <span>{{ isset($veg['name']) ? $veg['name'] : '' }}</span>
-                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                        <img src="{{ asset('images/checked.png') }}" class="checked-img" />
                                                     </div>
 
                                                     <div class="cop-select-with-radio">
                                                         <div class="cop-sox">
-                                                            <select class="province" name="veggiesPortion">
+                                                            <select class="province veggies-select" name="veggiesPortion">
                                                                 <option>Easy (.5x)</option>
                                                                 <option selected>Reguler (1x)</option>
                                                             </select>
@@ -244,21 +263,21 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        @if($key == 'extra-sauce')
+                                        @if ($key == 'extra-sauce')
                                         <div class="row cf-row">
-                                            @foreach($all['extra-sauce'] as $extraSauce)
+                                            @foreach ($all['extra-sauce'] as $extraSauce)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section extraSauce_ingredient">
-                                                    <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-sauce="{{ $extraSauce['id'] }}" />
+                                                    <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-extrasauce="{{ $extraSauce['id'] }}" />
                                                     <div class="custom-feat-wrapper">
-                                                        <img src="{{ asset('') . $extraSauce['img']}}" />
+                                                        <img src="{{ asset('') . $extraSauce['img'] }}" />
                                                         <span>{{ isset($extraSauce['name']) ? $extraSauce['name'] : '' }}</span>
-                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                        <img src="{{ asset('images/checked.png') }}" class="checked-img" />
                                                     </div>
 
                                                     <div class="cop-select-with-radio">
                                                         <div class="cop-sox">
-                                                            <select class="province">
+                                                            <select class="province extra-sauce-select">
                                                                 <option checked>Reguler (1x)</option>
                                                             </select>
                                                         </div>
@@ -276,21 +295,21 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        @if($key == 'meat')
+                                        @if ($key == 'meat')
                                         <div class="row cf-row">
-                                            @foreach($all['meat'] as $meat)
+                                            @foreach ($all['meat'] as $meat)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section meat_ingredients">
                                                     <input type="checkbox" name="meat[]" class="ingredients" data-price="{{ $meat['price'] }}" data-meat="{{ $meat['id'] }}" />
                                                     <div class="custom-feat-wrapper">
-                                                        <img src="{{ asset('') . $meat['img']}}" />
+                                                        <img src="{{ asset('') . $meat['img'] }}" />
                                                         <span>{{ $meat['name'] }}</span>
-                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                        <img src="{{ asset('images/checked.png') }}" class="checked-img" />
                                                     </div>
 
                                                     <div class="cop-select-with-radio">
                                                         <div class="cop-sox">
-                                                            <select class="province" name="meatPortion">
+                                                            <select class="province meat-select" name="meatPortion">
                                                                 <option>Easy (.5x)</option>
                                                                 <option selected>Reguler (1x)</option>
                                                             </select>
@@ -309,16 +328,16 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        @if($key == 'cheese')
+                                        @if ($key == 'cheese')
                                         <div class="row cf-row">
-                                            @foreach($all['cheese'] as $cheese)
+                                            @foreach ($all['cheese'] as $cheese)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section meat_ingredients">
-                                                    <input type="checkbox" name="cheese[]" class="ingredients" data-price="{{ $cheese['price'] }}" data-meat="{{ $cheese['id'] }}" />
+                                                    <input type="checkbox" name="cheese[]" class="ingredients" data-price="{{ $cheese['price'] }}" data-cheese="{{ $cheese['id'] }}" />
                                                     <div class="custom-feat-wrapper">
-                                                        <img src="{{ asset('') . $cheese['img']}}" />
+                                                        <img src="{{ asset('') . $cheese['img'] }}" />
                                                         <span>{{ $cheese['name'] }}</span>
-                                                        <img src="{{ asset('images/checked.png')}}" class="checked-img" />
+                                                        <img src="{{ asset('images/checked.png') }}" class="checked-img" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,7 +345,7 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        @if($key == 'sauce')
+                                        @if ($key == 'sauce')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Sauce</label>
@@ -334,9 +353,11 @@ $lastPart = last($urlParts);
                                             </div>
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
-                                                    <select class="province" name="sauce[]">
-                                                        @foreach($all['sauce'] as $sauce)
-                                                        <option value="{{ $sauce['price'] }}">{{ $sauce['name'] }}</option>
+                                                    <select class="province sauce-select" name="sauce[]">
+                                                        @foreach ($all['sauce'] as $sauce)
+                                                        <option value="{{ $sauce['price'] }}">
+                                                            {{ $sauce['name'] }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -344,7 +365,7 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        @if($key == 'bread')
+                                        @if ($key == 'bread')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Bread</label>
@@ -352,9 +373,11 @@ $lastPart = last($urlParts);
                                             </div>
                                             <div class="col-size-box">
                                                 <div class="mdl-textfield del-select-box">
-                                                    <select class="province" name="bread[]">
-                                                        @foreach($all['bread'] as $bread)
-                                                        <option value="{{ $bread['price'] }}">{{ $bread['name'] }}</option>
+                                                    <select class="province bread-select" name="bread[]">
+                                                        @foreach ($all['bread'] as $bread)
+                                                        <option value="{{ $bread['price'] }}">
+                                                            {{ $bread['name'] }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -362,9 +385,11 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
+                                        <!-- Your existing code for other sections -->
+
                                         <div class="col-md-12">
                                             <div class="form-submit mt-5">
-                                                <a class="pro-order-btn cop-border-btn" id="base&cheese"> Base Sauce & Cheese</a>
+                                                <a class="pro-order-btn cop-border-btn dynamic-button" data-target="#pills-{{ getNextKey($key, $all) }}" role="tab" id="{{ getNextKey($key, $all) }}" data-toggle="pill">Base {{ ucfirst(getNextKey($key, $all)) }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -394,12 +419,15 @@ $lastPart = last($urlParts);
                     <h2>ORDER SETUP</h2>
                     @guest
                     <div class="ls-btn-group">
-                        <button class="pro-order-btn" data-toggle="modal" data-target="#login" data-dismiss="modal"> Log in </button>
+                        <button class="pro-order-btn" data-toggle="modal" data-target="#login" data-dismiss="modal">
+                            Log in </button>
                         <button class="pro-order-btn btn-transparent" data-toggle="modal" data-target="#register" data-dismiss="modal"> Sign up</button>
                     </div>
-                    <p>Eat pizza. Get points. Get free pizza. Repeat. It's the pizza cycle of life. Become a Pizza Perks member and start earning today.</p>
+                    <p>Eat pizza. Get points. Get free pizza. Repeat. It's the pizza cycle of life. Become a Pizza Perks
+                        member and start earning today.</p>
                     <img src="{{ asset('images/perks.png') }}" alt="perks" />
-                    <p>To continue as a <b> guest </b> select delivery or pickup and provide us some details to get you started!</p>
+                    <p>To continue as a <b> guest </b> select delivery or pickup and provide us some details to get you
+                        started!</p>
                     @endguest
 
                     @auth
@@ -424,49 +452,57 @@ $lastPart = last($urlParts);
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="name">
-                                            <label class="mdl-textfield__label">Name<span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Name<span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="email" name="email">
-                                            <label class="mdl-textfield__label">Email<span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Email<span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="number" name="phone">
-                                            <label class="mdl-textfield__label">Phone # <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Phone # <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="street">
-                                            <label class="mdl-textfield__label">Street # <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Street # <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="apartment">
-                                            <label class="mdl-textfield__label">Apartment # <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Apartment # <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="streetName">
-                                            <label class="mdl-textfield__label">Street name <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Street name <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="number" name="postCode">
-                                            <label class="mdl-textfield__label">Postal code <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Postal code <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="city">
-                                            <label class="mdl-textfield__label">City <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">City <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
 
@@ -487,19 +523,22 @@ $lastPart = last($urlParts);
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="text" name="name">
-                                            <label class="mdl-textfield__label">Name<span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Name<span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="email" name="email">
-                                            <label class="mdl-textfield__label">Email<span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Email<span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="number" name="phone">
-                                            <label class="mdl-textfield__label">Phone # <span class="required"> *</span></label>
+                                            <label class="mdl-textfield__label">Phone # <span class="required">
+                                                    *</span></label>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -532,7 +571,8 @@ $lastPart = last($urlParts);
             <div class="modal-body">
                 <div class="order-header-content-wrapper">
                     <h2>SIGN IN </h2>
-                    <p style="width: 90%;margin: auto;">Sign in to your account and start earning Pizza Perks points on your next order. </p>
+                    <p style="width: 90%;margin: auto;">Sign in to your account and start earning Pizza Perks points on
+                        your next order. </p>
                     <img src="{{ asset('images/perks.png') }}" alt="perks" />
                 </div>
                 <div class="delivery-form-content sign-in-form">
@@ -548,7 +588,8 @@ $lastPart = last($urlParts);
                             <div class="col-md-6">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" type="password" name="password">
-                                    <label class="mdl-textfield__label">Password <span class="required"> *</span></label>
+                                    <label class="mdl-textfield__label">Password <span class="required">
+                                            *</span></label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -582,7 +623,8 @@ $lastPart = last($urlParts);
             <div class="modal-body">
                 <div class="order-header-content-wrapper">
                     <h2>REGISTER </h2>
-                    <p>Eat pizza. Get points. Get free pizza. Repeat. It's the pizza cycle of life. Become a Pizza Perks member and start earning today.</p>
+                    <p>Eat pizza. Get points. Get free pizza. Repeat. It's the pizza cycle of life. Become a Pizza Perks
+                        member and start earning today.</p>
                     <img src="{{ asset('images/perks.png') }}" alt="perks" />
                 </div>
                 <div class="delivery-form-content sign-in-form">
@@ -598,19 +640,22 @@ $lastPart = last($urlParts);
                             <div class="col-md-6">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" type="password" name="password">
-                                    <label class="mdl-textfield__label">Password <span class="required"> *</span></label>
+                                    <label class="mdl-textfield__label">Password <span class="required">
+                                            *</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" type="number" name="phone">
-                                    <label class="mdl-textfield__label">Phone #<span class="required"> *</span></label>
+                                    <label class="mdl-textfield__label">Phone #<span class="required">
+                                            *</span></label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input" type="text" name="firstname">
-                                    <label class="mdl-textfield__label">First name <span class="required"> *</span></label>
+                                    <label class="mdl-textfield__label">First name <span class="required">
+                                            *</span></label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -641,7 +686,8 @@ $lastPart = last($urlParts);
             <div class="modal-body">
                 <div class="forgotpassword-content">
                     <h2>FORGOT PASSWORD</h2>
-                    <p>Forgot your password? Let us help! Enter your email and we will send you a link to reset your password. </p>
+                    <p>Forgot your password? Let us help! Enter your email and we will send you a link to reset your
+                        password. </p>
                 </div>
 
                 <div class="delivery-form-content sign-in-form">
@@ -676,11 +722,11 @@ $lastPart = last($urlParts);
 <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/selectize.min.js') }}"></script>
 <script src="{{ asset('js/stickybits.min.js') }}"></script>
 <script src="{{ asset('js/owlCarousel.min.js') }}"></script>
-<script src="{{ asset('js/wow.js')}}"></script>
+<script src="{{ asset('js/wow.js') }}"></script>
 <script src="{{ asset('js/all.js') }}"></script>
 <script defer src="{{ asset('js/material.min.js') }}"></script>
 <script src="{{ asset('js/toastr.js') }}"></script>
@@ -825,90 +871,94 @@ $lastPart = last($urlParts);
 
             if (delivery || pickup) {
                 var idOfPizza = $(this).data('id');
-                $.ajax({
-                    url: '{{route("getPizzaDetails")}}',
-                    type: "POST",
-                    dataType: "JSON",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': idOfPizza
-                    },
-                    cache: false,
-                    async: false,
+                if (idOfPizza) {
+                    $.ajax({
+                        url: '{{route("getPizzaDetails")}}',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            'id': idOfPizza
+                        },
+                        cache: false,
+                        async: false,
 
-                    success: function(data) {
-                        if (data.status == 'success') {
+                        success: function(data) {
                             console.log(data);
-                            var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
-                            var price = data.data['price'].split(",");
+                            if (data.status == 'success') {
+                                var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
+                                var price = data.data['price'].split(",");
 
-                            var imgURl = "/public/admin/images/items/" + data.data['img'];
-                            $("#img").attr('src', imgURl);
-                            
-                            $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
+                                var imgURl = "/public/admin/images/items/" + data.data['img'];
+                                $("#img").attr('src', imgURl);
 
-                            $('#exampleModalLong').append("<input type='hidden' name='id' id='id' value='" + data.data['id'] + "' />");
+                                $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
 
-                            $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />");
+                                $('#exampleModalLong').append("<input type='hidden' name='id' id='id' value='" + data.data['id'] + "' />");
 
-                            $('#nameOfPizza').text(data.data['name'].toUpperCase());
+                                $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />");
 
-                            $('.ingredients').prop('checked', false);
+                                $('#nameOfPizza').text(data.data['name'].toUpperCase());
 
-                            $('#size option').each(function(index) {
-                                $(this).attr('data-price', price[index]);
-                                $(this).text($(this).text() + ' - $' + price[index]);
-                            });
+                                $('.ingredients').prop('checked', false);
 
-                            //This is for Meat
-                            if (data.data.meat_ingredients && data.data.meat_ingredients.trim() !== '') {
-                                var selectedMeatIDs = data.data.meat_ingredients.split(', ');
-
-                                selectedMeatIDs.forEach(function(meatID) {
-                                    // Select the checkbox with the corresponding data-meat attribute
-                                    $('input[data-meat="' + meatID + '"]').prop('checked', true);
-
-                                    // Select the corresponding option in the select element within the same meat_ingredients div
-                                    $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('select[name="meatPortion"]').val('Reguler (1x)');
-
-                                    // Select the default radio button within the same meat_ingredients div
-                                    $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('.second-radio input[type="radio"]').prop('checked', true);
+                                $('#size option').each(function(index) {
+                                    $(this).attr('data-price', price[index]);
+                                    $(this).text($(this).text() + ' - $' + price[index]);
                                 });
+
+                                //This is for Meat
+                                if (data.data.meat_ingredients && data.data.meat_ingredients.trim() !== '') {
+                                    var selectedMeatIDs = data.data.meat_ingredients.split(', ');
+
+                                    selectedMeatIDs.forEach(function(meatID) {
+                                        // Select the checkbox with the corresponding data-meat attribute
+                                        $('input[data-meat="' + meatID + '"]').prop('checked', true);
+
+                                        // Select the corresponding option in the select element within the same meat_ingredients div
+                                        $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('select[name="meatPortion"]').val('Reguler (1x)');
+
+                                        // Select the default radio button within the same meat_ingredients div
+                                        $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('.second-radio input[type="radio"]').prop('checked', true);
+                                    });
+                                }
+
+                                //This is for Veggies
+                                if (data.data.veggies && data.data.veggies.trim() !== '') {
+                                    var veggiesIDS = data.data.veggies.split(', ');
+
+                                    veggiesIDS.forEach(function(veggiesID) {
+                                        // Select the checkbox with the corresponding data-meat attribute
+                                        $('input[data-veggies="' + veggiesID + '"]').prop('checked', true);
+
+                                        // Select the corresponding option in the select element within the same meat_ingredients div
+                                        $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('select[name="veggiesPortion"]').val('Reguler (1x)');
+
+                                        // Select the default radio button within the same meat_ingredients div
+                                        $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('input[name="radio-group"][checked]').prop('checked', true);
+                                    });
+                                }
+
+                                var prices = data.data.price.split(',');
+                                $('#finalPrice').attr('data-finalprice', prices[0]);
+                                $('#finalPrice').attr('data-original', prices[0])
+                                $('#finalPrice').text(prices[0]);
                             }
-
-                            //This is for Veggies
-                            if (data.data.veggies && data.data.veggies.trim() !== '') {
-                                var veggiesIDS = data.data.veggies.split(', ');
-
-                                veggiesIDS.forEach(function(veggiesID) {
-                                    // Select the checkbox with the corresponding data-meat attribute
-                                    $('input[data-veggies="' + veggiesID + '"]').prop('checked', true);
-
-                                    // Select the corresponding option in the select element within the same meat_ingredients div
-                                    $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('select[name="veggiesPortion"]').val('Reguler (1x)');
-
-                                    // Select the default radio button within the same meat_ingredients div
-                                    $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('input[name="radio-group"][checked]').prop('checked', true);
-                                });
-                            }
-
-                            var prices = data.data.price.split(',');
-                            $('#finalPrice').attr('data-finalprice', prices[0]);
-                            $('#finalPrice').attr('data-original', prices[0])
-                            $('#finalPrice').text(prices[0]);
                         }
-                    }
-                });
+                    });
 
-                var sizes = @json($pizza);
-                var splitSizes = sizes[$(this).data('key')]['size'][0].split(",");
+                    var sizes = @json($pizza);
+                    var splitSizes = sizes[$(this).data('key')]['size'][0].split(",");
 
-                splitSizes.forEach(function(val) {
-                    $("#size").append('<option>' + val + "</option>");
-                });
+                    splitSizes.forEach(function(val) {
+                        $("#size").append('<option>' + val + "</option>");
+                    });
 
-                $('#exampleModalLong').modal('show');
-                $('#exampleModalLong #idOfPizza').val(idOfPizza);
+                    $('#exampleModalLong').modal('show');
+                    $('#exampleModalLong #idOfPizza').val(idOfPizza);
+                } else {
+                    $('#exampleModalLong').modal('show');
+                }
             } else {
                 $('#orderSetup').modal('show');
             }
@@ -1003,7 +1053,7 @@ $lastPart = last($urlParts);
             e.preventDefault();
             let data = new FormData(form);
             $.ajax({
-                url: '{{route("delivery-setup")}}',
+                url: '{{ route("delivery-setup") }}',
                 type: "POST",
                 dataType: "JSON",
                 data: data,
@@ -1057,7 +1107,7 @@ $lastPart = last($urlParts);
             e.preventDefault();
             let data = new FormData(form);
             $.ajax({
-                url: '{{route("pickup-setup")}}',
+                url: '{{ route("pickup-setup") }}',
                 type: "POST",
                 dataType: "JSON",
                 data: data,
@@ -1123,7 +1173,7 @@ $lastPart = last($urlParts);
             e.preventDefault();
             let data = new FormData(form);
             $.ajax({
-                url: '{{route("register")}}',
+                url: '{{ route("register") }}',
                 type: "POST",
                 dataType: "JSON",
                 data: data,
@@ -1172,7 +1222,7 @@ $lastPart = last($urlParts);
             e.preventDefault();
             let data = new FormData(form);
             $.ajax({
-                url: '{{route("user.login")}}',
+                url: '{{ route("user.login") }}',
                 type: "POST",
                 dataType: "JSON",
                 data: data,
@@ -1231,32 +1281,49 @@ $lastPart = last($urlParts);
         var type = "{{ $lastPart }}";
         var id = $('#id').val();
         var size = $('#size').val();
-        var name = $('#name').val();
+        var name = '';
+        if ($('#name').val()) {
+            name = $('#name').val();
+        } else {
+            name = 'Custom Pizza';
+        }
         var image = $('#image').val();
         var quantity = $('#quantity').val();
         var price = $('#finalPrice').html();
         var crust = $('#crust').val();
         var thickness = $('#thickness').val();
-        var sauce = $('#pills-Sauce select[name="sauce[]"]').val();
+        var sauce = $('#pills-sauce select[name="sauce[]"]').val();
 
         var cheese = [];
-        $('#pills-Sauce select[name="cheese[]"]').each(function() {
-            cheese.push($(this).val());
+        $('#pills-cheese input[name="cheese[]"]').each(function() {
+            cheese.push({
+                'id': $(this).data('cheese'),
+                'price': $(this).data('price')
+            });
         });
 
         var meat = [];
         $('#pills-meat input[name="meat[]"]:checked').each(function() {
-            meat.push($(this).data('meat'));
+            meat.push({
+                'id': $(this).data('meat'),
+                'price': $(this).data('price')
+            });
         });
 
         var veggies = [];
-        $('#pills-Veggiee input[name="veggies[]"]:checked').each(function() {
-            veggies.push($(this).data('veggies'));
+        $('#pills-veggies input[name="veggies[]"]:checked').each(function() {
+            veggies.push({
+                'id': $(this).data('veggies'),
+                'price': $(this).data('price')
+            });
         });
 
         var extraSauce = [];
-        $('#pills-Extras input[name="extraSauce[]"]:checked').each(function() {
-            extraSauce.push($(this).data('sauce'));
+        $('#pills-extra-sauce input[name="extraSauce[]"]:checked').each(function() {
+            extraSauce.push({
+                'id': $(this).data('extrasauce'),
+                'price': $(this).data('price')
+            });
         });
 
         $.ajax({
@@ -1280,15 +1347,16 @@ $lastPart = last($urlParts);
                 'extraSauce': extraSauce
             },
             success: function(data) {
+                console.log(data.status);
                 if (data.status == 'success') {
                     cart();
                     toastr.success(data.message);
                     $('#exampleModalLong').modal('hide');
-                    location.reload();
+                    // location.reload();
                 } else {
                     toastr.error("Something went Wrong");
                     $('#exampleModalLong').modal('hide');
-                    location.reload();
+                    // location.reload();
                 }
             },
             error: function(xhr, status, error) {
@@ -1323,5 +1391,38 @@ $lastPart = last($urlParts);
         }
 
     });
+
+    // Add event listeners to all select elements
+    document.querySelectorAll('.province').forEach(function(select) {
+        select.addEventListener('change', function() {
+            // Get the selected value
+            var selectedValue = this.value;
+            // Get the corresponding key (e.g., crust, sauce, bread)
+            var currentTarget = this.closest('.tab-pane').id.split('-')
+                .pop(); // Get the last part of the tab-pane ID
+            // Get the next menu key
+            var nextTarget = this.getAttribute('data-target');
+            // Update the button text and data-target attribute
+            updateButton('Base ' + ucfirst(nextTarget), nextTarget);
+        });
+    });
+
+    function updateButton(text, nextTarget) {
+        // Find the active tab-pane
+        var activeTabPane = document.querySelector('.tab-pane.active.show');
+        // Find the button within the active tab-pane and update its text and data-target attribute
+        var button = activeTabPane.querySelector('.dynamic-button');
+        button.textContent = text;
+        button.setAttribute('data-target', nextTarget);
+    }
+
+    function ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    $(".dynamic-button").click(function() {
+        $("#exampleModalLong .nav-link").removeClass('active');
+        $("." + $(this).attr('id')).addClass('active');
+    })
 </script>
 @endpush

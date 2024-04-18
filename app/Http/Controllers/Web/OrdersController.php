@@ -295,89 +295,98 @@ class OrdersController extends Controller
 
     public function addToCart(Request $request)
     {
-        $id = $request->input('id');
-        $name = $request->input('name');
-        $type = $request->input('type');
-        $image = $request->input('image');
-        $quantity = $request->input('quantity');
-        $size = $request->input('size');
-        $price = $request->input('price');
-        $crust = $request->input('crust');
-        $thickness = $request->input('thickness');
-        $sauce = $request->input('sauce');
-        $cheese = $request->input('cheese');
-        $meat = $request->input('meat');
-        $veggies = $request->input('veggies');
-        $extraSauce = $request->input('extraSauce');
+        try {
+            $id = $request->input('id');
+            $name = $request->input('name');
+            $type = $request->input('type');
+            $image = $request->input('image');
+            $quantity = $request->input('quantity');
+            $size = $request->input('size');
+            $price = $request->input('price');
+            $crust = $request->input('crust');
+            $thickness = $request->input('thickness');
+            $sauce = $request->input('sauce');
+            $cheese = $request->input('cheese');
+            $meat = $request->input('meat');
+            $veggies = $request->input('veggies');
+            $extraSauce = $request->input('extraSauce');
 
-        $cart = Session::get('cart', []);
+            $cart = Session::get('cart', []);
 
-        $sumAmt = 0;
-        if (isset($cart[$name])) {
-            $prevPrice = (float) $cart[$name]['price'];
-            $prevQty = (float) $cart[$name]['quantity'];
+            $sumAmt = 0;
+            if (isset($cart[$name])) {
+                $prevPrice = (float) $cart[$name]['price'];
+                $prevQty = (float) $cart[$name]['quantity'];
 
-            foreach ($cart[$name] as $key => $item) {
-                if (
-                    $key == 'crust'
-                    || $key == 'thickness'
-                    || $key == 'sauce'
-                    || $key == 'cheese'
-                    || $key == 'meat'
-                    || $key == 'veggies'
-                    || $key == 'extraSauce'
-                ) {
-                    if ($item) {
-                        $sumAmt = $sumAmt + array_sum($item);
+                foreach ($cart[$name] as $key => $item) {
+                    if (
+                        $key == 'crust'
+                        || $key == 'thickness'
+                        || $key == 'sauce'
+                        || $key == 'cheese'
+                        || $key == 'meat'
+                        || $key == 'veggies'
+                        || $key == 'extraSauce'
+                    ) {
+                        if ($item) {
+                            foreach ($item as $topping) {
+                                $sumAmt = $sumAmt + $topping['price'];
+                            }
+                        }
                     }
                 }
-            }
-            $cart[$name]['quantity'] =  $prevQty + (float) $quantity;
-            $cart[$name]['total'] =  ((float) $price * (float) $cart[$name]['quantity']) + $sumAmt;
-            $cart[$name]['price'] =  $price;
-        } else {
-            $cart[$name] = [
-                'id' => $id,
-                'name' => $name,
-                'type' => $type,
-                'image' => $image,
-                'quantity' => $quantity,
-                'total' => (float) $price * (float) $quantity,
-                'size' => $size,
-                'price' => $price,
-                'crust' => $crust,
-                'thickness' => $thickness,
-                'sauce' => $sauce,
-                'cheese' => $cheese,
-                'meat' => $meat,
-                'veggies' => $veggies,
-                'extraSauce' => $extraSauce
-            ];
+                $cart[$name]['quantity'] =  $prevQty + (float) $quantity;
+                $cart[$name]['total'] =  ((float) $price * (float) $cart[$name]['quantity']) + $sumAmt;
+                $cart[$name]['price'] =  $price;
+            } else {
+                $cart[$name] = [
+                    'id' => $id,
+                    'name' => $name,
+                    'type' => $type,
+                    'image' => $image,
+                    'quantity' => $quantity,
+                    'total' => (float) $price * (float) $quantity,
+                    'size' => $size,
+                    'price' => $price,
+                    'crust' => $crust,
+                    'thickness' => $thickness,
+                    'sauce' => $sauce,
+                    'cheese' => $cheese,
+                    'meat' => $meat,
+                    'veggies' => $veggies,
+                    'extraSauce' => $extraSauce
+                ];
 
-            foreach ($cart[$name] as $key => $item) {
-                if (
-                    $key == 'crust'
-                    || $key == 'thickness'
-                    || $key == 'sauce'
-                    || $key == 'cheese'
-                    || $key == 'meat'
-                    || $key == 'veggies'
-                    || $key == 'extraSauce'
-                ) {
-                    if ($item) {
-                        $sumAmt = $sumAmt + array_sum($item);
+                foreach ($cart[$name] as $key => $item) {
+                    if (
+                        $key == 'crust'
+                        || $key == 'thickness'
+                        || $key == 'sauce'
+                        || $key == 'cheese'
+                        || $key == 'meat'
+                        || $key == 'veggies'
+                        || $key == 'extraSauce'
+                    ) {
+                        if ($item) {
+                            foreach ($item as $topping) {
+                                $sumAmt = $sumAmt + (int) $topping['price'];
+                            }
+                        }
                     }
                 }
+
+                $cart[$name]['price'] = $cart[$name]['price'] + $sumAmt;
             }
 
-            $cart[$name]['price'] = $cart[$name]['price'] + $sumAmt;
+            Session::put('cart', $cart);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Items added to cart successfully'
+            ]);
+        } catch (\Exception $e) {
+            dd($e);
         }
-
-        Session::put('cart', $cart);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Items added to cart successfully'
-        ]);
     }
 
     public function cart(Request $request)
