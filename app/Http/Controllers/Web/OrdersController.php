@@ -197,49 +197,48 @@ class OrdersController extends Controller
 
     public function deliverySetup(Request $request)
     {
-        if ($request->ajax()) {
 
-            $val = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email',
-                'phone' => 'required|numeric',
-                'street' => 'required',
-                'apartment' => 'required',
-                'streetName' => 'required',
-                'postCode' => 'required|numeric',
-                'city' => 'required',
+        $val = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'street' => 'required',
+            'apartment' => 'required',
+            'streetName' => 'required',
+            'postCode' => 'required|numeric',
+            'city' => 'required',
+        ]);
+
+        if ($val->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $val->errors()->first()
             ]);
-
-            if ($val->fails()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $val->errors()->first()
-                ]);
-            }
-
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'street' => $request->street,
-                'apartment' => $request->apartment,
-                'streetName' => $request->streetName,
-                'postCode' => $request->postCode,
-                'city' => $request->city,
-            ];
-
-            Session::put('delivery_details', $data);
-            if (Session::has('delivery_details')) {
-                return response()->json([
-                    'status' => 'success'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Please setup the delivery details'
-                ]);
-            }
         }
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'street' => $request->street,
+            'apartment' => $request->apartment,
+            'streetName' => $request->streetName,
+            'postCode' => $request->postCode,
+            'city' => $request->city,
+        ];
+
+        Session::put('delivery_details', $data);
+        if (Session::has('delivery_details')) {
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please setup the delivery details'
+            ]);
+        }
+        // }
     }
 
     public function pickupSetup(Request $request)
@@ -383,8 +382,8 @@ class OrdersController extends Controller
     public function cart(Request $request)
     {
         if ($request->ajax()) {
-
             $cart = Session::get('cart');
+
             return response()->json([
                 'status' => 'success',
                 'cart' => $cart
@@ -396,7 +395,6 @@ class OrdersController extends Controller
     {
         if ($request->ajax()) {
             $cart = Session::get('cart');
-
             unset($cart[request()->item]);
 
             $cart = Session::put('cart', $cart);
