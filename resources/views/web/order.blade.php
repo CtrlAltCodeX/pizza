@@ -214,21 +214,22 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-                                        <!-- <div class="row size-flex">
-                                                <div class="col-size-label">
-                                                    <label>Crust Thickness</label>
+                                        <div class="row size-flex">
+                                            <div class="col-size-label">
+                                                <label>Size</label>
+                                                <i>Choose from 9" small to 18" extra large</i>
+                                            </div>
+                                            <div class="col-size-box">
+                                                <div class="mdl-textfield del-select-box">
+                                                    <select class="province crust-select" name="size" id="size" data-price=0>
+                                                        <option value="Small (9'')">Small (9'')</option>
+                                                        <option value="Medium(12'')">Medium(12'')</option>
+                                                        <option value="Large(15'')">Large(15'')</option>
+                                                        <option value="Extra-Large(18'')">Extra-Large(18'')</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-size-box">
-                                                    <div class="mdl-textfield del-select-box">
-                                                        <select class="province" name="thickness" id="thickness">
-                                                            <option value=0>--Select--</option>
-                                                            <option value=1>Reguler</option>
-                                                            <option value=2>Thick</option>
-                                                            <option value=3>Thin</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                            </div>
+                                        </div>
 
                                         @if ($key == 'veggies')
                                         <div class="row cf-row">
@@ -732,7 +733,6 @@ $lastPart = last($urlParts);
 <script src="{{ asset('js/toastr.js') }}"></script>
 <script>
     $(document).ready(function() {
-
         stickybits('.main-header', {
             useStickyClasses: true
         });
@@ -884,12 +884,11 @@ $lastPart = last($urlParts);
                         async: false,
 
                         success: function(data) {
-                            console.log(data);
                             if (data.status == 'success') {
                                 var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
                                 var price = data.data['price'].split(",");
 
-                                var imgURl = "/public/admin/images/items/" + data.data['img'];
+                                var imgURl = "/admin/images/items/" + data.data['img'];
                                 $("#img").attr('src', imgURl);
 
                                 $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
@@ -1266,13 +1265,15 @@ $lastPart = last($urlParts);
     });
 
     $(document).on('change', '.province', function(e) {
-        // If checked, add to finalPrice
-        var priceToAdd = parseFloat($(this).val());
-        var currentPrice = parseFloat($('#finalPrice').attr('data-original'));
-        var newPrice = currentPrice + priceToAdd;
+        if ($(this).attr('name') != 'size') {
+            // If checked, add to finalPrice
+            var priceToAdd = parseFloat($(this).val());
+            var currentPrice = parseFloat($('#finalPrice').attr('data-original'));
+            var newPrice = currentPrice + priceToAdd;
 
-        $('#finalPrice').attr('data-finalprice', newPrice.toFixed(2));
-        $('#finalPrice').text(newPrice.toFixed(2));
+            $('#finalPrice').attr('data-finalprice', newPrice.toFixed(2));
+            $('#finalPrice').text(newPrice.toFixed(2));
+        }
     });
 
     $(document).on('click', '#orderBTN', function(e) {
