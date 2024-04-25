@@ -41,6 +41,12 @@
                     <span class="nav-text">Registration</span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('shops.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-050-info"></i>
+                    <span class="nav-text">Shop</span>
+                </a>
+            </li>
         </ul>
         {{-- <div class="plus-box">--}}
         {{-- <img src="images/plus.png" alt="">--}}

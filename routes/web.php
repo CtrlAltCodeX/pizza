@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\IngridentController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\OrderController;
-
+use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\OrdersController;
@@ -37,6 +37,16 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/users', [DashboardController::class, 'users'])->name('admin.users');
         Route::get('/registration', [DashboardController::class, 'registration'])->name('user.registration.view');
         Route::post('/registration-save', [DashboardController::class, 'registrationSubmit'])->name('admin.registration');
+
+        Route::get('shop/index', [ShopController::class, 'index'])->name('shops.index');
+
+        Route::post('shops/store', [ShopController::class, 'store'])->name('shop.store');
+
+        Route::post('shops/edit/{id}', [ShopController::class, 'edit'])->name('shop.edit');
+
+        Route::post('shops/update/{id}', [ShopController::class, 'update'])->name('shop.update');
+
+        Route::post('shops/delete/{id}', [ShopController::class, 'destroy'])->name('shop.delete');
 
         // start vijay for admin
         Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');

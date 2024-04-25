@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\IngredientsMaster;
 use App\Models\ItemMaster;
 use App\Models\OrderDetails;
+use App\Models\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -117,10 +118,13 @@ class OrdersController extends Controller
             }
         }
 
+        $shops = Shop::all();
+
         return view('web.order')
             ->with('categories', $categoryAll)
             ->with('pizza', $data)
-            ->with('all', $all);
+            ->with('all', $all)
+            ->with('shops', $shops);
     }
 
     public function ordering(Request $request)
@@ -226,9 +230,11 @@ class OrdersController extends Controller
                 'streetName' => $request->streetName,
                 'postCode' => $request->postCode,
                 'city' => $request->city,
+                'shop' => $request->shop,
             ];
 
             Session::put('delivery_details', $data);
+
             if (Session::has('delivery_details')) {
                 return response()->json([
                     'status' => 'success'
@@ -262,7 +268,8 @@ class OrdersController extends Controller
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'shop' => $request->shop
             ];
 
             Session::put('pickup_details', $data);

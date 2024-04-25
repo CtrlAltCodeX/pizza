@@ -52,11 +52,9 @@ $lastPart = last($urlParts);
                 <div class="select-store-dropdown">
                     <label>Select a store...</label>
                     <select class="selectpicker">
-                        <option>Antigonish - 48 Nova Landing (closed)</option>
-                        <option>Ketchup</option>
-                        <option>Barbecue</option>
-                        <option>Mustard</option>
-                        <option>Ketchup12</option>
+                        @foreach($shops as $shop)
+                        <option value="{{ $shop->id }}">{{ $shop->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -507,6 +505,15 @@ $lastPart = last($urlParts);
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <label>Provice</label>
+                                        <select class="selectpicker" name="shop">
+                                            @foreach($shops as $shop)
+                                            <option value="{{ $shop->id }}">{{ $shop->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div class="col-md-12">
                                         <div class="form-submit">
                                             <button class="pro-order-btn"> Continue </button>
@@ -538,9 +545,16 @@ $lastPart = last($urlParts);
                                     <div class="col-md-6">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input class="mdl-textfield__input" type="number" name="phone">
-                                            <label class="mdl-textfield__label">Phone # <span class="required">
-                                                    *</span></label>
+                                            <label class="mdl-textfield__label">Phone # <span class="required">*</span></label>
                                         </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <select class="selectpicker" name="shop">
+                                            <option value="">Select Store</option>
+                                            @foreach($shops as $shop)
+                                            <option value="{{ $shop->id }}">{{ $shop->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-submit">

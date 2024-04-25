@@ -270,7 +270,6 @@
                     }
                 }
             });
-
         });
 
         //This is to deactivate/activate the category
