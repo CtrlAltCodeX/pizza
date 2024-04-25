@@ -129,15 +129,15 @@
                                 <div class="cart-item-name">
                                     <img src="{{ $item['image'] }}" width="100" />
                                     <h4 class="mt-2">{{$item['quantity']}}x {{$item['name']}}</h4>
-                                    <!-- <span><strong>Selections:</strong>
+                                    <span><strong>Selections:</strong>
                                         @foreach($item as $innerKey => $topings)
-                                        @if($innerKey == 'thickness' && ($topings && count($topings))) Thickness - ${{ array_sum($topings) }} @endif
-                                        @if($innerKey == 'sauce' && ($topings && count($topings))) Sauce - ${{ array_sum($topings) }}@endif
-                                        @if($innerKey == 'cheese' && ($topings && count($topings))) Cheese ${{ array_sum($topings) }} @endif
-                                        @if($innerKey == 'meat' && ($topings && count($topings))) Meat - ${{ array_sum($topings) }} @endif
-                                        @if($innerKey == 'veggies' && ($topings && count($topings))) Veggies - ${{ array_sum($topings) }}@endif
+                                        @if($innerKey == 'thickness' && ($topings && count($topings))) Thickness - @php $sumAmt = 0; foreach ($topings as $topping) { $sumAmt = $sumAmt + (int) $topping['price']; } @endphp ${{ $sumAmt }}, @endif
+                                        @if($innerKey == 'sauce' && ($topings && count($topings))) Sauce - @php $sumAmt = 0; foreach ($topings as $topping) { $sumAmt = $sumAmt + (int) $topping['price']; } @endphp ${{ $sumAmt }}, @endif
+                                        @if($innerKey == 'cheese' && ($topings && count($topings))) Cheese - @php $sumAmt = 0; foreach($topings as $topping) { $sumAmt = $sumAmt + (int) $topping['price']; } @endphp ${{ $sumAmt }}, @endif
+                                        @if($innerKey == 'meat' && ($topings && count($topings))) Meat - @php $sumAmt = 0; foreach ($topings as $topping) { $sumAmt = $sumAmt + (int) $topping['price']; } @endphp ${{ $sumAmt }}, @endif
+                                        @if($innerKey == 'veggies' && ($topings && count($topings))) Veggies - @php $sumAmt = 0; foreach ($topings as $topping) { $sumAmt = $sumAmt + (int) $topping['price']; } @endphp ${{ $sumAmt }} @endif
                                         @endforeach
-                                    </span> -->
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-sm-3">

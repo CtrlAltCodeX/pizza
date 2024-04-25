@@ -1,13 +1,19 @@
 @extends('web.layout.master')
+<<<<<<< HEAD
 
 @push('head')
+=======
+
+
+@push('head')
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/media.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" />
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -69,19 +75,21 @@ $lastPart = last($urlParts);
 
                     <div class="tab-pane fade show active" id="v-pills-deal" role="tabpanel">
                         <div class="row">
+                            @if($lastPart == 'pizzas')
                             <div class="product-col">
                                 <div class="product-bg-wrapper pro-bg-image">
                                     <div class="image-with-content ">
                                         <div class="pro-con">
                                             <h4>CREATE YOUR OWN</h4>
                                             <h3> CUSTOM PIZZA</h3>
-                                            <a class="pro-order-btn checkSession" data-toggle="modal" data-target="#exampleModalLong2">
+                                            <a class="pro-order-btn checkSession" data-toggle="modal" data-target="#exampleModalLong2" data-key=0>
                                                 Start your order
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @endif
 
                             @foreach ($pizza as $key => $piz)
                             <div class="product-col">
@@ -161,12 +169,16 @@ $lastPart = last($urlParts);
 
                     <div class="col-lg-6">
                         <div class="cop-tab-right-part">
-                            <ul class="nav nav-pills mb-3 dp-form cop-tab" id="pills-tab-order" role="tablist">
+                            <ul class="nav nav-pills mb-3 dp-form cop-tab" id="pills-tab-order" role="tablist" style="flex-wrap: nowrap;">
                                 @php $i = 0;@endphp
                                 @foreach ($all as $key => $ingredent)
                                 @php $i++; @endphp
                                 <li class="nav-item" role="presentation">
+<<<<<<< HEAD
                                     <button class="nav-link {{ $i == 1 ? 'active' : '' }}" data-toggle="pill" data-target="#pills-{{ $key }}" type="button" role="tab">{{ ucfirst($key) }}</button>
+=======
+                                    <button class="nav-link {{$key}} {{ $i == 1 ? 'active' : '' }}" data-toggle="pill" data-target="#pills-{{ $key }}" type="button" role="tab">{{ ucfirst($key) }}</button>
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                 </li>
                                 @endforeach
                             </ul>
@@ -179,19 +191,32 @@ $lastPart = last($urlParts);
                             if ($nextIndex >= count($keys)) {
                             $nextIndex = 0; // If it reaches the end, loop back to the first menu item
                             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                             return $keys[$nextIndex];
                             }
                             @endphp
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                             <div class="tab-content" id="pills-tabContent">
                                 @php $i = 0; @endphp
                                 @foreach ($all as $key => $ingredient)
                                 @php $i++; @endphp
+<<<<<<< HEAD
                                 <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}" id="pills-{{ $key }}" role="tabpanel">
                                     <div>
                                         <!-- Your existing code for various sections goes here -->
 
+=======
+
+                                <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}" id="pills-{{ $key }}" role="tabpanel">
+                                    <div>
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                         @if ($key == 'crust')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
@@ -212,6 +237,7 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
+<<<<<<< HEAD
                                         <!-- <div class="row size-flex">
                                                 <div class="col-size-label">
                                                     <label>Crust Thickness</label>
@@ -227,6 +253,24 @@ $lastPart = last($urlParts);
                                                     </div>
                                                 </div>
                                             </div> -->
+=======
+                                        <div class="row size-flex">
+                                            <div class="col-size-label">
+                                                <label>Size</label>
+                                                <i>Choose from 9" small to 18" extra large</i>
+                                            </div>
+                                            <div class="col-size-box">
+                                                <div class="mdl-textfield del-select-box">
+                                                    <select class="province crust-select" name="size" id="size" data-price=0>
+                                                        <option value="Small (9'')">Small (9'')</option>
+                                                        <option value="Medium(12'')">Medium(12'')</option>
+                                                        <option value="Large(15'')">Large(15'')</option>
+                                                        <option value="Extra-Large(18'')">Extra-Large(18'')</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 
                                         @if ($key == 'veggies')
                                         <div class="row cf-row">
@@ -266,7 +310,7 @@ $lastPart = last($urlParts);
                                             @foreach ($all['extra-sauce'] as $extraSauce)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section extraSauce_ingredient">
-                                                    <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-sauce="{{ $extraSauce['id'] }}" />
+                                                    <input type="checkbox" name="extraSauce[]" class="ingredients" data-price="0" data-extrasauce="{{ $extraSauce['id'] }}" />
                                                     <div class="custom-feat-wrapper">
                                                         <img src="{{ asset('') . $extraSauce['img'] }}" />
                                                         <span>{{ isset($extraSauce['name']) ? $extraSauce['name'] : '' }}</span>
@@ -331,7 +375,7 @@ $lastPart = last($urlParts);
                                             @foreach ($all['cheese'] as $cheese)
                                             <div class="col-md-6">
                                                 <div class="custom-features-section meat_ingredients">
-                                                    <input type="checkbox" name="cheese[]" class="ingredients" data-price="{{ $cheese['price'] }}" data-meat="{{ $cheese['id'] }}" />
+                                                    <input type="checkbox" name="cheese[]" class="ingredients" data-price="{{ $cheese['price'] }}" data-cheese="{{ $cheese['id'] }}" />
                                                     <div class="custom-feat-wrapper">
                                                         <img src="{{ asset('') . $cheese['img'] }}" />
                                                         <span>{{ $cheese['name'] }}</span>
@@ -383,13 +427,20 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                         <!-- Your existing code for other sections -->
 
                                         <div class="col-md-12">
                                             <div class="form-submit mt-5">
+<<<<<<< HEAD
                                                 <a class="pro-order-btn cop-border-btn dynamic-button" data-target="{{ getNextKey($key, $all) }}">Base
                                                     {{ ucfirst(getNextKey($key, $all)) }}</a>
+=======
+                                                <a class="pro-order-btn cop-border-btn dynamic-button" data-target="#pills-{{ getNextKey($key, $all) }}" role="tab" id="{{ getNextKey($key, $all) }}" data-toggle="pill">Base {{ ucfirst(getNextKey($key, $all)) }}</a>
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                             </div>
                                         </div>
                                     </div>
@@ -721,10 +772,20 @@ $lastPart = last($urlParts);
 
 @push('js')
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
+<<<<<<< HEAD
+=======
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/selectize.min.js') }}"></script>
+<script src="{{ asset('js/stickybits.min.js') }}"></script>
+<script src="{{ asset('js/owlCarousel.min.js') }}"></script>
+<script src="{{ asset('js/wow.js') }}"></script>
+<script src="{{ asset('js/all.js') }}"></script>
+<script defer src="{{ asset('js/material.min.js') }}"></script>
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 <script src="{{ asset('js/toastr.js') }}"></script>
 <script>
     $(document).ready(function() {
-
         stickybits('.main-header', {
             useStickyClasses: true
         });
@@ -778,6 +839,7 @@ $lastPart = last($urlParts);
 
             if (delivery || pickup) {
                 var idOfPizza = $(this).data('id');
+<<<<<<< HEAD
                 $.ajax({
                     url: '{{ route("getPizzaDetails") }}',
                     type: "POST",
@@ -810,11 +872,37 @@ $lastPart = last($urlParts);
                             $('#exampleModalLong').append(
                                 "<input type='hidden' name='name' id='name' value='" +
                                 data.data['name'].toUpperCase() + "' />");
+=======
+                if (idOfPizza) {
+                    $.ajax({
+                        url: '{{route("getPizzaDetails")}}',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            '_token': "{{ csrf_token() }}",
+                            'id': idOfPizza
+                        },
+                        cache: false,
+                        async: false,
 
-                            $('#nameOfPizza').text(data.data['name'].toUpperCase());
+                        success: function(data) {
+                            if (data.status == 'success') {
+                                var sizes = data.data['size'] ? data.data['size'].split(",") : 0;
+                                var price = data.data['price'].split(",");
 
-                            $('.ingredients').prop('checked', false);
+                                var imgURl = "/admin/images/items/" + data.data['img'];
+                                $("#img").attr('src', imgURl);
 
+                                $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
+
+                                $('#exampleModalLong').append("<input type='hidden' name='id' id='id' value='" + data.data['id'] + "' />");
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
+
+                                $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />");
+
+                                $('#nameOfPizza').text(data.data['name'].toUpperCase());
+
+<<<<<<< HEAD
                             $('#size option').each(function(index) {
                                 $(this).attr('data-price', price[index]);
                                 $(this).text($(this).text() + ' - $' + price[
@@ -843,8 +931,53 @@ $lastPart = last($urlParts);
                                             '.meat_ingredients').find(
                                             '.second-radio input[type="radio"]')
                                         .prop('checked', true);
+=======
+                                $('.ingredients').prop('checked', false);
+
+                                $('#size option').each(function(index) {
+                                    $(this).attr('data-price', price[index]);
+                                    $(this).text($(this).text() + ' - $' + price[index]);
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                 });
+
+                                //This is for Meat
+                                if (data.data.meat_ingredients && data.data.meat_ingredients.trim() !== '') {
+                                    var selectedMeatIDs = data.data.meat_ingredients.split(', ');
+
+                                    selectedMeatIDs.forEach(function(meatID) {
+                                        // Select the checkbox with the corresponding data-meat attribute
+                                        $('input[data-meat="' + meatID + '"]').prop('checked', true);
+
+                                        // Select the corresponding option in the select element within the same meat_ingredients div
+                                        $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('select[name="meatPortion"]').val('Reguler (1x)');
+
+                                        // Select the default radio button within the same meat_ingredients div
+                                        $('input[data-meat="' + meatID + '"]').closest('.meat_ingredients').find('.second-radio input[type="radio"]').prop('checked', true);
+                                    });
+                                }
+
+                                //This is for Veggies
+                                if (data.data.veggies && data.data.veggies.trim() !== '') {
+                                    var veggiesIDS = data.data.veggies.split(', ');
+
+                                    veggiesIDS.forEach(function(veggiesID) {
+                                        // Select the checkbox with the corresponding data-meat attribute
+                                        $('input[data-veggies="' + veggiesID + '"]').prop('checked', true);
+
+                                        // Select the corresponding option in the select element within the same meat_ingredients div
+                                        $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('select[name="veggiesPortion"]').val('Reguler (1x)');
+
+                                        // Select the default radio button within the same meat_ingredients div
+                                        $('input[data-veggies="' + veggiesID + '"]').closest('.veggies_ingredients').find('input[name="radio-group"][checked]').prop('checked', true);
+                                    });
+                                }
+
+                                var prices = data.data.price.split(',');
+                                $('#finalPrice').attr('data-finalprice', prices[0]);
+                                $('#finalPrice').attr('data-original', prices[0])
+                                $('#finalPrice').text(prices[0]);
                             }
+<<<<<<< HEAD
 
                             //This is for Veggies
                             if (data.data.veggies && data.data.veggies.trim() !== '') {
@@ -873,19 +1006,23 @@ $lastPart = last($urlParts);
                             $('#finalPrice').attr('data-finalprice', prices[0]);
                             $('#finalPrice').attr('data-original', prices[0])
                             $('#finalPrice').text(prices[0]);
+=======
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                         }
-                    }
-                });
+                    });
 
-                var sizes = @json($pizza);
-                var splitSizes = sizes[$(this).data('key')]['size'][0].split(",");
+                    var sizes = @json($pizza);
+                    var splitSizes = sizes[$(this).data('key')]['size'][0].split(",");
 
-                splitSizes.forEach(function(val) {
-                    $("#size").append('<option>' + val + "</option>");
-                });
+                    splitSizes.forEach(function(val) {
+                        $("#size").append('<option>' + val + "</option>");
+                    });
 
-                $('#exampleModalLong').modal('show');
-                $('#exampleModalLong #idOfPizza').val(idOfPizza);
+                    $('#exampleModalLong').modal('show');
+                    $('#exampleModalLong #idOfPizza').val(idOfPizza);
+                } else {
+                    $('#exampleModalLong').modal('show');
+                }
             } else {
                 $('#orderSetup').modal('show');
             }
@@ -1193,13 +1330,15 @@ $lastPart = last($urlParts);
     });
 
     $(document).on('change', '.province', function(e) {
-        // If checked, add to finalPrice
-        var priceToAdd = parseFloat($(this).val());
-        var currentPrice = parseFloat($('#finalPrice').attr('data-original'));
-        var newPrice = currentPrice + priceToAdd;
+        if ($(this).attr('name') != 'size') {
+            // If checked, add to finalPrice
+            var priceToAdd = parseFloat($(this).val());
+            var currentPrice = parseFloat($('#finalPrice').attr('data-original'));
+            var newPrice = currentPrice + priceToAdd;
 
-        $('#finalPrice').attr('data-finalprice', newPrice.toFixed(2));
-        $('#finalPrice').text(newPrice.toFixed(2));
+            $('#finalPrice').attr('data-finalprice', newPrice.toFixed(2));
+            $('#finalPrice').text(newPrice.toFixed(2));
+        }
     });
 
     $(document).on('click', '#orderBTN', function(e) {
@@ -1208,32 +1347,49 @@ $lastPart = last($urlParts);
         var type = "{{ $lastPart }}";
         var id = $('#id').val();
         var size = $('#size').val();
-        var name = $('#name').val();
+        var name = '';
+        if ($('#name').val()) {
+            name = $('#name').val();
+        } else {
+            name = 'Custom Pizza';
+        }
         var image = $('#image').val();
         var quantity = $('#quantity').val();
         var price = $('#finalPrice').html();
         var crust = $('#crust').val();
         var thickness = $('#thickness').val();
-        var sauce = $('#pills-Sauce select[name="sauce[]"]').val();
+        var sauce = $('#pills-sauce select[name="sauce[]"]').val();
 
         var cheese = [];
-        $('#pills-Sauce select[name="cheese[]"]').each(function() {
-            cheese.push($(this).val());
+        $('#pills-cheese input[name="cheese[]"]').each(function() {
+            cheese.push({
+                'id': $(this).data('cheese'),
+                'price': $(this).data('price')
+            });
         });
 
         var meat = [];
         $('#pills-meat input[name="meat[]"]:checked').each(function() {
-            meat.push($(this).data('meat'));
+            meat.push({
+                'id': $(this).data('meat'),
+                'price': $(this).data('price')
+            });
         });
 
         var veggies = [];
-        $('#pills-Veggiee input[name="veggies[]"]:checked').each(function() {
-            veggies.push($(this).data('veggies'));
+        $('#pills-veggies input[name="veggies[]"]:checked').each(function() {
+            veggies.push({
+                'id': $(this).data('veggies'),
+                'price': $(this).data('price')
+            });
         });
 
         var extraSauce = [];
-        $('#pills-Extras input[name="extraSauce[]"]:checked').each(function() {
-            extraSauce.push($(this).data('sauce'));
+        $('#pills-extra-sauce input[name="extraSauce[]"]:checked').each(function() {
+            extraSauce.push({
+                'id': $(this).data('extrasauce'),
+                'price': $(this).data('price')
+            });
         });
 
         $.ajax({
@@ -1257,15 +1413,16 @@ $lastPart = last($urlParts);
                 'extraSauce': extraSauce
             },
             success: function(data) {
+                console.log(data.status);
                 if (data.status == 'success') {
                     cart();
                     toastr.success(data.message);
                     $('#exampleModalLong').modal('hide');
-                    location.reload();
+                    // location.reload();
                 } else {
                     toastr.error("Something went Wrong");
                     $('#exampleModalLong').modal('hide');
-                    location.reload();
+                    // location.reload();
                 }
             },
             error: function(xhr, status, error) {
@@ -1328,5 +1485,13 @@ $lastPart = last($urlParts);
     function ucfirst(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
+<<<<<<< HEAD
+=======
+
+    $(".dynamic-button").click(function() {
+        $("#exampleModalLong .nav-link").removeClass('active');
+        $("." + $(this).attr('id')).addClass('active');
+    })
+>>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 </script>
 @endpush

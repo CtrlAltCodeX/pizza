@@ -134,7 +134,7 @@ class PaymentController extends Controller
 
         if (session()->get('pickup_details')) {
             $name = session()->get('pickup_details')['name'];
-        } else if(auth()->check()) {
+        } else if (auth()->check()) {
             $name = auth()->user()->name;
         } else {
             $name = '';
@@ -142,7 +142,7 @@ class PaymentController extends Controller
 
         if (session()->get('pickup_details')) {
             $email = session()->get('pickup_details')['email'];
-        } else if(auth()->check()) {
+        } else if (auth()->check()) {
             $email = auth()->user()->email;
         } else {
             $email = '';
@@ -150,7 +150,7 @@ class PaymentController extends Controller
 
         if (session()->get('pickup_details')) {
             $phone = session()->get('pickup_details')['phone'];
-        } else if(auth()->check()) {
+        } else if (auth()->check()) {
             $phone = auth()->user()->phone;
         } else {
             $phone = '';
@@ -204,8 +204,8 @@ class PaymentController extends Controller
                 'item_id' => $item['id'],
                 'name' => $data['name'],
                 'quantity' => $item['quantity'],
-                'price' => $price[0],
-                'size' => $size[0],
+                'price' => (int) $item['price'],
+                'size' => $item['size'],
                 'category_id' => $data['category_master_id'],
                 'category_name' => 'pizza',
                 'igredients_used_id' => $data['sauces'] . ',' . $data['cheese'] . ',' . $data['meat_ingredients'] . ',' . $data['veggies'],
