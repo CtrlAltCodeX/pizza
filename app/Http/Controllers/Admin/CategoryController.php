@@ -42,18 +42,6 @@ class CategoryController extends Controller
                                         </a>
 
                                     </li>';
-                    //                                    <li class="list-inline-item">
-                    //                                        <a class="text-danger deleteItem" data-bs-toggle="modal"
-                    //                            data-bs-target="#deleteCategory" href="javascript:void(0)" id="'.$row->id.'">
-                    //                                            <i class="fa fa-trash p-2 bg-soft-danger border border-danger rounded-circle" data-id="1"></i>
-                    //                                        </a>
-                    //                                    </li>
-                    //                                </ul>';
-                    //                    <li class="list-inline-item">
-                    //                                        <a class="text-success viewItem" href="javascript:void(0)" id="'.$row->id.'">
-                    //                                            <i class="ri-eye-fill fs-16 p-2 bg-soft-success border border-success rounded-circle" data-id="1"></i>
-                    //                                        </a>
-                    //                                    </li>
                     return $action;
                 })
                 ->rawColumns(['status', 'action', 'image'])
