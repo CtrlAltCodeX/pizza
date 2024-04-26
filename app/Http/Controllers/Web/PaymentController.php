@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -177,6 +178,12 @@ class PaymentController extends Controller
 
         $orderId = rand();
 
+        if ($getDelivery = Session::get("delivery_details")) {
+            $store = $getDelivery['shop'];
+        } else if ($getPickup = Session::get("pickup_details")) {
+            $store = $getPickup['shop'];
+        }
+
         $order_id = Order::create([
             'order_id' => $orderId,
             'first_name' => request()->info['first_name'],
@@ -191,6 +198,7 @@ class PaymentController extends Controller
             'zip' => request()->address['zip'],
             'payment_method' => 'COD',
             'total' => $total,
+            'shop' => $store,
         ]);
 
         foreach ($request->items as $item) {

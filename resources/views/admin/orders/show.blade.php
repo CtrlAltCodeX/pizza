@@ -24,6 +24,10 @@
                             <strong>Phone:</strong>
                             {{ $order->mobile ?? '' }}
                         </div>
+                        <div class="form-group">
+                            <strong>Store:</strong>
+                            {{ $order->shop_details->name ?? '' }}
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label>Order Status</label>

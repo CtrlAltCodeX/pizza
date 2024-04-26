@@ -1,13 +1,8 @@
 @extends('web.layout.master')
-<<<<<<< HEAD
-
-@push('head')
-=======
 
 
 @push('head')
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" />
@@ -172,11 +167,7 @@ $lastPart = last($urlParts);
                                 @foreach ($all as $key => $ingredent)
                                 @php $i++; @endphp
                                 <li class="nav-item" role="presentation">
-<<<<<<< HEAD
-                                    <button class="nav-link {{ $i == 1 ? 'active' : '' }}" data-toggle="pill" data-target="#pills-{{ $key }}" type="button" role="tab">{{ ucfirst($key) }}</button>
-=======
                                     <button class="nav-link {{$key}} {{ $i == 1 ? 'active' : '' }}" data-toggle="pill" data-target="#pills-{{ $key }}" type="button" role="tab">{{ ucfirst($key) }}</button>
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                 </li>
                                 @endforeach
                             </ul>
@@ -189,32 +180,17 @@ $lastPart = last($urlParts);
                             if ($nextIndex >= count($keys)) {
                             $nextIndex = 0; // If it reaches the end, loop back to the first menu item
                             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                             return $keys[$nextIndex];
                             }
                             @endphp
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                             <div class="tab-content" id="pills-tabContent">
                                 @php $i = 0; @endphp
                                 @foreach ($all as $key => $ingredient)
                                 @php $i++; @endphp
-<<<<<<< HEAD
-                                <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}" id="pills-{{ $key }}" role="tabpanel">
-                                    <div>
-                                        <!-- Your existing code for various sections goes here -->
-
-=======
 
                                 <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}" id="pills-{{ $key }}" role="tabpanel">
                                     <div>
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                         @if ($key == 'crust')
                                         <div class="row size-flex">
                                             <div class="col-size-label">
@@ -233,25 +209,7 @@ $lastPart = last($urlParts);
                                                 </div>
                                             </div>
                                         </div>
-                                        @endif
 
-<<<<<<< HEAD
-                                        <!-- <div class="row size-flex">
-                                                <div class="col-size-label">
-                                                    <label>Crust Thickness</label>
-                                                </div>
-                                                <div class="col-size-box">
-                                                    <div class="mdl-textfield del-select-box">
-                                                        <select class="province" name="thickness" id="thickness">
-                                                            <option value=0>--Select--</option>
-                                                            <option value=1>Reguler</option>
-                                                            <option value=2>Thick</option>
-                                                            <option value=3>Thin</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-=======
                                         <div class="row size-flex">
                                             <div class="col-size-label">
                                                 <label>Size</label>
@@ -268,7 +226,7 @@ $lastPart = last($urlParts);
                                                 </div>
                                             </div>
                                         </div>
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
+                                        @endif
 
                                         @if ($key == 'veggies')
                                         <div class="row cf-row">
@@ -425,20 +383,11 @@ $lastPart = last($urlParts);
                                         </div>
                                         @endif
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                         <!-- Your existing code for other sections -->
 
                                         <div class="col-md-12">
                                             <div class="form-submit mt-5">
-<<<<<<< HEAD
-                                                <a class="pro-order-btn cop-border-btn dynamic-button" data-target="{{ getNextKey($key, $all) }}">Base
-                                                    {{ ucfirst(getNextKey($key, $all)) }}</a>
-=======
                                                 <a class="pro-order-btn cop-border-btn dynamic-button" data-target="#pills-{{ getNextKey($key, $all) }}" role="tab" id="{{ getNextKey($key, $all) }}" data-toggle="pill">Base {{ ucfirst(getNextKey($key, $all)) }}</a>
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                             </div>
                                         </div>
                                     </div>
@@ -786,8 +735,6 @@ $lastPart = last($urlParts);
 
 @push('js')
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
-<<<<<<< HEAD
-=======
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/selectize.min.js') }}"></script>
@@ -796,7 +743,6 @@ $lastPart = last($urlParts);
 <script src="{{ asset('js/wow.js') }}"></script>
 <script src="{{ asset('js/all.js') }}"></script>
 <script defer src="{{ asset('js/material.min.js') }}"></script>
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 <script src="{{ asset('js/toastr.js') }}"></script>
 <script>
     $(document).ready(function() {
@@ -853,40 +799,6 @@ $lastPart = last($urlParts);
 
             if (delivery || pickup) {
                 var idOfPizza = $(this).data('id');
-<<<<<<< HEAD
-                $.ajax({
-                    url: '{{ route("getPizzaDetails") }}',
-                    type: "POST",
-                    dataType: "JSON",
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'id': idOfPizza
-                    },
-                    cache: false,
-                    async: false,
-
-                    success: function(data) {
-                        if (data.status == 'success') {
-                            console.log(data);
-                            var sizes = data.data['size'] ? data.data['size'].split(",") :
-                                0;
-                            var price = data.data['price'].split(",");
-
-                            var imgURl = "/admin/images/items/" + data.data['img'];
-                            $("#img").attr('src', imgURl);
-
-                            $('#exampleModalLong').append(
-                                "<input type='hidden' name='img' id='image' value='" +
-                                imgURl + "' />");
-
-                            $('#exampleModalLong').append(
-                                "<input type='hidden' name='id' id='id' value='" + data
-                                .data['id'] + "' />");
-
-                            $('#exampleModalLong').append(
-                                "<input type='hidden' name='name' id='name' value='" +
-                                data.data['name'].toUpperCase() + "' />");
-=======
                 if (idOfPizza) {
                     $.ajax({
                         url: '{{route("getPizzaDetails")}}',
@@ -910,48 +822,16 @@ $lastPart = last($urlParts);
                                 $('#exampleModalLong').append("<input type='hidden' name='img' id='image' value='" + imgURl + "' />");
 
                                 $('#exampleModalLong').append("<input type='hidden' name='id' id='id' value='" + data.data['id'] + "' />");
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 
                                 $('#exampleModalLong').append("<input type='hidden' name='name' id='name' value='" + data.data['name'].toUpperCase() + "' />");
 
                                 $('#nameOfPizza').text(data.data['name'].toUpperCase());
 
-<<<<<<< HEAD
-                            $('#size option').each(function(index) {
-                                $(this).attr('data-price', price[index]);
-                                $(this).text($(this).text() + ' - $' + price[
-                                    index]);
-                            });
-
-                            //This is for Meat
-                            if (data.data.meat_ingredients && data.data.meat_ingredients
-                                .trim() !== '') {
-                                var selectedMeatIDs = data.data.meat_ingredients.split(
-                                    ', ');
-
-                                selectedMeatIDs.forEach(function(meatID) {
-                                    // Select the checkbox with the corresponding data-meat attribute
-                                    $('input[data-meat="' + meatID + '"]').prop(
-                                        'checked', true);
-
-                                    // Select the corresponding option in the select element within the same meat_ingredients div
-                                    $('input[data-meat="' + meatID + '"]').closest(
-                                        '.meat_ingredients').find(
-                                        'select[name="meatPortion"]').val(
-                                        'Reguler (1x)');
-
-                                    // Select the default radio button within the same meat_ingredients div
-                                    $('input[data-meat="' + meatID + '"]').closest(
-                                            '.meat_ingredients').find(
-                                            '.second-radio input[type="radio"]')
-                                        .prop('checked', true);
-=======
                                 $('.ingredients').prop('checked', false);
 
                                 $('#size option').each(function(index) {
                                     $(this).attr('data-price', price[index]);
                                     $(this).text($(this).text() + ' - $' + price[index]);
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                                 });
 
                                 //This is for Meat
@@ -991,37 +871,6 @@ $lastPart = last($urlParts);
                                 $('#finalPrice').attr('data-original', prices[0])
                                 $('#finalPrice').text(prices[0]);
                             }
-<<<<<<< HEAD
-
-                            //This is for Veggies
-                            if (data.data.veggies && data.data.veggies.trim() !== '') {
-                                var veggiesIDS = data.data.veggies.split(', ');
-
-                                veggiesIDS.forEach(function(veggiesID) {
-                                    // Select the checkbox with the corresponding data-meat attribute
-                                    $('input[data-veggies="' + veggiesID + '"]')
-                                        .prop('checked', true);
-
-                                    // Select the corresponding option in the select element within the same meat_ingredients div
-                                    $('input[data-veggies="' + veggiesID + '"]')
-                                        .closest('.veggies_ingredients').find(
-                                            'select[name="veggiesPortion"]').val(
-                                            'Reguler (1x)');
-
-                                    // Select the default radio button within the same meat_ingredients div
-                                    $('input[data-veggies="' + veggiesID + '"]')
-                                        .closest('.veggies_ingredients').find(
-                                            'input[name="radio-group"][checked]')
-                                        .prop('checked', true);
-                                });
-                            }
-
-                            var prices = data.data.price.split(',');
-                            $('#finalPrice').attr('data-finalprice', prices[0]);
-                            $('#finalPrice').attr('data-original', prices[0])
-                            $('#finalPrice').text(prices[0]);
-=======
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
                         }
                     });
 
@@ -1432,11 +1281,11 @@ $lastPart = last($urlParts);
                     cart();
                     toastr.success(data.message);
                     $('#exampleModalLong').modal('hide');
-                    // location.reload();
+                    location.reload();
                 } else {
                     toastr.error("Something went Wrong");
                     $('#exampleModalLong').modal('hide');
-                    // location.reload();
+                    location.reload();
                 }
             },
             error: function(xhr, status, error) {
@@ -1499,13 +1348,10 @@ $lastPart = last($urlParts);
     function ucfirst(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-<<<<<<< HEAD
-=======
 
     $(".dynamic-button").click(function() {
         $("#exampleModalLong .nav-link").removeClass('active');
         $("." + $(this).attr('id')).addClass('active');
     })
->>>>>>> 7ce466507b4f5e67c595da102ed7f87438d2c2d4
 </script>
 @endpush

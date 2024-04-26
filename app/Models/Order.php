@@ -24,10 +24,16 @@ class Order extends Model
         'payment_method',
         'total',
         'status',
+        'shop',
     ];
 
     public function order_details()
     {
         return $this->hasOne(OrderDetails::class, 'id', 'orderMaster_id');
+    }
+
+    public function shop_details()
+    {
+        return $this->hasOne(Shop::class, 'id', 'shop');
     }
 }

@@ -54,7 +54,7 @@
         serverSide: true,
         ajax: "",
         columns: [
-            {data: 'order_id', name: 'order_id'},
+            {data: 'id', name: 'id'},
             {data: 'created_at', name: 'created_at'},
             {data: 'payment_method', name: 'payment_method'},
             {data: 'total', name: 'total'},

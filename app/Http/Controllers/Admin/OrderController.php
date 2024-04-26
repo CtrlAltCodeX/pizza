@@ -17,8 +17,8 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('order_id', function ($row) {
-                    return $row->order_id;
+                ->addColumn('id', function ($row) {
+                    return $row->id;
                 })
                 ->addColumn('date', function ($row) {
                     return $row->created_at->format('Y-m-d');
@@ -49,7 +49,7 @@ class OrderController extends Controller
             ->orderBy('id', 'ASC')
             ->get();
 
-        $order = Order::find($id);
+        $order = Order::with('shop_details')->find($id);
 
         return view('admin.orders.show', compact('data', 'order', 'id'));
     }

@@ -218,38 +218,6 @@ class OrdersController extends Controller
                 'status' => 'error',
                 'message' => $val->errors()->first()
             ]);
-
-            if ($val->fails()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $val->errors()->first()
-                ]);
-            }
-
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'street' => $request->street,
-                'apartment' => $request->apartment,
-                'streetName' => $request->streetName,
-                'postCode' => $request->postCode,
-                'city' => $request->city,
-                'shop' => $request->shop,
-            ];
-
-            Session::put('delivery_details', $data);
-
-            if (Session::has('delivery_details')) {
-                return response()->json([
-                    'status' => 'success'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Please setup the delivery details'
-                ]);
-            }
         }
 
         $data = [
@@ -261,9 +229,11 @@ class OrdersController extends Controller
             'streetName' => $request->streetName,
             'postCode' => $request->postCode,
             'city' => $request->city,
+            'store' => $request->store,
         ];
 
         Session::put('delivery_details', $data);
+
         if (Session::has('delivery_details')) {
             return response()->json([
                 'status' => 'success'
@@ -285,6 +255,7 @@ class OrdersController extends Controller
                 'name' => 'required',
                 'email' => 'required|email',
                 'phone' => 'required|numeric'
+            ]);
 
             if ($val->fails()) {
                 return response()->json([
